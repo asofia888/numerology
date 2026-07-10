@@ -370,6 +370,29 @@ footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacin
   html{scroll-behavior:auto}
 }
 
+/* ---------- 文字サイズ切替(スマートフォン表示) ---------- */
+html[data-fs="s"]{--fs-scale:.9}
+html[data-fs="l"]{--fs-scale:1.2}
+.fs-switch{
+  position:fixed;top:12px;right:12px;z-index:20;
+  display:none;align-items:center;
+  background:rgba(10,12,26,.85);
+  border:1px solid var(--line);border-radius:999px;
+  padding:4px 6px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+.fs-switch .fs-label{font-size:10px;color:var(--ink-faint);letter-spacing:.18em;padding:0 5px 0 7px}
+.fs-switch button{
+  font-family:inherit;background:none;border:1px solid transparent;border-radius:999px;
+  color:var(--ink-dim);cursor:pointer;padding:3px 10px;line-height:1.6;
+  transition:color .2s,background .2s;
+}
+.fs-switch button:nth-of-type(1){font-size:11px}
+.fs-switch button:nth-of-type(2){font-size:13px}
+.fs-switch button:nth-of-type(3){font-size:15px}
+.fs-switch button.on{color:var(--gold-bright);border-color:var(--line);background:rgba(201,164,92,.14)}
+.fs-switch button:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+
 /* ---------- レスポンシブ ---------- */
 @media (max-width:680px){
   .card{padding:26px 20px}
@@ -382,8 +405,9 @@ footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacin
   .dob-row{grid-template-columns:1fr}
   .sec-num{font-size:2.8rem}
   .actions{grid-template-columns:1fr}
-  html{font-size:17px}
-  body{font-size:16.5px}
+  html{font-size:calc(17px * var(--fs-scale,1))}
+  body{font-size:calc(16.5px * var(--fs-scale,1))}
+  .fs-switch{display:flex}
 }
 
 /* ---------- 印刷(鑑定書として保存) ---------- */
@@ -409,6 +433,13 @@ footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacin
 </style>
 </head>
 <body>
+
+<div class="fs-switch no-print" role="group" aria-label="文字サイズの変更">
+  <span class="fs-label">文字</span>
+  <button type="button" data-fs="s" aria-pressed="false">小</button>
+  <button type="button" data-fs="m" aria-pressed="true">標準</button>
+  <button type="button" data-fs="l" aria-pressed="false">大</button>
+</div>
 
 <header class="hero">
   <div class="wrap">
@@ -1377,6 +1408,27 @@ document.addEventListener("click", e => {
 window.addEventListener("beforeprint", () => {
   document.querySelectorAll("details.calc").forEach(d => d.open = true);
 });
+
+/* ---------- 文字サイズ切替(スマートフォン表示) ---------- */
+const FS_KEY = "numerology-fontsize";
+function setFontSize(v){
+  document.documentElement.setAttribute("data-fs", v);
+  document.querySelectorAll(".fs-switch [data-fs]").forEach(b => {
+    const on = b.dataset.fs === v;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", String(on));
+  });
+  try{ localStorage.setItem(FS_KEY, v); }catch(e){ /* プライベートブラウズ等では記憶せず動作のみ */ }
+}
+document.querySelectorAll(".fs-switch [data-fs]").forEach(b => {
+  b.addEventListener("click", () => setFontSize(b.dataset.fs));
+});
+(function initFontSize(){
+  let v = "m";
+  try{ v = localStorage.getItem(FS_KEY) || "m"; }catch(e){}
+  if(!["s","m","l"].includes(v)) v = "m";
+  setFontSize(v);
+})();
 </script>
 </body>
 </html>
