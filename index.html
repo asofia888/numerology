@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数秘術鑑定 | Numerology Reading</title>
+<meta name="description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
+<!-- OGP(SNSシェア用)※別のURLで公開する場合は og:url と og:image の2行を書き換えてください -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="数秘術鑑定 | Numerology Reading">
+<meta property="og:description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
+<meta property="og:site_name" content="数秘術鑑定">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://asofia888.github.io/numerology/">
+<meta property="og:image" content="https://asofia888.github.io/numerology/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a45c' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c9a45c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   紺紙金泥 — 藍の夜空に金泥で記す鑑定書
+   ============================================================ */
+:root{
+  --bg:#0d1022;
+  --bg-deep:#0a0c1a;
+  --card:rgba(255,253,245,.032);
+  --card-strong:rgba(255,253,245,.055);
+  --line:rgba(201,164,92,.30);
+  --line-dim:rgba(201,164,92,.16);
+  --gold:#c9a45c;
+  --gold-bright:#e6c88a;
+  --ink:#efe8d8;
+  --ink-dim:#b3ab97;
+  --ink-faint:#8d8672;
+  --danger:#d8a08a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.95;
+  letter-spacing:.03em;
+  font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  position:relative;
+}
+/* 星屑と金の靄 */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(1px 1px at 12% 22%, rgba(240,230,200,.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 12%, rgba(240,230,200,.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 62% 38%, rgba(230,200,138,.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 32% 64%, rgba(240,230,200,.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 56%, rgba(240,230,200,.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 8% 84%, rgba(230,200,138,.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 46% 92%, rgba(240,230,200,.3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 76%, rgba(240,230,200,.35) 50%, transparent 51%),
+    radial-gradient(900px 480px at 50% -8%, rgba(201,164,92,.10), transparent 70%),
+    linear-gradient(180deg, #0e1126 0%, var(--bg) 40%, var(--bg-deep) 100%);
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+
+/* ---------- 見出し・共通 ---------- */
+.eyebrow{
+  font-family:"Cormorant Garamond", serif;
+  font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line-dim);
+  border-radius:6px;
+  padding:34px 36px;
+}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);border:0;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.chip{
+  font-size:.78rem;letter-spacing:.12em;color:var(--gold-bright);
+  border:1px solid var(--line);border-radius:999px;padding:2px 13px;
+}
+
+/* ---------- ヒーロー ---------- */
+.hero{padding:76px 0 44px;text-align:center}
+.hero .eyebrow{margin-bottom:18px}
+.hero h1{
+  font-size:clamp(2rem,6vw,2.9rem);font-weight:600;letter-spacing:.24em;
+  text-indent:.24em;color:var(--ink);
+}
+.hero h1 .h-gold{color:var(--gold-bright)}
+.hero .lead{
+  margin-top:18px;color:var(--ink-dim);font-size:.92rem;letter-spacing:.1em;
+}
+.hero .orn{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:26px;color:var(--gold);
+}
+.hero .orn::before,.hero .orn::after{
+  content:"";width:110px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line));
+}
+.hero .orn::after{background:linear-gradient(90deg,var(--line),transparent)}
+.hero .orn span{font-size:.7rem;letter-spacing:.3em}
+
+/* ---------- 入力フォーム ---------- */
+.form-card{margin-bottom:70px}
+.form-title{font-size:1.02rem;font-weight:600;letter-spacing:.2em;margin-bottom:6px}
+.form-note{font-size:.8rem;color:var(--ink-faint);margin-bottom:24px}
+.field{margin-bottom:22px}
+.field label{
+  display:block;font-size:.8rem;letter-spacing:.24em;color:var(--gold);
+  margin-bottom:9px;
+}
+.field label small{color:var(--ink-faint);letter-spacing:.08em;margin-left:8px}
+input[type="text"], select{
+  width:100%;
+  background:rgba(10,12,26,.6);
+  border:1px solid var(--line-dim);
+  border-radius:4px;
+  color:var(--ink);
+  font-family:inherit;font-size:1rem;letter-spacing:.08em;
+  padding:11px 14px;
+  transition:border-color .25s;
+  appearance:none;-webkit-appearance:none;
+}
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23c9a45c' stroke-width='1.2'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;
+  cursor:pointer;
+}
+input[type="text"]:focus, select:focus{outline:none;border-color:var(--gold)}
+input::placeholder{color:var(--ink-faint)}
+.dob-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px}
+.btn{
+  display:inline-block;
+  font-family:inherit;font-size:.95rem;letter-spacing:.34em;text-indent:.34em;
+  color:var(--gold-bright);
+  background:transparent;
+  border:1px solid var(--gold);
+  border-radius:4px;
+  padding:13px 10px;width:100%;
+  cursor:pointer;
+  transition:background .3s,color .3s,box-shadow .3s;
+}
+.btn:hover{background:var(--gold);color:#141020;box-shadow:0 0 26px rgba(201,164,92,.35)}
+.btn:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+.btn--sub{border-color:var(--line);color:var(--ink-dim);letter-spacing:.2em;text-indent:.2em}
+.btn--sub:hover{background:rgba(201,164,92,.12);color:var(--gold-bright);box-shadow:none}
+.err{display:none;color:var(--danger);font-size:.84rem;margin-top:14px;letter-spacing:.06em}
+.err.show{display:block}
+
+/* ---------- モード切替タブ ---------- */
+.tabs{display:flex;margin-bottom:24px;border-bottom:1px solid var(--line-dim)}
+.tab{
+  flex:1;background:none;border:none;cursor:pointer;
+  font-family:inherit;font-size:.94rem;letter-spacing:.3em;text-indent:.3em;
+  color:var(--ink-faint);padding:12px 0 14px;position:relative;transition:color .3s;
+}
+.tab:hover{color:var(--ink-dim)}
+.tab.active{color:var(--gold-bright)}
+.tab.active::after{
+  content:"";position:absolute;left:18%;right:18%;bottom:-1px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.tab:focus-visible{outline:2px solid var(--gold-bright);outline-offset:-2px}
+.person{border:1px solid var(--line-dim);border-radius:6px;padding:20px 20px 4px;margin-bottom:18px}
+.person-label{
+  font-size:.8rem;letter-spacing:.3em;color:var(--gold);margin-bottom:16px;
+  display:flex;align-items:center;gap:12px;
+}
+.person-label::after{content:"";flex:1;height:1px;background:var(--line-dim)}
+
+/* ---------- 相性ビジュアル ---------- */
+.duo{display:flex;align-items:center;justify-content:center;gap:26px;padding:36px 16px 22px;flex-wrap:wrap}
+.duo .p{text-align:center}
+.duo .p .pname{font-size:.85rem;color:var(--ink-dim);letter-spacing:.08em;margin-bottom:12px;max-width:170px;overflow-wrap:break-word;margin-left:auto;margin-right:auto}
+.duo-ring{
+  width:118px;height:118px;border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;margin:0 auto;
+  box-shadow:inset 0 0 30px rgba(201,164,92,.12), 0 0 34px rgba(201,164,92,.12);
+}
+.duo-ring .n{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:3.1rem;color:var(--gold-bright)}
+.duo .p .parch{margin-top:10px;font-size:.9rem;letter-spacing:.08em}
+.duo-link{
+  font-family:"Cormorant Garamond",serif;font-size:2.3rem;font-style:italic;color:var(--gold);
+  text-shadow:0 0 18px rgba(201,164,92,.5);
+}
+.harmony{text-align:center;padding:2px 20px 32px}
+.pair-title{font-size:1.28rem;font-weight:600;letter-spacing:.2em;color:var(--gold-bright);margin-bottom:14px}
+.stars{font-size:1.4rem;letter-spacing:.32em;text-indent:.32em;color:var(--gold-bright);text-shadow:0 0 14px rgba(201,164,92,.4)}
+.stars .off{color:rgba(201,164,92,.28);text-shadow:none}
+.h-type{margin-top:12px;font-size:1rem;letter-spacing:.2em}
+.h-type b{color:var(--gold-bright);font-weight:600}
+.h-note{margin-top:12px;font-size:.78rem;color:var(--ink-faint)}
+.cycle-grid.two{grid-template-columns:1fr 1fr}
+.block p + p{margin-top:12px}
+
+/* ---------- 鑑定書ヘッダー ---------- */
+#result{padding-bottom:40px}
+#result:focus{outline:none}
+.doc-head{text-align:center;padding:26px 0 40px}
+.doc-head .eyebrow{margin-bottom:14px}
+.doc-head h2{font-size:1.5rem;font-weight:600;letter-spacing:.3em;text-indent:.3em}
+.doc-meta{
+  margin-top:20px;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 34px;
+  font-size:.88rem;color:var(--ink-dim);letter-spacing:.08em;
+}
+.doc-meta b{color:var(--ink);font-weight:500}
+
+/* ---------- コアナンバーチャート(シグネチャー) ---------- */
+.chart{
+  display:grid;grid-template-columns:280px 1fr;gap:30px;align-items:center;
+  padding:40px 36px;margin-bottom:26px;
+}
+.lp-moon{text-align:center}
+.lp-ring{
+  position:relative;width:172px;height:172px;margin:0 auto 18px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 1px rgba(201,164,92,.12), inset 0 0 42px rgba(201,164,92,.14), 0 0 56px rgba(201,164,92,.14);
+  animation:breath 7s ease-in-out infinite;
+}
+.lp-ring::before{
+  content:"";position:absolute;inset:-13px;border-radius:50%;
+  border:1px solid var(--line-dim);
+}
+.lp-ring::after{
+  content:"";position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;background:var(--gold-bright);
+  box-shadow:0 0 10px rgba(230,200,138,.8);
+}
+.lp-ring .n{
+  font-family:"Cormorant Garamond", serif;font-weight:300;
+  font-size:5rem;line-height:1;color:var(--gold-bright);
+}
+.lp-ring .n.master{font-size:4.1rem}
+@keyframes breath{
+  0%,100%{box-shadow:0 0 0 1px rgba(201,164,92,.12), inset 0 0 42px rgba(201,164,92,.12), 0 0 44px rgba(201,164,92,.10)}
+  50%{box-shadow:0 0 0 1px rgba(201,164,92,.2), inset 0 0 52px rgba(201,164,92,.2), 0 0 74px rgba(201,164,92,.22)}
+}
+.lp-moon .eyebrow{display:block;margin-bottom:6px}
+.lp-moon .lp-label{font-size:.92rem;letter-spacing:.2em;color:var(--ink-dim)}
+.lp-moon .lp-name{font-size:1.2rem;font-weight:600;letter-spacing:.14em;color:var(--ink);margin-top:6px}
+.lp-moon .lp-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:.9rem;color:var(--gold);letter-spacing:.08em}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.mini{
+  border:1px solid var(--line-dim);border-radius:6px;
+  padding:16px 14px 14px;text-align:center;
+  background:rgba(10,12,26,.35);
+}
+.mini .m-label{font-size:.68rem;letter-spacing:.22em;color:var(--gold);display:block}
+.mini .m-jp{font-size:.76rem;color:var(--ink-faint);letter-spacing:.1em;display:block;margin-top:2px}
+.mini .m-num{
+  font-family:"Cormorant Garamond",serif;font-weight:300;
+  font-size:2.3rem;line-height:1.25;color:var(--ink);display:block;margin-top:4px;
+}
+.mini .m-name{font-size:.8rem;color:var(--ink-dim);letter-spacing:.1em}
+.master-tag{
+  display:inline-block;font-size:.62rem;letter-spacing:.2em;color:var(--gold-bright);
+  border:1px solid var(--line);border-radius:999px;padding:0 8px;margin-top:4px;
+}
+
+/* ---------- カルミックナンバー ---------- */
+.karma{
+  border:1px solid var(--line);border-left:3px solid var(--gold);
+  border-radius:4px;background:rgba(201,164,92,.06);
+  padding:22px 26px;margin-bottom:26px;
+}
+.karma h3{font-size:.95rem;letter-spacing:.22em;color:var(--gold-bright);font-weight:600;margin-bottom:10px}
+.karma p{font-size:.9rem;color:var(--ink-dim)}
+.karma p + p{margin-top:10px}
+.karma b{color:var(--ink);font-weight:600}
+
+/* ---------- 計算の内訳 ---------- */
+details.calc{
+  border:1px solid var(--line-dim);border-radius:6px;
+  margin-bottom:56px;background:var(--card);
+}
+details.calc summary{
+  cursor:pointer;list-style:none;
+  padding:18px 26px;
+  font-size:.86rem;letter-spacing:.24em;color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+}
+details.calc summary::-webkit-details-marker{display:none}
+details.calc summary::before{content:"▸";transition:transform .25s;font-size:.8em}
+details.calc[open] summary::before{transform:rotate(90deg)}
+.calc-body{padding:4px 28px 26px;font-size:.88rem;color:var(--ink-dim)}
+.calc-body h4{font-size:.8rem;letter-spacing:.24em;color:var(--gold);font-weight:600;margin:18px 0 8px}
+.calc-line{font-family:"Cormorant Garamond","Shippori Mincho",serif;font-size:1rem;letter-spacing:.04em;color:var(--ink)}
+.letters{display:flex;flex-wrap:wrap;gap:4px 10px;margin:8px 0 4px}
+.lt{text-align:center;min-width:22px}
+.lt .c{font-family:"Cormorant Garamond",serif;font-size:1.05rem;color:var(--ink);display:block;line-height:1.3}
+.lt .v{font-size:.72rem;color:var(--ink-faint);display:block;line-height:1.2}
+.lt.vowel .c{color:var(--gold-bright)}
+.lt.vowel .v{color:var(--gold)}
+.calc-note{font-size:.78rem;color:var(--ink-faint);margin-top:14px}
+
+/* ---------- 各鑑定セクション ---------- */
+section.reading{margin-bottom:34px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.sec-head h2{font-size:1.18rem;font-weight:600;letter-spacing:.16em;margin-top:4px}
+.sec-sub{display:block;font-size:.8rem;font-weight:400;color:var(--ink-faint);letter-spacing:.14em;margin-top:4px}
+.sec-num{
+  font-family:"Cormorant Garamond",serif;font-weight:300;font-size:3.6rem;line-height:1;
+  color:var(--gold-bright);flex-shrink:0;
+  text-shadow:0 0 24px rgba(201,164,92,.35);
+}
+.arch{margin-top:14px;font-size:1.04rem;letter-spacing:.1em}
+.arch b{font-weight:600;color:var(--gold-bright)}
+.arch .arch-en{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:.9rem;color:var(--ink-faint);margin-left:10px;letter-spacing:.06em}
+.pos-text{
+  margin-top:16px;padding:18px 22px;
+  border-left:2px solid var(--gold);
+  background:rgba(201,164,92,.05);
+  border-radius:0 4px 4px 0;
+  color:var(--ink);
+}
+.block{margin-top:24px}
+.block h3{
+  font-size:.88rem;font-weight:600;letter-spacing:.24em;color:var(--gold);
+  display:flex;align-items:center;gap:10px;margin-bottom:9px;
+}
+.block h3::before{content:"◆";font-size:.6em;color:var(--gold)}
+.block p{color:var(--ink-dim)}
+.block p b{color:var(--ink);font-weight:500}
+
+/* ---------- 運気サイクル ---------- */
+.cycle-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:22px}
+.cy{border:1px solid var(--line-dim);border-radius:6px;padding:22px 24px;background:rgba(10,12,26,.35)}
+.cy .cy-label{font-size:.72rem;letter-spacing:.26em;color:var(--gold);display:block}
+.cy .cy-head{display:flex;align-items:baseline;gap:14px;margin-top:6px;flex-wrap:wrap}
+.cy .cy-num{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:2.4rem;line-height:1;color:var(--gold-bright)}
+.cy .cy-title{font-size:1.02rem;font-weight:600;letter-spacing:.14em}
+.cy p{margin-top:10px;font-size:.92rem;color:var(--ink-dim)}
+.cy.small p{margin-top:6px}
+.cy-note{font-size:.76rem;color:var(--ink-faint);margin-top:14px}
+
+/* ---------- 総合メッセージ ---------- */
+.synth{border-color:var(--line);background:var(--card-strong)}
+.synth p{margin-top:16px;color:var(--ink)}
+.synth p:first-of-type{margin-top:18px}
+.synth p.close{color:var(--gold-bright)}
+
+/* ---------- アクション・フッター ---------- */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:44px 0 10px}
+footer{
+  text-align:center;padding:56px 0 44px;
+  font-size:.76rem;color:var(--ink-faint);letter-spacing:.14em;
+}
+footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:.5em}
+
+/* ---------- 出現アニメーション ---------- */
+#result section.reading, #result .chart, #result .doc-head, #result .karma, #result details.calc{
+  animation:rise .7s ease both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width:680px){
+  .card{padding:26px 20px}
+  .cycle-grid.two{grid-template-columns:1fr}
+  .duo{gap:14px}
+  .duo-link{width:100%;text-align:center;order:1}
+  .duo .p{order:0}
+  .duo .p:last-child{order:2}
+  .chart{grid-template-columns:1fr;padding:32px 20px;gap:24px}
+  .dob-row{grid-template-columns:1fr}
+  .sec-num{font-size:2.8rem}
+  .actions{grid-template-columns:1fr}
+  html{font-size:17px}
+  body{font-size:16.5px}
+}
+
+/* ---------- 印刷(鑑定書として保存) ---------- */
+@media print{
+  :root{
+    --bg:#ffffff;--bg-deep:#ffffff;
+    --card:#ffffff;--card-strong:#faf7ef;
+    --line:rgba(138,107,46,.5);--line-dim:rgba(138,107,46,.3);
+    --gold:#8a6b2e;--gold-bright:#7a5c20;
+    --ink:#241f14;--ink-dim:#4a4231;--ink-faint:#7d7460;
+  }
+  body::before{display:none}
+  body{font-size:11.5pt;background:#fff}
+  .hero,.form-card,.actions,.no-print{display:none !important}
+  .card,.mini,.cy,details.calc{background:#fff}
+  .lp-ring{box-shadow:none;animation:none}
+  .duo-ring{box-shadow:none}
+  .stars,.duo-link{text-shadow:none}
+  .sec-num{text-shadow:none}
+  section.reading{break-inside:avoid-page}
+  a{color:inherit;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Numerology &nbsp;·&nbsp; Professional Reading</p>
+    <h1>数<span class="h-gold">秘</span>術鑑定</h1>
+    <p class="lead">生年月日とお名前に刻まれた、あなたの魂の設計図を読み解きます</p>
+    <div class="orn"><span>1 · 2 · 3 · 4 · 5 · 6 · 7 · 8 · 9 · 11 · 22 · 33</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card form-card" id="form-card">
+    <div class="tabs" role="tablist" aria-label="鑑定モード">
+      <button class="tab active" id="tab-personal" type="button" role="tab" aria-selected="true" aria-controls="mode-personal">個人鑑定</button>
+      <button class="tab" id="tab-pair" type="button" role="tab" aria-selected="false" aria-controls="mode-pair" tabindex="-1">相性診断</button>
+    </div>
+    <p class="form-note" id="form-note">お名前はヘボン式ローマ字(英字)でご入力ください。名前を省略した場合は、生年月日のみの鑑定となります。</p>
+
+    <div id="mode-personal" role="tabpanel" aria-labelledby="tab-personal">
+      <div class="field">
+        <label for="name">お名前(ローマ字)<small>例:HANAKO YAMADA</small></label>
+        <input type="text" id="name" placeholder="HANAKO YAMADA" autocomplete="off" spellcheck="false">
+      </div>
+
+      <div class="field">
+        <label>生年月日</label>
+        <div class="dob-row">
+          <select id="yy" aria-label="年"></select>
+          <select id="mm" aria-label="月"></select>
+          <select id="dd" aria-label="日"></select>
+        </div>
+      </div>
+    </div>
+
+    <div id="mode-pair" role="tabpanel" aria-labelledby="tab-pair" hidden>
+      <div class="person">
+        <p class="person-label">お一人目</p>
+        <div class="field">
+          <label for="nameA">お名前(ローマ字・任意)<small>例:TARO SATO</small></label>
+          <input type="text" id="nameA" placeholder="TARO SATO" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label>生年月日</label>
+          <div class="dob-row">
+            <select id="yyA" aria-label="お一人目の年"></select>
+            <select id="mmA" aria-label="お一人目の月"></select>
+            <select id="ddA" aria-label="お一人目の日"></select>
+          </div>
+        </div>
+      </div>
+      <div class="person">
+        <p class="person-label">お二人目</p>
+        <div class="field">
+          <label for="nameB">お名前(ローマ字・任意)<small>例:HANAKO YAMADA</small></label>
+          <input type="text" id="nameB" placeholder="HANAKO YAMADA" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="field">
+          <label>生年月日</label>
+          <div class="dob-row">
+            <select id="yyB" aria-label="お二人目の年"></select>
+            <select id="mmB" aria-label="お二人目の月"></select>
+            <select id="ddB" aria-label="お二人目の日"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="method">計算方式(ライフパス)<small>流派により結果が異なることがあります</small></label>
+      <select id="method">
+        <option value="standard" selected>標準方式(生年月日の全桁を一括合算)</option>
+        <option value="component">桁別還元方式(年・月・日を個別に還元して合算)</option>
+      </select>
+    </div>
+
+    <button class="btn" id="go">鑑 定 す る</button>
+    <p class="err" id="err" role="alert"></p>
+  </div>
+
+  <main id="result" hidden tabindex="-1"></main>
+</div>
+
+<footer>
+  <p class="f-orn">◆ ◆ ◆</p>
+  <p>Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
+  <p>ご入力いただいた情報は、お使いの端末内でのみ計算され、外部に送信・保存されることはありません。</p>
+  <p>数が示すのは定められた運命ではなく、魂が携えてきた才能の地図です。</p>
+</footer>
+
+<script>
+/* ============================================================
+   数秘術エンジン & 鑑定データベース
+   ============================================================ */
+const P = {
+1:{name:"開拓者",en:"The Pioneer",kw:["始まり","独立","意志","リーダーシップ"],
+essence:"すべての数の始まりである「1」は、創造の第一歩、純粋な意志の力を象徴します。この数を持つ人の魂には「自らの足で道を切り拓く」というテーマが刻まれています。誰かの敷いたレールではなく、まだ誰も歩いていない場所へ最初の一歩を印すこと。強い意志、決断力、そして逆境でこそ燃える情熱は、この数ならではの資質です。孤独を恐れず前へ進むとき、あなたの後ろには自然と道ができ、人がついてきます。",
+talent:"ゼロから立ち上げる開拓力、即断即決の行動力、先頭に立つリーダーシップ。前例のない仕事、新規プロジェクト、独立起業など「最初の人」になる場面で最も輝きます。",
+challenge:"我が強くなりすぎると、独善や孤立を招くことがあります。「頼ることも強さのうち」と知り、人の意見に耳を傾ける余白を持つと、リーダーとしての器が一段と大きくなります。",
+love:"恋愛でも自分からアプローチする情熱型。駆け引きより一直線な愛情表現が魅力です。相手を尊重し「勝ち負け」を持ち込まないことで、対等で燃えるようなパートナーシップが育ちます。",
+work:"指示を待つ立場より、裁量を持って切り拓く立場で輝きます。起業家、リーダー、新規事業、企画開発など。「前例がない」と言われる場所こそ、あなたの仕事場です。",
+advice:"迷ったら「心が熱くなる方」を選ぶこと。始めたことを一つ形にするたび、運は加速します。赤やゴールドなど、心に火を灯す色を身につけるのも吉。",
+lp:"あなたの人生の大きなテーマは「自立」と「開拓」。人の後ろではなく先頭を歩き、自分の意志で選択を重ねるほど道が開けます。人生の節目には必ず「自分で決める」経験が用意されているはずです。",
+dt:"社会の中でのあなたの役割は「先駆者」。新しい流れを起こし、道なき場所に旗を立てることが使命です。周囲を引っ張る立場に押し出されるのは、その役割ゆえの必然です。",
+sl:"あなたの魂が心の奥で望んでいるのは「自分の力で成し遂げた」という実感。誰かの評価より、自分に恥じない生き方。魂は常に「挑戦」という燃料を求めています。",
+ps:"周囲の目にあなたは「頼れるリーダー」「意志の強い人」と映っています。堂々とした佇まいは、初対面でも一目置かれるはず。近寄りがたい印象を和らげる笑顔が、さらに人を惹きつけます。",
+bd:"日々の場面でふと顔を出すのは「即断即決の行動力」。ここぞの場面で迷わず一歩踏み出せる瞬発力が、あなたの隠れた武器です。",
+mt:"人生の後半(およそ35歳以降)、あなたはより「自分らしく生きる」方向へ舵を切ります。組織や誰かに合わせてきた人ほど、独立や新しい挑戦の扉が開く時期。遠慮なく主役の座へ。"},
+
+2:{name:"調和の人",en:"The Harmonizer",kw:["調和","共感","受容","パートナーシップ"],
+essence:"「2」は陰と陽、月と太陽のように、二つのものの間に立って調和を生み出す数です。この数を持つ人は、繊細な感受性と深い共感力を授かっており、言葉にならない相手の気持ちを感じ取る天性のアンテナを持っています。自分が主役として輝くよりも、誰かを支え、つなぎ、場を和ませることで本領を発揮します。その優しさは弱さではなく、争いを溶かし、人と人とを結び直す、静かで偉大な力です。",
+talent:"相手の気持ちを察する共感力、場の空気を整える調整力、細やかなサポート力。交渉の橋渡し、補佐役、カウンセリングなど「人と人の間」に立つ場面で真価を発揮します。",
+challenge:"繊細さゆえに人の顔色をうかがいすぎ、自分を後回しにしがちです。「NO」と言うことは冷たさではありません。自分の気持ちを言葉にする練習が、あなたの優しさをさらに本物にします。",
+love:"深い愛情で相手に寄り添う一途なロマンチスト。愛されることで花開くタイプです。尽くしすぎて我慢を溜めないよう、小さな本音をこまめに伝えることが長続きの秘訣。",
+work:"誰かの右腕、チームの潤滑油として組織に欠かせない存在に。秘書・補佐、人事、カウンセラー、看護・介護、コーディネーターなど、心を扱う仕事に深い適性があります。",
+advice:"「私はどうしたい?」と一日一度、自分に尋ねる習慣を。月の光を浴びる、水辺で過ごすなど、静かに感性を満たす時間が運気の源になります。",
+lp:"人生のテーマは「調和」と「つながり」。誰かと共に歩み、支え合う中で魂が磨かれます。競争社会で強くなることよりも、優しさを貫くこと——それがあなたにとっての本当の強さです。",
+dt:"社会での役割は「結び手」。人と人、組織と組織の間に立ち、対立を溶かして調和を生むことが使命です。あなたの細やかな気配りは、集団にとって空気のように不可欠なものです。",
+sl:"魂が望むのは「深くわかり合える絆」。表面的な付き合いでは満たされず、心と心が静かに通い合う関係にこそ安らぎを覚えます。愛し、愛されることが、魂の栄養です。",
+ps:"周囲には「物腰の柔らかい、感じのよい人」と映っています。安心感のある雰囲気で、自然と相談事や秘密を打ち明けられやすいタイプ。その信頼は大切な財産です。",
+bd:"隠し味は「察する力」。相手が言葉にする前に気持ちを汲み取れる細やかさが、人間関係の随所であなたを助けます。",
+mt:"後半生のテーマは「パートナーシップと安らぎ」。競い急いだ前半から一転、支え合える人間関係の中に深い幸福を見出します。誰かと共に紡ぐ日々が、最高の財産になります。"},
+
+3:{name:"表現者",en:"The Creator",kw:["創造","表現","喜び","好奇心"],
+essence:"「3」は創造と表現、そして喜びの数。子どものような無邪気さと尽きない好奇心を持ち、そこにいるだけで場がぱっと明るくなる——そんな太陽のようなエネルギーを放ちます。話す、書く、歌う、描く。どんな形であれ、内側から湧き上がるものを外へ表現することがこの数の使命であり、最大の喜びです。あなたの笑顔や言葉は、ご自身が思っている以上に、多くの人の心を照らしています。",
+talent:"言葉・アイデア・ユーモアで人を惹きつける表現力と発想力。企画、執筆、話す仕事、エンターテインメントなど、創造性を外に放つ場面で天性の輝きを放ちます。",
+challenge:"興味が移ろいやすく、物事が長続きしにくい傾向も。飽きっぽさは好奇心の裏返しです。「これだけは」というものを一つ決めて続けると、才能が大きく開花します。",
+love:"恋を人生の彩りとして楽しむ、天性の魅力の持ち主。一緒に笑い合える関係が何よりの栄養です。楽しさだけでなく、弱さも見せ合える深さが加わると、愛は本物になります。",
+work:"表現とコミュニケーションが武器。企画、広報、ライター、デザイン、講師、芸能・音楽など。「楽しい」と感じられる仕事を選ぶことが、成功への最短ルートです。",
+advice:"とにかく「楽しい」を優先すること。笑う門には福来る、を地で行く数です。歌う・描く・書くなど、小さな創作を暮らしに取り入れると運が巡ります。",
+lp:"人生のテーマは「創造」と「喜び」。楽しむことに罪悪感を持つ必要はありません。あなたが心から楽しんでいるとき、周囲にも幸運の連鎖が生まれる——そういう仕組みの人生です。",
+dt:"社会での役割は「光をもたらす人」。言葉や作品、持ち前の明るさを通して人々の心を軽くすることが使命です。あなたの表現が、誰かの曇り空に差し込むひと筋の光になります。",
+sl:"魂が望むのは「表現する喜び」と「無邪気でいられる自由」。よく笑い、心が弾むことをしているとき、あなたの魂は本来の輝きを取り戻します。",
+ps:"周囲には「明るくて話しやすい、魅力的な人」と映っています。あなたがいると場が華やぎ、会話が弾む——ムードメーカーとして愛されるキャラクターです。",
+bd:"隠し味は「場を明るくするユーモア」。ふとした一言で空気を和ませる才能は、どんな肩書きよりも人を惹きつけます。",
+mt:"後半生のテーマは「人生を楽しみ、表現する」こと。責任や義務に追われた人ほど、創作・趣味・遊び心が花開く時期に。若々しさと魅力は、むしろ年齢と共に増していきます。"},
+
+4:{name:"構築者",en:"The Builder",kw:["安定","誠実","継続","基盤"],
+essence:"「4」は大地の数。四角形が象徴するように、安定・秩序・継続を司ります。この数を持つ人は、物事を計画的に積み上げ、確かな形にしていく建築家のような資質を持っています。派手さはなくとも、誠実さと粘り強さで周囲から厚い信頼を集めるのが4の生き方。コツコツと積んだ石は、やがて誰にも崩せない礎となり、多くの人がその上に安心して立つことができるのです。",
+talent:"計画性、継続力、細部への正確さ。仕組みづくりや管理、品質を守る仕事に抜群の適性。「この人に任せれば間違いない」という信頼こそ、最大の財産です。",
+challenge:"真面目さが頑固さや融通の利かなさに転じることも。完璧を求めすぎず、時には「まあいいか」と流れに委ねる柔らかさが、あなたの安定感をより温かいものにします。",
+love:"一目惚れよりも、時間をかけて信頼を育てる堅実な愛。浮ついたところがなく、家庭を大切に守る誠実なパートナーです。時には計画外のサプライズが、愛に新しい風を運びます。",
+work:"正確さと継続力が求められる分野で厚い信頼を築きます。経理・法務、建築、製造、品質管理、公務など。組織の土台を支える仕事はあなたの独壇場です。",
+advice:"焦らないこと。あなたの歩みは遅いのではなく、確実なのです。整理整頓と朝の習慣が運の土台に。自然や土に触れる時間も心を整えてくれます。",
+lp:"人生のテーマは「構築」と「継続」。近道や一発逆転ではなく、日々の積み重ねこそが、最も確実にあなたを高みへ運びます。晩年に近づくほど、積み上げた信頼と実績が輝きを増します。",
+dt:"社会での役割は「土台を築く人」。人々が安心して立てる仕組みや基盤を作り、守ることが使命です。目立たなくても、あなたの仕事の上に多くの人の日常が成り立っています。",
+sl:"魂が望むのは「揺るがない安心」。地に足のついた暮らし、信頼できる人間関係、着実な前進。派手さより確かさに、あなたの魂は深く満たされます。",
+ps:"周囲には「誠実で、きちんとした人」と映っています。約束を守る堅実な印象は、仕事でもプライベートでも厚い信用の源。第一印象の固さは、親しむほどに温かさへ変わります。",
+bd:"隠し味は「コツコツ続ける力」。誰も見ていなくても手を抜かない実直さが、長い目で見て大きな差となって表れます。",
+mt:"後半生のテーマは「安定した基盤の完成」。積み重ねてきたものが形になり、信頼・資産・居場所という揺るがぬ土台が整います。その土台は、次の世代への贈り物にもなります。"},
+
+5:{name:"自由人",en:"The Adventurer",kw:["自由","変化","冒険","多才"],
+essence:"「5」は自由と変化の数。五感を象徴し、この世界をまるごと体験し尽くすために生まれてきた冒険者です。好奇心が羅針盤、変化が追い風。ひとつの場所に留まるより、旅・出会い・新しい挑戦の中でこそ魂が輝きます。多才で順応性が高く、どんな環境にも飛び込める柔軟さは天性のもの。その自由な生き様そのものが、枠の中で息苦しさを感じている人たちへの励ましになります。",
+talent:"抜群の順応力と多才さ、フットワークの軽さ。変化の激しい環境、旅や海外、複数の分野をまたぐ仕事で本領を発揮。人脈づくりの才にも恵まれています。",
+challenge:"自由を求めるあまり、飽きっぽさや落ち着きのなさが顔を出すことも。自由とは「何でも途中でやめること」ではなく「自分で選び続けること」。軸を持つほど、翼は大きく広がります。",
+love:"恋にも新鮮さと刺激を求める自由な恋愛体質。束縛は苦手ですが、飽きたのではなく「変化がない」ことが苦しいだけ。共に成長し変化し続けられる相手となら、驚くほど一途です。",
+work:"変化と動きのある仕事が適職。営業、旅行・貿易、通訳・翻訳、メディア、イベントなど。複数の肩書きを持つ働き方も、5にとっては自然な生き方です。",
+advice:"停滞を感じたら、迷わず「移動」を。旅、引っ越し、新しい学び——動くことで運が流れ込みます。フットワークの軽さこそ、あなたのお守りです。",
+lp:"人生のテーマは「自由」と「体験」。安定した一本道よりも、変化に富んだ旅路が用意されています。転機や環境の変化は不運ではなく、あなたの魂が求めた「次の教室」なのです。",
+dt:"社会での役割は「風を運ぶ人」。停滞した場所に変化と新しい情報をもたらすことが使命です。分野や国境を軽やかに越えるあなたの動きが、世界の風通しを良くします。",
+sl:"魂が望むのは「自由」と「未知との出会い」。管理や束縛の中では魂が窒息してしまいます。まだ見ぬ景色・人・知識に触れているとき、いのちが躍動します。",
+ps:"周囲には「フットワークが軽く、話題の豊富な人」と映っています。垢抜けた雰囲気と親しみやすさで、初対面でもすぐ打ち解けられる社交上手に見られています。",
+bd:"隠し味は「順応力」。初めての場所・人・仕事にもすっと馴染める柔軟さが、チャンスの間口を広げてくれます。",
+mt:"後半生のテーマは「自由の拡大」。年齢を重ねるほど行動範囲が広がる、逆転の運気です。旅、学び直し、新しい人脈——好奇心の赴くままに動くほど若返ります。"},
+
+6:{name:"愛の人",en:"The Nurturer",kw:["愛","奉仕","責任","美"],
+essence:"「6」は愛と調和、美の数。母性的な温かさで人を包み、家族や仲間のために自然と手を差し伸べる——そんな奉仕の心がこの数の核にあります。責任感が強く、頼られると放っておけない性分。美的センスにも恵まれ、暮らしや空間、人間関係を美しく整える才能があります。あなたの注ぐ愛情は確かに人を癒しますが、その愛を自分自身にも注ぐことを、どうか忘れないでください。",
+talent:"人を育て、癒し、美しく整える力。教育、医療・福祉、美容、飲食、家庭運営など「愛を形にする」あらゆる場面で、かけがえのない存在になります。",
+challenge:"世話を焼きすぎて自己犠牲に陥ったり、見返りを求めて苦しくなったりすることも。「相手の課題は相手に委ねる」という境界線を学ぶと、あなたの愛はもっと軽やかに届きます。",
+love:"愛し、世話を焼くことに喜びを感じる献身的なパートナー。家庭運にも恵まれやすい数です。「してあげる」だけでなく「受け取る」ことを覚えると、関係はより対等で豊かになります。",
+work:"人を癒し、育て、美しくする仕事に天職が。教育、医療・福祉、美容、料理・飲食、インテリア、ブライダルなど。「ありがとう」が直接届く現場で魂が満たされます。",
+advice:"与えたら、受け取ること。感謝や助けを遠慮なく受け取るほど、愛の循環が整います。花を飾る、美しいものに触れる習慣が運気を高めます。",
+lp:"人生のテーマは「愛」と「責任」。家族や身近な人との関わりを通して、与える愛と受け取る愛のバランスを学びます。愛した分だけ、人生の後半に温かな実りが還ってくる道です。",
+dt:"社会での役割は「癒し、育てる人」。関わる人や場を美しく整え、安心を与えることが使命です。あなたのいる場所が、誰かにとっての「帰れる場所」になっていきます。",
+sl:"魂が望むのは「愛し、愛される調和の中で生きること」。大切な人の笑顔、美しく整った空間、感謝の言葉——それらがあなたの魂の深い喜びです。",
+ps:"周囲には「面倒見がよく、品のある人」と映っています。温かく整った雰囲気に、人は安心して頼ってきます。年齢や立場を問わず慕われる、愛され上手な印象です。",
+bd:"隠し味は「美的センスと世話心」。さりげない気配りやセンスの良さが、あなたの評価を静かに、確実に高めています。",
+mt:"後半生のテーマは「愛の実り」。家族・仲間・関わってきた人々からの感謝と愛情が還ってくる収穫期です。美しいもの・心地よい住まいに囲まれた、温かな成熟へ向かいます。"},
+
+7:{name:"探求者",en:"The Seeker",kw:["探求","分析","直観","精神性"],
+essence:"「7」は探求と精神性の数。物事の表面では満足せず、「なぜ」「本当は何か」と本質を掘り下げずにはいられない、生まれながらの求道者です。鋭い分析力と深い直観を併せ持ち、一人静かに思索する時間の中で真理と繋がります。群れることを好まない孤高の気質は欠点ではなく、深い専門性と揺るがぬ内的世界を築くための、この数だけに許された聖域なのです。",
+talent:"本質を見抜く分析力と深い集中力、専門性を極める探求心。研究、技術、鑑定、執筆など、一つの道を深く掘る仕事で唯一無二の境地に到達します。",
+challenge:"考えすぎて心を閉ざし、孤立してしまうことも。一人の時間は大切な充電ですが、信頼できる誰かに内面を分かち合う勇気が、探求をさらに深い次元へ導きます。",
+love:"心を開くまでに時間がかかる分、一度結ばれた絆はどこまでも深い、精神的な愛。べったりよりも、互いの世界を尊重し合える距離感のある関係で、愛が長く静かに燃え続けます。",
+work:"専門性を深く掘り下げる仕事で唯一無二の存在に。研究者、技術者、医師、鑑定士、作家、職人など。量より質、広さより深さ——それが7の成功法則です。",
+advice:"一人の時間を「予定」として確保すること。自然の中の静けさ、瞑想、良書があなたを整えます。直観が冴えた瞬間の「ひらめき」は必ずメモを。",
+lp:"人生のテーマは「探求」と「精神性」。目に見える成功以上に「納得」と「真理」を求める旅路です。孤独に感じる時期も、実は内なる知恵と繋がるための大切な通過点です。",
+dt:"社会での役割は「真理を究める人」。専門性と洞察を深め、本質を人々に示すことが使命です。あなたの探求の成果は、時を経ても色あせない知の財産となります。",
+sl:"魂が望むのは「真実を知ること」と「静寂」。騒がしい成功よりも、腑に落ちる理解と精神的な深まり。一人の時間は、魂にとっての神聖な礼拝です。",
+ps:"周囲には「知的でミステリアスな人」と映っています。静かな存在感と独自の世界観は、簡単には踏み込めない魅力。言葉少なでも、その一言に重みが宿ります。",
+bd:"隠し味は「観察眼」。人や物事の本質をさっと見抜く目の確かさが、あなたの判断の精度を支えています。",
+mt:"後半生のテーマは「精神的な深まり」。外の評価から自由になり、学び・研究・精神世界の探求が人生の中心に。あなたの知恵を求めて、人が自然と集まってくるでしょう。"},
+
+8:{name:"実現者",en:"The Achiever",kw:["達成","豊かさ","力","循環"],
+essence:"「8」は実現と豊かさの数。無限大(∞)を縦にした形が示す通り、天の理想を地上の形にする強大なエネルギーを宿しています。目標を定めたら現実的な手順で必ず成し遂げる実行力、人と組織を動かす統率力はこの数の真骨頂。富や成功と縁の深い数ですが、その本質は「循環」。得た豊かさを惜しみなく巡らせるとき、8のエネルギーは何倍にもなって還ってきます。",
+talent:"目標達成力、組織を率いる統率力、お金とビジネスを動かす手腕。経営、管理職、金融、不動産など、現実世界で大きな成果を形にする力に恵まれています。",
+challenge:"成果や地位を追うあまり、力みや働きすぎに陥ることも。本当の豊かさは所有ではなく循環の中にあります。手にしたものを分かち合うほど、運の流れは太くなります。",
+love:"好きになったら情熱的に、そして誠実に相手を守り抜くタイプ。頼りがいは抜群ですが、仕事優先になりがちな点は注意。弱音を見せることが、実は最高の愛情表現になります。",
+work:"経営、管理職、金融、不動産、コンサルタントなど、結果と責任が明確な世界で力を発揮。大きな目標ほど燃えるタイプ。正々堂々と豊かさを追求してよい数です。",
+advice:"目標を紙に書き、堂々と口にすること。豊かさを恥じないことが8の開運の鍵。得た富や知恵の一部を人へ循環させると、さらに大きく還ってきます。",
+lp:"人生のテーマは「達成」と「豊かさの循環」。現実社会でしっかり結果を出し、力と富の正しい使い方を学ぶ道です。試練は大きめですが、乗り越えた分の報酬も大きい人生です。",
+dt:"社会での役割は「実現する人」。構想を現実の成果へと変え、豊かさを生み出して循環させることが使命です。あなたの采配で、多くの人の生活と夢が動き出します。",
+sl:"魂が望むのは「達成」と「正当な評価」。自分の力を存分に振るい、実りを手にすること。豊かさへの欲求は俗なものではなく、魂の健全なエンジンです。",
+ps:"周囲には「有能で、堂々とした人」と映っています。自然と漂う成功者の風格で、大事な役目を任されやすいタイプ。時折見せる気さくさが、ギャップの魅力になります。",
+bd:"隠し味は「勝負強さ」。ここ一番のプレッシャーの中でこそ力を出せる胆力が、あなたの人生の要所を支えます。",
+mt:"後半生のテーマは「社会的な実りと采配」。培った実力が地位や豊かさとして結実する時期。手にした力を人のために振るうとき、8の人生は最も誇り高く輝きます。"},
+
+9:{name:"賢者",en:"The Humanitarian",kw:["完成","博愛","智慧","手放し"],
+essence:"「9」は一桁の最後の数であり、完成と統合を象徴します。1から8までのすべての経験を内包する、老賢者のような懐の深さを持つ数です。国境や立場を越えて人を思いやる博愛精神、物事を俯瞰する広い視野に恵まれ、自然と相談役や癒し手の役割を引き受けます。「手放すことで完成する」のが9のテーマ。執着をひとつ手放すたび、あなたの世界は静かに広がっていきます。",
+talent:"広い視野と包容力、多様な人をまとめる統合力。相談役、支援職、国際的な活動、精神世界の分野など、垣根を越えて人に貢献する場面で輝きます。",
+challenge:"何でも受け入れる懐の深さが、優柔不断や自己喪失につながることも。すべてを抱え込まず「手放す」こと。それが9にとって最大の癒しであり、次の扉を開く鍵です。",
+love:"見返りを求めない大きな愛で相手を包む、成熟した恋愛観の持ち主。ただし何でも許すうちに自分を見失わないこと。「私はこうしたい」を伝えることも、愛の大切な形です。",
+work:"分野の垣根を越えて人に貢献する仕事に縁が。支援職、医療、教育、芸術、占いや癒しの分野など。あなたの経験のすべてが、誰かの道しるべになります。",
+advice:"定期的な「手放し」を。持ち物、人間関係、古い執着——空けたところに新しい風が入ります。寄付やボランティアなど、無償の行いが運を磨きます。",
+lp:"人生のテーマは「統合」と「貢献」。さまざまな経験・出会い・別れを経て、それらすべてを智慧に変えていく道です。あなたの人生の物語そのものが、誰かの希望になります。",
+dt:"社会での役割は「まとめ、還元する人」。多様な人・知恵・経験を統合し、広く社会へ還すことが使命です。立場や国籍を越えたあなたの視野が、分断の時代の架け橋になります。",
+sl:"魂が望むのは「誰かの役に立てたという静かな充足」。個人的な成功だけでは満たされない、より大きな全体への貢献を、魂は生まれながらに求めています。",
+ps:"周囲には「穏やかで懐の深い人」と映っています。誰に対しても分け隔てない態度は、年長者にも年少者にも好かれる人徳。どこか達観した雰囲気も魅力のひとつです。",
+bd:"隠し味は「包容力」。多少のことでは動じず、相手を丸ごと受け止められる器の大きさが、信頼の源になっています。",
+mt:"後半生のテーマは「集大成と継承」。歩んできたすべての経験が統合され、人に伝え、遺す段階へ。肩の力が抜けた自然体のあなたが、多くの人の道標になります。"},
+11:{name:"直観の人",en:"The Intuitive Messenger",kw:["直観","霊性","感受性","メッセンジャー"],
+essence:"「11」は最初のマスターナンバー。鋭い直観とインスピレーションで、目に見えない世界からのメッセージを受け取り、人に伝える「霊的なメッセンジャー」の数です。感受性は人一倍で、時にその繊細さに疲れることもありますが、それは高性能なアンテナを持つ証。ふと浮かぶひらめき、理由のない確信——それらを信じて言葉にするとき、あなたは多くの人の道を照らす光になります。",
+talent:"直観力、インスピレーション、人の心の機微を感じ取る力。ヒーリング、カウンセリング、芸術、執筆など、目に見えないものを言葉や形にする仕事に天性の適性があります。",
+challenge:"感受性が強すぎて、不安や気疲れに飲み込まれやすい面も。受信したものをすべて背負う必要はありません。直観は信じつつ、地に足をつける習慣(食事・睡眠・自然)が最良の守りになります。",
+love:"直観で「この人だ」と感じ取る、運命論的な恋愛観。相手の感情に敏感すぎて振り回されることもありますが、魂のレベルで共鳴できる相手と出会えたとき、人生そのものが光に包まれます。",
+work:"感じ取ったものを伝える仕事が使命。ヒーラー、カウンセラー、占術家、アーティスト、作家、講演など。理屈で選ぶより「呼ばれた」と感じる場所へ進んでください。",
+advice:"直観が降りたら、まず小さく動いてみること。感受性を守るため、情報や人混みから離れて浄化する日を。塩・水・神社仏閣との相性も抜群です。",
+lp:"人生のテーマは「直観に従うこと」。理屈や常識より、魂のアンテナが指す方向に真実があります。感受性の強さに戸惑う前半を越えると、人を導く光としての後半が始まります。",
+dt:"社会での役割は「メッセンジャー」。目に見えない気づきやインスピレーションを、人々に届く言葉や形に翻訳することが使命です。あなたを通して、必要なメッセージが必要な人へ届きます。",
+sl:"魂が望むのは「見えない世界との繋がり」。直観やシンクロニシティを感じながら、魂の声に正直に生きること。霊性を抜きにした人生では、どこか渇きが残ります。",
+ps:"周囲には「透明感のある、不思議な魅力の人」と映っています。繊細で純粋な佇まいは、一度会ったら忘れられない印象を残します。感性の合う人とは、瞬時に深く繋がれます。",
+bd:"隠し味は「鋭い直観」。「なんとなく」の感覚が驚くほど当たるはず。その第六感は、論理より先に正解を知っています。",
+mt:"後半生のテーマは「直観の開花」。感受性の強さに悩んだ経験が、そのまま人を導く力へ転じます。精神的な学びや発信が、後半の人生の柱になっていくでしょう。"},
+
+22:{name:"理想の建築家",en:"The Master Builder",kw:["具現化","大志","構築","遺産"],
+essence:"「22」は「マスタービルダー」と呼ばれる強力な数。11の霊的な直観力と、4の現実的な構築力を併せ持ち、壮大な理想を地上に形として打ち立てる使命を帯びています。個人の成功に留まらず、多くの人が長く恩恵を受ける仕組みや場を残せる器です。その分、背負うものの大きさに戸惑う時期もありますが、焦らずとも大丈夫。大器晩成——あなたの土台づくりは、決して無駄になりません。",
+talent:"理想を現実の仕組みに変える構想力と実行力。大規模プロジェクト、組織や事業の創設、社会貢献活動など、多くの人に長く残るものを築く力があります。",
+challenge:"理想の大きさと現実のギャップに、焦りや重圧を感じやすい面も。大きな建物ほど基礎工事に時間がかかるもの。目の前の一段を丁寧に積むことが、結局いちばんの近道です。",
+love:"恋愛にも誠実さと将来性を重んじる現実派。共に人生を築いていける同志のような関係を求めます。夢を語り合い、同じ方向を見て歩めるパートナーとは最強の絆を結びます。",
+work:"理想を仕組みとして残す仕事へ。事業創設、大規模プロジェクト、建築・まちづくり、教育機関や団体の設立など。私利を超えた志が、22の器を最大限に開きます。",
+advice:"大きな夢ほど「今日の一歩」に刻んで着手すること。散歩や運動など地に足のついた日課が、壮大なビジョンを支える基礎工事になります。",
+lp:"人生のテーマは「理想の具現化」。個人の幸せに留まらない大きな志が、あなたを動かし続けます。時間はかかっても、多くの人の役に立つ「形あるもの」を残せる、稀有な道です。",
+dt:"社会での役割は「偉大なる建築家」。多くの人の役に立つ仕組み・場・事業を打ち立てることが使命です。一代で完成しなくても構いません。礎を築くこと自体が偉業です。",
+sl:"魂が望むのは「後世に残る何かを築くこと」。自分一代の満足では足りない、大きな器の魂です。志を同じくする仲間との共同創造に、深い歓びを見出します。",
+ps:"周囲には「スケールの大きい、只者ではない人」と映っています。静かでも存在感があり、「この人は何かを成す」という予感を周囲に抱かせるタイプです。",
+bd:"隠し味は「大局観と実務力の両立」。夢を語りながら段取りも組める稀有なバランス感覚が、あなたの底力です。",
+mt:"後半生のテーマは「大仕事の完成」。長年温めてきた構想が、いよいよ現実の形を結ぶ時期です。個人の枠を超えた事業や活動が、あなたの名と共に長く遺ります。"},
+
+33:{name:"無償の愛の人",en:"The Master Teacher",kw:["無条件の愛","癒し","導き","菩薩"],
+essence:"「33」は最も稀有なマスターナンバー。「マスターティーチャー」と呼ばれ、見返りを求めない無条件の愛で人々を癒し、導く魂です。6の愛と奉仕が宇宙規模にまで拡大された数であり、常識の枠に収まらない独特の感性と、底なしの慈愛を併せ持ちます。世間の物差しで自分を測る必要はありません。あなたがあなたらしく在ること、それ自体がすでに、周囲への深い癒しなのです。",
+talent:"存在そのもので人を安心させる癒しの力、損得を超えた奉仕の心。教育、癒し、福祉、精神世界の分野で、多くの魂の支えとなる稀有な資質です。",
+challenge:"人のために尽くしすぎて、自分が空っぽになってしまうことも。まず自分の器を満たすこと。それはわがままではなく、より多くの人を照らすための、大切な祈りの作法です。",
+love:"恋人・家族の枠を超えた、慈しみに近い深い愛を注ぐ人。その愛の深さゆえに誤解されたり、重く受け取られたりすることも。あなたの愛を理解できる魂は、必ず存在します。",
+work:"癒しと教えの道が天職。教育者、セラピスト、保育・福祉、精神世界の指導者など。組織の枠に収まらなくても大丈夫。あなたの「在り方」そのものが仕事になります。",
+advice:"「自分を満たすこと=世界への貢献」と心得て。好きな香り、音楽、祈りの時間で自分の器を満たしてから、溢れた分を差し出せば十分です。",
+lp:"人生のテーマは「無条件の愛」。常識的な物差しでは測れない、魂の導きに従う人生です。回り道に見える経験のすべてが、やがて誰かを癒すための引き出しになっていきます。",
+dt:"社会での役割は「大いなる教師」。教え諭すというより、その在り方と愛によって人々を目覚めさせる使命です。あなたに触れた人は、自分の中の優しさを思い出します。",
+sl:"魂が望むのは「すべてを愛で包むこと」。損得を超えて誰かの力になれたとき、魂は最も深く満たされます。その愛の器の大きさこそ、あなたの正体です。",
+ps:"周囲には「包み込むような、慈愛に満ちた雰囲気の人」と映っています。一緒にいるだけでほっとする、と言われることも多いはず。その癒しの空気は天性のものです。",
+bd:"隠し味は「無償の愛」。見返りを求めず手を差し伸べられる心根が、巡り巡ってあなたを守る徳となっています。",
+mt:"後半生のテーマは「愛の体現者として生きる」こと。存在そのものが周囲の癒しとなり、教え導く役割が自然と巡ってきます。愛した分だけ、深く愛される晩年です。"}
+};
+
+/* ---------- 9年サイクル(パーソナルイヤー) ---------- */
+const CYCLE = {
+1:{t:"種まきの年",x:"9年サイクルの始まり。新しいことを始めるのに最適な一年です。この年に蒔いた種が、今後9年間の実りを決めます。迷っているなら、始めてしまいましょう。直感的に「これだ」と感じたものには、素直に飛び込んで吉。"},
+2:{t:"育みの年",x:"昨年蒔いた種が、土の中で根を張る時期。目に見える成果を焦らず、人との縁・協力関係を育てることに意識を向けて。パートナーシップに進展が起きやすい年でもあります。待つこと、寄り添うことが開運の鍵。"},
+3:{t:"開花の年",x:"楽しみと創造の年。取り組んできたことに、小さな花が咲き始めます。遊び心を忘れず、交友を広げ、自分を表現することで運が拡大。発信・発表・イベントごとに幸運が宿ります。"},
+4:{t:"土台の年",x:"足元を固める年。生活習慣・仕事の基盤・お金の管理など、地味でも大切なことを整えるほど、来年以降の飛躍が大きくなります。健康のメンテナンスにも最適な一年です。"},
+5:{t:"変化の年",x:"風向きが変わる転機の年。引っ越し、転職、新しい出会いなど、変化の波が訪れやすいとき。怖がらず流れに乗るのが正解です。旅や移動が幸運を連れてきます。"},
+6:{t:"愛と調和の年",x:"家族・パートナー・仲間との関係にスポットが当たる年。結婚や家庭に関する決断、住まいを整えることに縁があります。誰かのために動いた愛情が、そのまま自分の運となって還る年です。"},
+7:{t:"内省の年",x:"立ち止まり、深める年。外へ広げるより、学び・研究・心の整理に向く時期です。一人の時間を意識的に持つほど、次のステージへの答えが内側から浮かび上がってきます。"},
+8:{t:"収穫の年",x:"これまでの努力が、目に見える成果・評価・実りとなって還ってくる年。仕事運・金運ともに高まる充実期です。堂々と受け取り、大きな決断や勝負に出るのにも適しています。"},
+9:{t:"手放しの年",x:"9年サイクルの締めくくり。完了・整理・卒業の年です。役目を終えた物・習慣・関係に感謝して手放すほど、来年から始まる新しいサイクルに大きな追い風が吹きます。"}
+};
+
+/* パーソナルイヤーの途中合計にマスターナンバーが現れた年の資質 */
+const PY_MASTER_QUALITY = {11:"鋭い直観と感受性",22:"大きな構築と実現",33:"無条件の愛と癒し"};
+
+/* ---------- カルミックナンバー ---------- */
+const KARMA = {
+13:"<b>13/4</b> — 過去に途中で投げ出したことを、今世で「継続」を通して完成させるテーマを持ちます。近道を選ばずコツコツ積み上げることで、この数の重みは強固な実力へと変わります。",
+14:"<b>14/5</b> — 「自由の正しい使い方」を学ぶテーマ。快楽や刹那に流されず、節度をもって自由を生きることで、この数は豊かな体験と智慧の源に変わります。",
+16:"<b>16/7</b> — プライドや思い込みが崩れる経験を通して「本物の謙虚さと精神性」を育てるテーマ。壊れることは終わりではなく、より真実な自分への再構築の始まりです。",
+19:"<b>19/1</b> — 「自立」と「人に頼る勇気」の両方を学ぶテーマ。何でも一人で抱え込まず、支え合いの中で立つことを覚えたとき、真のリーダーシップが完成します。"
+};
+
+/* ---------- 総合鑑定用の短句 ---------- */
+const SHORT = {1:"自立と挑戦",2:"調和と共感",3:"創造と喜び",4:"安定と継続",5:"自由と変化",6:"愛と奉仕",7:"探求と精神性",8:"達成と豊かさ",9:"統合と博愛",11:"直観と霊性",22:"理想の具現化",33:"無条件の愛"};
+
+/* ---------- パーソナルマンス短文 ---------- */
+const PM_SHORT = {
+1:"新しい流れが芽吹く月。小さくても「始める」一歩が吉。",
+2:"縁を育てる月。急がず、人との対話と協調を大切に。",
+3:"心が華やぐ月。遊び・発信・交流が幸運の入口に。",
+4:"整える月。暮らしと仕事の基盤づくりに向いています。",
+5:"動きのある月。変化や誘いには軽やかに乗ってみて。",
+6:"愛の月。家族や大切な人との時間が運を養います。",
+7:"静けさの月。学びと内省が、次の答えを連れてきます。",
+8:"実りの月。成果を堂々と受け取り、勝負にも好機。",
+9:"締めくくりの月。整理と感謝が、次の扉を開きます。"
+};
+
+/* ============================================================
+   計算エンジン(ピタゴラス式)
+   ============================================================ */
+const LETTER_MAP = {A:1,B:2,C:3,D:4,E:5,F:6,G:7,H:8,I:9,J:1,K:2,L:3,M:4,N:5,O:6,P:7,Q:8,R:9,S:1,T:2,U:3,V:4,W:5,X:6,Y:7,Z:8};
+const VOWELS  = new Set(["A","E","I","O","U"]);
+const MASTERS = new Set([11,22,33]);
+
+const $  = id => document.getElementById(id);
+const ds = n => String(n).split("").reduce((a,c)=>a+Number(c),0);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* 全角英字→半角、マクロン付きローマ字(Ō・Ū など)→基本ラテン文字に自動補正 */
+const normalizeRoman = s => String(s).normalize("NFKD").replace(/[\u0300-\u036f]/g,"");
+const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function reduceSteps(n){
+  const steps=[n];
+  while(n>9 && !MASTERS.has(n)){ n=ds(n); steps.push(n); }
+  return steps;
+}
+function fullReduce(n){
+  let masterHit=null;
+  while(n>9){ if(MASTERS.has(n)) masterHit=n; n=ds(n); }
+  return {n, masterHit};
+}
+/* ライフパスの算出。standard=全桁一括合算/component=年・月・日を個別に還元してから合算 */
+function lifePathParts(y, m, d, method){
+  if(method === "component"){
+    const ySteps = reduceSteps(y), mSteps = reduceSteps(m), dSteps = reduceSteps(d);
+    const ry = ySteps[ySteps.length-1], rm = mSteps[mSteps.length-1], rd = dSteps[dSteps.length-1];
+    const lpRaw   = ry + rm + rd;
+    const lpSteps = reduceSteps(lpRaw);
+    return {method, ySteps, mSteps, dSteps, sumParts:`${ry}+${rm}+${rd}`, lpRaw, lpSteps, lp:lpSteps[lpSteps.length-1]};
+  }
+  const lpRaw   = ds(String(y)+String(m)+String(d));
+  const lpSteps = reduceSteps(lpRaw);
+  return {method, ySteps:null, mSteps:null, dSteps:null,
+          sumParts:(String(y)+String(m)+String(d)).split("").join("+"), lpRaw, lpSteps, lp:lpSteps[lpSteps.length-1]};
+}
+function chainHTML(parts, steps){
+  let s = (parts && parts !== String(steps[0])) ? `${parts} = <b>${steps[0]}</b>` : `<b>${steps[0]}</b>`;
+  for(let i=1;i<steps.length;i++){
+    s += ` → ${String(steps[i-1]).split("").join("+")} = <b>${steps[i]}</b>`;
+  }
+  if(MASTERS.has(steps[steps.length-1])) s += ' <span style="color:var(--gold-bright)">(マスターナンバーのため、ここで確定)</span>';
+  return s;
+}
+
+/* ---------- 部品ビルダー ---------- */
+function blockHTML(label, text){
+  return `<div class="block"><h3>${label}</h3><p>${text}</p></div>`;
+}
+function secHTML(en, jp, sub, num, posKey, blocks){
+  const p = P[num];
+  const master = MASTERS.has(num) ? '<span class="master-tag" style="margin-left:10px;vertical-align:2px">MASTER NUMBER</span>' : "";
+  return `<section class="reading card">
+    <div class="sec-head">
+      <div><p class="eyebrow">${en}</p><h2>${jp}<span class="sec-sub">— ${sub}</span></h2></div>
+      <div class="sec-num">${num}</div>
+    </div>
+    <p class="arch"><b>「${p.name}」</b><span class="arch-en">${p.en}</span>${master}</p>
+    <div class="chips">${p.kw.map(k=>`<span class="chip">${k}</span>`).join("")}</div>
+    <p class="pos-text">${p[posKey]}</p>
+    ${blocks.map(b=>blockHTML(b[0], p[b[1]])).join("")}
+  </section>`;
+}
+function miniHTML(en, jp, num){
+  const master = MASTERS.has(num) ? '<br><span class="master-tag">MASTER</span>' : "";
+  return `<div class="mini">
+    <span class="m-label">${en}</span>
+    <span class="m-jp">${jp}</span>
+    <span class="m-num">${num}</span>
+    <span class="m-name">${P[num].name}</span>${master}
+  </div>`;
+}
+function lettersHTML(words){
+  const groups = words.map(w =>
+    w.split("").map(ch=>{
+      const v = VOWELS.has(ch);
+      return `<span class="lt${v?" vowel":""}"><span class="c">${ch}</span><span class="v">${LETTER_MAP[ch]}</span></span>`;
+    }).join("")
+  );
+  return `<div class="letters">${groups.join('<span class="lt" style="min-width:18px"></span>')}</div>`;
+}
+
+/* ---------- 入力欄の初期化 ---------- */
+function fillDOB(yId, mId, dId){
+  const thisYear = new Date().getFullYear();
+  let ys = '<option value="">年</option>';
+  for(let y=thisYear; y>=1900; y--) ys += `<option value="${y}">${y}年</option>`;
+  $(yId).innerHTML = ys;
+  let ms = '<option value="">月</option>';
+  for(let m=1; m<=12; m++) ms += `<option value="${m}">${m}月</option>`;
+  $(mId).innerHTML = ms;
+  let dsOpt = '<option value="">日</option>';
+  for(let d=1; d<=31; d++) dsOpt += `<option value="${d}">${d}日</option>`;
+  $(dId).innerHTML = dsOpt;
+}
+const daysInMonth = (y, m) => new Date(y, m, 0).getDate();
+/* 選択中の年・月に合わせて「日」の選択肢を実在する日数に絞る(年未選択時はうるう年扱いで29日まで許容) */
+function syncDays(yId, mId, dId){
+  const y = Number($(yId).value), m = Number($(mId).value);
+  const max = m ? daysInMonth(y || 2000, m) : 31;
+  const sel = $(dId), cur = sel.value;
+  let opts = '<option value="">日</option>';
+  for(let d=1; d<=max; d++) opts += `<option value="${d}">${d}日</option>`;
+  sel.innerHTML = opts;
+  if(cur && Number(cur) <= max) sel.value = cur;
+}
+(function initSelects(){
+  [["yy","mm","dd"],["yyA","mmA","ddA"],["yyB","mmB","ddB"]].forEach(([yId, mId, dId])=>{
+    fillDOB(yId, mId, dId);
+    $(yId).addEventListener("change", ()=>syncDays(yId, mId, dId));
+    $(mId).addEventListener("change", ()=>syncDays(yId, mId, dId));
+  });
+})();
+
+function showErr(msg){
+  const e = $("err");
+  e.textContent = msg;
+  e.classList.add("show");
+}
+
+/* ============================================================
+   鑑定の実行
+   ============================================================ */
+function calc(){
+  $("err").classList.remove("show");
+
+  const y = Number($("yy").value), m = Number($("mm").value), d = Number($("dd").value);
+  const method  = $("method").value;
+  const rawName = normalizeRoman($("name").value).trim();
+
+  if(!y || !m || !d){ showErr("生年月日をお選びください。"); return; }
+  const chk = new Date(y, m-1, d);
+  if(chk.getFullYear()!==y || chk.getMonth()!==m-1 || chk.getDate()!==d){
+    showErr("存在しない日付です。日付をご確認ください。"); return;
+  }
+
+  let hasName=false, words=[], letters="";
+  if(rawName){
+    if(/[^\x00-\x7F]/.test(rawName)){
+      showErr("お名前はヘボン式ローマ字(英字)でご入力ください。例:HANAKO YAMADA"); return;
+    }
+    const clean = rawName.toUpperCase().replace(/[^A-Z]+/g," ").trim();
+    words = clean.split(/\s+/).filter(Boolean);
+    letters = words.join("");
+    if(!letters){ showErr("お名前に英字が含まれていません。ローマ字でご入力ください。"); return; }
+    hasName = true;
+  }
+
+  /* --- 生年月日系 --- */
+  const lpp     = lifePathParts(y, m, d, method);
+  const lpRaw   = lpp.lpRaw;
+  const lpSteps = lpp.lpSteps;
+  const lp      = lpp.lp;
+  const bdSteps = reduceSteps(d);
+  const bd      = bdSteps[bdSteps.length-1];
+
+  const karmic = [];
+  const lpKarmaPos = method === "component" ? "ライフパス(年・月・日の還元後合計)" : "ライフパス(生年月日の合計)";
+  if(KARMA[lpRaw]) karmic.push({pos:lpKarmaPos, txt:KARMA[lpRaw]});
+  if(KARMA[d])     karmic.push({pos:"バースデー(誕生日)",       txt:KARMA[d]});
+
+  /* --- 名前系 --- */
+  let dtN=null, sl=null, ps=null, mtN=null;
+  let dtRaw=0, allV=[], vwV=[], csV=[];
+  let dtSteps=[], slSteps=[], psSteps=[], mtSteps=[];
+  if(hasName){
+    for(const ch of letters){
+      const v = LETTER_MAP[ch];
+      allV.push(v); dtRaw += v;
+      if(VOWELS.has(ch)) vwV.push(v); else csV.push(v);
+    }
+    dtSteps = reduceSteps(dtRaw); dtN = dtSteps[dtSteps.length-1];
+    if(vwV.length){ slSteps = reduceSteps(vwV.reduce((a,b)=>a+b,0)); sl = slSteps[slSteps.length-1]; }
+    if(csV.length){ psSteps = reduceSteps(csV.reduce((a,b)=>a+b,0)); ps = psSteps[psSteps.length-1]; }
+    mtSteps = reduceSteps(lp + dtN); mtN = mtSteps[mtSteps.length-1];
+    if(KARMA[dtRaw]) karmic.push({pos:"ディスティニー(名前の合計)", txt:KARMA[dtRaw]});
+  }
+
+  /* --- 運気サイクル --- */
+  const now = new Date();
+  const cyY = now.getFullYear(), cyM = now.getMonth()+1;
+  const pyR = fullReduce(ds(String(m)+String(d)+String(cyY)));
+  const py = pyR.n, pyMaster = pyR.masterHit;
+  const pm  = fullReduce(py + cyM).n;
+  const npy = fullReduce(ds(String(m)+String(d)+String(cyY+1))).n;
+
+  render({y,m,d,hasName,words,lp,lpSteps,bd,bdSteps,
+          dtN,dtSteps,sl,slSteps,ps,psSteps,mtN,mtSteps,
+          allV,vwV,csV,karmic,cyY,cyM,py,pyMaster,pm,npy,now,
+          method, ySteps:lpp.ySteps, mSteps:lpp.mSteps, dSteps:lpp.dSteps, sumParts:lpp.sumParts});
+}
+
+/* ============================================================
+   鑑定書のレンダリング
+   ============================================================ */
+function render(o){
+  const today = `${o.now.getFullYear()}年${o.now.getMonth()+1}月${o.now.getDate()}日`;
+  const nameDisp = o.hasName ? esc(o.words.join(" ")) : "─(生年月日のみの鑑定)";
+  let h = "";
+
+  /* 鑑定書ヘッダー */
+  h += `<div class="doc-head">
+    <p class="eyebrow">Numerology Reading Report</p>
+    <h2>鑑 定 書</h2>
+    <div class="doc-meta">
+      <span>お名前 <b>${nameDisp}</b></span>
+      <span>生年月日 <b>${o.y}年${o.m}月${o.d}日</b></span>
+      <span>鑑定日 <b>${today}</b></span>
+    </div>
+  </div>`;
+
+  /* コアナンバーチャート */
+  const lpP = P[o.lp];
+  let minis = "";
+  if(o.hasName){
+    minis += miniHTML("DESTINY","使命", o.dtN);
+    if(o.sl) minis += miniHTML("SOUL","魂の欲求", o.sl);
+    if(o.ps) minis += miniHTML("PERSONALITY","外面", o.ps);
+    minis += miniHTML("BIRTHDAY","隠れた強み", o.bd);
+    minis += miniHTML("MATURITY","後半生", o.mtN);
+  }else{
+    minis += miniHTML("BIRTHDAY","隠れた強み", o.bd);
+  }
+  h += `<div class="card chart">
+    <div class="lp-moon">
+      <span class="eyebrow">Life Path</span>
+      <div class="lp-ring"><span class="n${o.lp>9?" master":""}">${o.lp}</span></div>
+      <p class="lp-label">ライフパスナンバー</p>
+      <p class="lp-name">「${lpP.name}」</p>
+      <p class="lp-en">${lpP.en}</p>
+      ${MASTERS.has(o.lp)?'<div style="margin-top:8px"><span class="master-tag">MASTER NUMBER</span></div>':""}
+    </div>
+    <div>
+      <div class="mini-grid">${minis}</div>
+      ${o.hasName?"":'<p class="calc-note">お名前(ローマ字)をご入力いただくと、ディスティニー・ソウル・パーソナリティ・マチュリティの4つのナンバーも合わせて鑑定できます。</p>'}
+    </div>
+  </div>`;
+
+  /* カルミックナンバー */
+  if(o.karmic.length){
+    h += `<div class="karma">
+      <h3>カルミックナンバーが現れています</h3>
+      <p>計算の途中に、魂の宿題を示す「カルミックナンバー」が含まれています。重い意味ではなく、今世で丁寧に磨くと決めてきたテーマ——伸びしろの印として、お受け取りください。</p>
+      ${o.karmic.map(k=>`<p>【${k.pos}】 ${k.txt}</p>`).join("")}
+    </div>`;
+  }
+
+  /* 計算の内訳 */
+  let cb = `<h4>ライフパスナンバー(生年月日)</h4>`;
+  if(o.method === "component"){
+    cb += `<p class="calc-line">年:${chainHTML(null, o.ySteps)}</p>
+    <p class="calc-line">月:${chainHTML(null, o.mSteps)}</p>
+    <p class="calc-line">日:${chainHTML(null, o.dSteps)}</p>
+    <p class="calc-line">合計:${chainHTML(o.sumParts, o.lpSteps)}</p>`;
+  }else{
+    cb += `<p class="calc-line">${chainHTML(o.sumParts, o.lpSteps)}</p>`;
+  }
+  cb += `<h4>バースデーナンバー(誕生日)</h4>
+    <p class="calc-line">${chainHTML(String(o.d), o.bdSteps)}</p>`;
+  if(o.hasName){
+    cb += `<h4>お名前の換算表(金色の文字は母音)</h4>${lettersHTML(o.words)}
+      <h4>ディスティニーナンバー(全文字の合計)</h4>
+      <p class="calc-line">${chainHTML(o.allV.join("+"), o.dtSteps)}</p>`;
+    cb += o.sl
+      ? `<h4>ソウルナンバー(母音の合計)</h4><p class="calc-line">${chainHTML(o.vwV.join("+"), o.slSteps)}</p>`
+      : `<h4>ソウルナンバー(母音の合計)</h4><p class="calc-line">母音が含まれないため、算出対象外です。</p>`;
+    cb += o.ps
+      ? `<h4>パーソナリティナンバー(子音の合計)</h4><p class="calc-line">${chainHTML(o.csV.join("+"), o.psSteps)}</p>`
+      : `<h4>パーソナリティナンバー(子音の合計)</h4><p class="calc-line">子音が含まれないため、算出対象外です。</p>`;
+    cb += `<h4>マチュリティナンバー(ライフパス+ディスティニー)</h4>
+      <p class="calc-line">${chainHTML(`${o.lp}+${o.dtN}`, o.mtSteps)}</p>`;
+  }
+  const methodName = o.method === "component"
+    ? "桁別還元方式(年・月・日をそれぞれ還元してから合算)"
+    : "一括合算方式(生年月日の全桁を合計)";
+  cb += `<p class="calc-note">※ピタゴラス式(A=1〜Z=8の換算)を採用し、ライフパスは${methodName}で算出しています。マスターナンバー(11・22・33)は還元せず、そのまま採用しています。Yは子音として扱います。数秘術には複数の流派があるため、計算方式の違いにより他の書籍・サイトと結果が異なる場合があります。</p>`;
+  h += `<details class="calc"><summary>計算の内訳を見る</summary><div class="calc-body">${cb}</div></details>`;
+
+  /* 各ナンバーの詳細鑑定 */
+  h += secHTML("Life Path Number","ライフパスナンバー","人生の目的と歩む道(生年月日より)", o.lp, "lp",
+    [["基本性質","essence"],["才能と強み","talent"],["成長のテーマ","challenge"],["開運の鍵","advice"]]);
+  if(o.hasName){
+    h += secHTML("Destiny Number","ディスティニーナンバー","社会での使命と役割(名前の全文字より)", o.dtN, "dt",
+      [["仕事・使命の生かし方","work"]]);
+    if(o.sl) h += secHTML("Soul Number","ソウルナンバー","魂が本当に望むもの(名前の母音より)", o.sl, "sl",
+      [["恋愛・パートナーシップ","love"]]);
+    if(o.ps) h += secHTML("Personality Number","パーソナリティナンバー","周囲に映るあなた(名前の子音より)", o.ps, "ps", []);
+  }
+  h += secHTML("Birthday Number","バースデーナンバー","生まれ持った隠し味(誕生日より)", o.bd, "bd", []);
+  if(o.hasName){
+    h += secHTML("Maturity Number","マチュリティナンバー","人生後半のテーマ(ライフパス+ディスティニー)", o.mtN, "mt", []);
+  }
+
+  /* 運気サイクル */
+  let masterNote = "";
+  if(o.pyMaster){
+    masterNote = `<p class="cy-note">※今年は途中の合計が <b>${o.pyMaster}</b> になるマスターイヤー。${o.py}の流れに、${PY_MASTER_QUALITY[o.pyMaster]}のエネルギーが重なる特別な一年です。</p>`;
+  }
+  h += `<section class="reading card">
+    <div class="sec-head">
+      <div><p class="eyebrow">Life Cycle</p><h2>運気サイクル<span class="sec-sub">— 9年周期のリズム(パーソナルイヤー)</span></h2></div>
+      <div class="sec-num">${o.py}</div>
+    </div>
+    <div class="cycle-grid">
+      <div class="cy">
+        <span class="cy-label">${o.cyY}年のパーソナルイヤー</span>
+        <div class="cy-head"><span class="cy-num">${o.py}</span><span class="cy-title">${CYCLE[o.py].t}</span></div>
+        <p>${CYCLE[o.py].x}</p>
+        ${masterNote}
+      </div>
+      <div class="cy small">
+        <span class="cy-label">${o.cyY}年${o.cyM}月のパーソナルマンス</span>
+        <div class="cy-head"><span class="cy-num">${o.pm}</span><span class="cy-title">${CYCLE[o.pm].t}</span></div>
+        <p>${PM_SHORT[o.pm]}</p>
+      </div>
+      <div class="cy small">
+        <span class="cy-label">来年の流れ</span>
+        <div class="cy-head"><span class="cy-num">${o.npy}</span><span class="cy-title">${CYCLE[o.npy].t}</span></div>
+        <p>${o.cyY+1}年は「${CYCLE[o.npy].t}」のサイクルへ。今年の過ごし方が、そのまま来年の追い風になります。</p>
+      </div>
+    </div>
+    <p class="cy-note">※パーソナルイヤーは1月1日切り替えで算出しています(お誕生日切り替えとする流派もあります)。</p>
+  </section>`;
+
+  /* 総合鑑定 */
+  let syn = "";
+  if(o.hasName){
+    if(o.lp === o.dtN){
+      syn += `<p>あなたは、魂の道(ライフパス)と社会的な使命(ディスティニー)が「${o.lp}」で重なる、一貫性のとても強い設計図をお持ちです。「${SHORT[o.lp]}」というひとつのテーマに、人生と仕事の両方で迷いなく打ち込める——生き方と役割が一致した、力強い配置です。</p>`;
+    }else{
+      syn += `<p>あなたは「${P[o.lp].name}」としての魂の道(ライフパス${o.lp})を歩みながら、社会では「${P[o.dtN].name}」としての使命(ディスティニー${o.dtN})を担っています。「${SHORT[o.lp]}」をテーマに生きる魂が、「${SHORT[o.dtN]}」という形で世界と関わっていく——これがあなたという存在の設計図です。</p>`;
+    }
+    if(o.sl && o.ps){
+      if(o.sl === o.ps){
+        syn += `<p>内なる願い(ソウル${o.sl})と外に映る姿(パーソナリティ${o.ps})が同じ数で一致しています。思っていることと見えていることに裏表がなく、ありのままのあなたで人と関われる、澄んだ配置です。</p>`;
+      }else{
+        syn += `<p>心の奥では「${SHORT[o.sl]}」(ソウル${o.sl})を求めながら、周囲には「${SHORT[o.ps]}」の人(パーソナリティ${o.ps})として映っています。このギャップは奥行きのある魅力の源ですが、時に「本当の自分をわかってもらえない」と感じる理由にもなります。信頼できる相手には、内なる${o.sl}の顔を少しずつ見せていくことで、より深いご縁が結ばれていきます。</p>`;
+      }
+    }
+  }else{
+    syn += `<p>生年月日から見えるあなたの根幹は、「${P[o.lp].name}」として「${SHORT[o.lp]}」を生きる、ライフパス${o.lp}の道です。日々の選択に迷ったときは、この軸に照らして「自分らしい方」を選ぶこと。それが数秘術からの、いちばんシンプルな道しるべです。</p>`;
+  }
+  const masterCores = [...new Set([o.lp,o.dtN,o.sl,o.ps,o.bd,o.mtN].filter(n=>n && MASTERS.has(n)))];
+  if(masterCores.length){
+    syn += `<p>また、あなたのコアナンバーにはマスターナンバー(${masterCores.join("・")})が含まれています。感受性やエネルギーが人一倍強く、生きづらさを感じる時期もあったかもしれません。それは欠陥ではなく、大きな役割を果たすための特別な器である証です。</p>`;
+  }
+  syn += `<p class="close">数秘術が示すのは、決められた運命ではなく、あなたという魂が携えてきた「才能の地図」です。出来事に良いも悪いもなく、すべてはあなたが本来の輝きを思い出すための道しるべ。この鑑定が、ご自身を深く愛おしむきっかけとなりますように。</p>`;
+
+  h += `<section class="reading card synth">
+    <div class="sec-head">
+      <div><p class="eyebrow">Synthesis</p><h2>総合鑑定<span class="sec-sub">— 数が織りなす、あなたという物語</span></h2></div>
+    </div>
+    ${syn}
+  </section>`;
+
+  /* アクション */
+  h += `<div class="actions no-print">
+    <button class="btn" id="print-btn">鑑定書を印刷・PDF保存</button>
+    <button class="btn btn--sub" id="reset-btn">新しい鑑定をはじめる</button>
+  </div>`;
+
+  const R = $("result");
+  R.innerHTML = h;
+  R.hidden = false;
+  R.focus({preventScroll:true});
+  R.scrollIntoView({behavior: prefersReduce ? "auto" : "smooth", block: "start"});
+}
+
+/* ============================================================
+   相性診断データベース(ライフパス45通り)
+   ============================================================ */
+const PAIR = {
+"1-1":{s:3,t:"二頭の獅子",x:"お互いに先頭を歩きたい者同士。同じ目標を共有すれば最強の同志になりますが、主導権を争えば火花が散ります。この縁の分かれ目は、競うことをやめて讃え合えるかどうか、ただ一点です。",tip:"「勝ち負け」を持ち込まず、相手の挑戦を一番に応援し合うこと。役割や領域を分けると衝突がぐっと減ります。"},
+"1-2":{s:5,t:"太陽と月",x:"切り拓く1と、支える2。リーダーと参謀という天然の役割分担が生まれる、古典的な好相性です。1は2の繊細な気配りに癒され、2は1の迷いない決断力に深く安心します。",tip:"1は2の「言わない本音」を汲む努力を。2は遠慮せず、希望をきちんと言葉にすること。"},
+"1-3":{s:4,t:"花火のような二人",x:"行動力の1と発想力の3。一緒にいると次々に新しいことが始まる、賑やかで創造的な組み合わせです。3の明るさが1の緊張をほぐし、1の実行力が3のひらめきを現実の形にします。",tip:"楽しい勢いだけで進みがち。お金や約束など大事な決めごとは、落ち着いた場で丁寧に。"},
+"1-4":{s:3,t:"スピードと安定",x:"即断即決の1と、石橋を叩く4。ペースの違いに最初は戸惑いますが、1の推進力と4の堅実さが噛み合えば、勢いと持続力を兼ね備えた最強の実務ペアになります。",tip:"1は4の慎重さを「遅い」と裁かない。4は1の勢いを「雑」と決めつけない。互いの速度に敬意を。"},
+"1-5":{s:4,t:"冒険者同盟",x:"挑戦の1と自由の5。互いを束縛せず、それぞれの世界を持ちながら刺激し合える、風通しのよい関係です。一緒に旅や新しい体験を重ねるほど、絆は深まっていきます。",tip:"自由同士ゆえ、すれ違いも起きやすい縁。「報告より共有」を合言葉に、楽しいことはまめに分かち合って。"},
+"1-6":{s:4,t:"戦士と癒し手",x:"外で闘う1を、6が温かく迎え支える——昔ながらの深い絆が育ちやすい組み合わせです。1は6の献身に感謝を言葉で返すこと、6は世話を焼きすぎて自分を後回しにしないことが大切です。",tip:"6の「してあげたい」と1の「自分でやりたい」がぶつかる時は、頼み方・任せ方を言葉で確認して。"},
+"1-7":{s:3,t:"開拓者と賢者",x:"動いて学ぶ1と、考えて究める7。テンポは違えど、互いの実力を認め合えば深い尊敬で結ばれます。適度な距離と静かな時間が、この関係の何よりの潤滑油です。",tip:"7の沈黙は不機嫌ではなく思索中。1は結論を急かさず、7は考えの途中でも言葉にする努力を。"},
+"1-8":{s:4,t:"覇者の同盟",x:"意志の1と実現の8。目標を共有すれば、周囲が驚くほどの成果を出すパワフルな同盟になります。ただし力と力の関係ゆえ、主導権と面子の扱いには互いに繊細さを忘れずに。",tip:"「どちらが上か」ではなく「何を成すか」に目線を揃えること。功績は必ず分かち合って。"},
+"1-9":{s:4,t:"始まりと完成",x:"数の始まり1と、締めくくりの9。9の包容力が1の突進を優しく受け止め、1の行動力が9の理想に現実の翼を与えます。世代や立場を越えて結ばれやすい、円環のご縁です。",tip:"9は溜め込まず、不満は小さいうちに言葉へ。1は9の「広い視野」からの助言を面倒がらないこと。"},
+"2-2":{s:4,t:"静かな湖",x:"言葉にせずとも通じ合う、穏やかで繊細な共鳴の関係です。安心感は抜群ですが、互いに遠慮して本音を飲み込み、決断を譲り合っているうちに物事が停滞することもあります。",tip:"「あなたが決めて」の譲り合いになったら、交代で決める係を。小さな本音を出し合う練習を二人で。"},
+"2-3":{s:4,t:"月あかりと陽だまり",x:"繊細な2と陽気な3。3の明るさが2の不安をふわりと溶かし、2の細やかさが3の抜けたところをそっと補う、和やかな組み合わせです。笑いと安心が同居する心地よい関係に育ちます。",tip:"3の軽い冗談が、2には深く刺さることも。3はひと言の配慮を、2は溜めずに「嫌だった」と軽く返して。"},
+"2-4":{s:5,t:"安心の名コンビ",x:"思いやりの2と誠実の4。派手さはなくとも、信頼と安心を静かに積み上げていける、長続きの筆頭格です。家庭や共同の仕事など「共に守り育てるもの」があるほど、絆は強くなります。",tip:"安定ゆえのマンネリだけはご注意。季節の行事や記念日を、小さくても丁寧に祝うこと。"},
+"2-5":{s:2,t:"凪と疾風",x:"寄り添いたい2と、飛び回りたい5。求める距離感が正反対のため、学びの多いご縁です。ただし2の受容力と5の柔軟さが噛み合えば、互いに自分にない世界を与え合える関係にもなります。",tip:"5は行き先と帰る時間だけは共有を。2は5の自由を「愛されていない証拠」と結びつけないこと。"},
+"2-6":{s:5,t:"愛の巣",x:"共感の2と慈愛の6。互いを思いやる心が自然に循環する、温かさに満ちた組み合わせです。家庭的な幸福やチームの和を築く力は、全ての組み合わせの中でも屈指です。",tip:"優しさ同士ゆえ、我慢も水面下で溜まりがち。月に一度は「最近どう?」と本音の棚卸しを。"},
+"2-7":{s:3,t:"静寂の共有",x:"静けさを愛する者同士、穏やかな時間を分かち合えます。ただし2は心の交流を、7は思索の孤独を求めるため、同じ「静かさ」でも質の違いに戸惑う場面があるかもしれません。",tip:"7の一人時間は拒絶ではないと2は心得て。7は週に一度、2の話にじっくり耳を傾ける時間を。"},
+"2-8":{s:4,t:"大将と名参謀",x:"実現者8を、2が細やかに支える名コンビ。8の力強さは2に安心を与え、2の気配りは8の戦いに潤いを与えます。公私ともに「二人三脚」の形が自然と定まりやすいご縁です。",tip:"8は成果だけでなく、2の陰の支えを言葉で労って。2は疲れを隠さず、休みたい時は休みたいと。"},
+"2-9":{s:4,t:"慈しみの縁",x:"寄り添う2と包み込む9。どちらも与えることが自然な、優しさの共鳴する関係です。困っている人を放っておけない二人ですから、共に誰かを支える活動をするほど絆が深まります。",tip:"外へ優しさを注ぎすぎて、二人の時間が後回しにならないように。まず互いを満たすこと。"},
+"3-3":{s:4,t:"お祭りコンビ",x:"一緒にいるだけで笑いが絶えない、人生をお祭りに変えてしまう二人です。創造力も倍増しますが、楽しさ優先でお金や段取りなどの現実面が置き去りになりやすい点だけはご愛嬌。",tip:"楽しい計画と同じ熱量で「現実係」を決めること。家計や締切の管理は、仕組みに任せてしまうのが吉。"},
+"3-4":{s:3,t:"風船と重石",x:"自由な発想の3と、堅実な4。4は3に「形にする力」を、3は4に「楽しむ心」を教え合える、凸凹ながら補完的なご縁です。違いを欠点と見るか才能と見るかで、関係の質が決まります。",tip:"4は3の思いつきを頭ごなしに却下しない。3は4の段取りを窮屈がらず、まず一度乗ってみて。"},
+"3-5":{s:5,t:"追い風の二人",x:"表現の3と自由の5。好奇心と行動力が掛け算になる、最高に楽しい組み合わせです。話題は尽きず、フットワークも軽く、二人でいるだけで自然と人が集まってきます。",tip:"盛り上がりは天下一品、継続だけが課題。「二人の楽しみの定番」を一つ持つと、関係に芯が通ります。"},
+"3-6":{s:4,t:"花と庭師",x:"のびのびと咲く3を、6が愛情深く整え支える構図です。3の明るさは6の癒しになり、6の温かさは3の安全基地になります。美的センスも響き合う、華やぎのあるご縁です。",tip:"6の世話が、3には「管理」に感じられる瞬間も。6は手を出しすぎず、3は感謝をまめに言葉へ。"},
+"3-7":{s:2,t:"詩人と哲学者",x:"外へ表現する3と、内へ探求する7。テンポも興味も対照的で、最初は噛み合いにくい学びのご縁です。ただし3の言葉の才と7の思索の深さが出会うと、唯一無二の創造が生まれます。",tip:"3は7の静けさを退屈と誤解しない。7は3の陽気さを浅いと裁かない。「違う楽器の合奏」と心得て。"},
+"3-8":{s:3,t:"華と実",x:"華やかな3と手腕の8。8の築く現実の土台の上で3の魅力が輝く、特に仕事の場で強い組み合わせです。私的な関係では、8の重厚さと3の軽やかさの温度差を、楽しめるかどうかが鍵になります。",tip:"8は3の「遊び」を浪費と切り捨てない。3は8の頑張りを茶化さず、ねぎらいの言葉を。"},
+"3-9":{s:5,t:"創造の泉",x:"無邪気な3と懐深い9。9は3の一番の理解者となり、3は9の理想に彩りと笑いを添えます。芸術・表現・人を喜ばせる活動をともにするほど、豊かに実を結ぶご縁です。",tip:"二人とも現実の細部が少し苦手。契約や数字が絡む場面だけは、外部の力や仕組みを借りて。"},
+"4-4":{s:4,t:"岩盤の絆",x:"誠実×誠実。約束を守り、コツコツ積み上げる者同士の、揺るぎない信頼の関係です。安定感は随一ですが、二人とも変化が得意ではないため、世界が固定化しやすい一面もあります。",tip:"年に数回は「初めての体験」を計画に組み込んで。小さな冒険が、関係の風通しを保ちます。"},
+"4-5":{s:2,t:"城と旅人",x:"根を張る4と、風のように動く5。価値観の軸が対照的な、学び甲斐のあるご縁です。4は5から人生の広さを、5は4から積み重ねの豊かさを、時間をかけて受け取り合っていきます。",tip:"4は5を囲い込まず、5は4が大切にする約束事だけは必ず守る。「変えない土台」と「変える自由」の線引きを二人で。"},
+"4-6":{s:5,t:"家を建てる二人",x:"構築の4と愛の6。堅実さと温かさが組み合わさり、家庭や組織という「安心の器」を共に築ける、最良のご縁のひとつです。約束を守り抜く4に、6は深い信頼を寄せます。",tip:"現実を固める力が強い分、夢や遊びの話も意識して。「いつかしたいこと」を語る夜を大切に。"},
+"4-7":{s:4,t:"職人と学者",x:"黙々と積む4と、深く究める7。互いの領分を侵さず、静かな尊敬で結ばれる大人の関係です。言葉数は多くなくとも、信頼の質は極めて高い組み合わせです。",tip:"静かすぎて、気持ちの確認が省略されがち。節目には「助かっている」「感謝している」を言葉で。"},
+"4-8":{s:5,t:"実りの黄金コンビ",x:"基盤の4と実現の8。現実世界で成果を築く力は、全組み合わせの中でも最強クラスです。8の描く大きな絵を、4が確かな施工で支えます。共に財を成すご縁としても知られます。",tip:"仕事の話ばかりにならないようご注意。成果の節目には、二人でしっかり休み、祝うこと。"},
+"4-9":{s:3,t:"実務家と理想家",x:"目の前を固める4と、遠くを見る9。視線の距離が違うため擦れ違いも起きますが、9の理想に4が道筋をつけるとき、絵空事に見えたものが本物の事業や貢献に変わります。",tip:"4は9の夢を「非現実的」と一蹴しない。9は4の心配を「小さい」と流さない。互いの言葉を翻訳し合う姿勢を。"},
+"5-5":{s:4,t:"自由の共犯者",x:"縛らず、縛られず、思い立ったら即行動。刺激と鮮度が続く、最高に楽しい相棒関係です。ただし二人とも錨を持たないため、環境の変化とともに縁まで流されやすい面があります。",tip:"自由の中に「必ず戻る場所」をひとつ。月一の定例の集まりでも、二人だけの合言葉でも構いません。"},
+"5-6":{s:3,t:"渡り鳥と巣",x:"帰る巣を整える6と、空を巡る5。6の温かさは5の安らぎになりますが、6の「もっと一緒に」が5には重く感じられることも。距離の調律が、この縁のすべての鍵です。",tip:"6は見返りを求める前に、自分の楽しみを持つこと。5は「必ず帰ってくる」ことを行動で示し続けて。"},
+"5-7":{s:4,t:"知的な放浪者たち",x:"体験で学ぶ5と、思索で学ぶ7。互いの自由と領域を尊重できる、束縛のない知的な関係です。旅先の景色と深い対話——二つの喜びを行き来できる、稀有なご縁です。",tip:"独立心が強い者同士、放っておきすぎにご注意。「あえて誘う」ひと手間が縁を保ちます。"},
+"5-8":{s:3,t:"風と山",x:"変化を乗りこなす5と、目標を打ち立てる8。攻めの姿勢は共通で、挑戦の場では互いの度胸に痺れる関係です。ただし8の管理と5の気ままさは、時にぶつかります。",tip:"8は5を「駒」として管理しない。5は8との約束・期日だけは死守する。それだけで信頼は保たれます。"},
+"5-9":{s:4,t:"世界を巡る二人",x:"自由の5と博愛の9。国境も分野も軽々と越えていく、スケールの大きなご縁です。9の理想に5の行動力が加わると、世界を舞台にした活動さえ現実のものになります。",tip:"どちらも「今ここ」の生活実務が疎かになりがち。足元の暮らしを整える日を、月に一度。"},
+"6-6":{s:4,t:"与え合う二人",x:"慈愛×慈愛。互いに尽くし、思いやりが絶えない温室のような関係です。ただし「与える」ことに慣れすぎた者同士、受け取り下手な遠慮合戦や、見返りへの期待が影を落とすこともあります。",tip:"「してもらったら素直に受け取り、喜ぶ」を二人のルールに。奉仕は外へ、甘えは内へ。"},
+"6-7":{s:3,t:"温もりと静寂",x:"包みたい6と、一人の時間を愛する7。愛情の表現方法が異なるため、6は物足りなさを、7は息苦しさを感じる場面も。ただし7が心を開いた相手への信頼は本物で、6の深い愛はそれを引き出す力を持っています。",tip:"6は「構わない優しさ」も愛のかたちと知ること。7は感謝や愛情を、たまにで良いので必ず言葉に。"},
+"6-8":{s:4,t:"実りと団欒",x:"外で成果を築く8と、内を豊かに整える6。役割が自然に噛み合い、実りと温もりの両方を手にしやすい、現実に強い愛の形です。8にとって6のいる場所は、何よりの帰る港になります。",tip:"8は家族や仲間との時間を「後で」にしない。6は8の重圧を理解し、家を戦場にしないこと。"},
+"6-9":{s:5,t:"大きな愛の同盟",x:"身近な人を深く愛する6と、広く世界を愛する9。愛の半径は違えど、根は同じ「慈しみ」の魂同士です。共に人を支え、癒す活動をするほど、二人自身の絆も深まっていきます。",tip:"9の博愛が、6には「自分だけを見てくれない」と映る瞬間が。9は一番近くの愛を最優先に。"},
+"7-7":{s:4,t:"静かな共鳴",x:"多くを語らずとも通じ合う、精神性の深い共鳴関係です。互いの聖域を守り合える、7にとって最も呼吸の楽な相手。ただし世界が内へ内へと閉じやすいので、二人だけの殻にはご注意を。",tip:"二人の静けさに、時々「外の風」を。共通の学びの場や自然の中へ、意識して出かけて。"},
+"7-8":{s:3,t:"賢者と王",x:"本質を見抜く7と、現実を動かす8。7の洞察が8の戦略を研ぎ、8の実行力が7の知を世に出す——噛み合えば見事な補完関係です。精神性か成果か、価値観の違いだけ丁寧に扱って。",tip:"8は7の助言を軽んじない。7は8の野心を俗と裁かない。互いの土俵に敬意を払うこと。"},
+"7-9":{s:4,t:"求道者の縁",x:"真理を求める7と、悟りに近い9。精神性という共通言語を持つ、魂の対話が成立する関係です。人生観や目に見えない世界の話を、時間を忘れて語り合えるでしょう。",tip:"精神性は満点、現実面は要補強。生活の実務は分担表を作るなど、あえて形式的に。"},
+"8-8":{s:3,t:"二人の帝王",x:"実現者×実現者。同じ頂を目指せば途方もない成果を生む反面、覇権がぶつかれば消耗戦になります。この縁の分かれ目は、ただ一点「敬意」です。",tip:"領土(役割・決定権)を明確に分けること。そして相手の成果を、誰より先に、大きく讃えること。"},
+"8-9":{s:4,t:"実りと分かち合い",x:"豊かさを生む8と、循環させる9。8の成果に9が意味と方向を与える、社会的にも美しい補完のご縁です。9の寛容さは、闘い続ける8にとって心の安息所にもなります。",tip:"8は9の「損得抜き」を非効率と切らない。9は8の頑張りの原動力である誇りを理解して。"},
+"9-9":{s:4,t:"老賢者の対話",x:"酸いも甘いも知る者同士の、争いの少ない成熟した関係です。互いを裁かず受け入れ合えますが、どちらも執着が薄いため、縁を「保つ努力」を忘れると自然と離れてしまうことも。",tip:"「言わなくてもわかる」に甘えず、会う・話す・祝うの機会を定期的に。手放し上手な二人こそ、掴む練習を。"}
+};
+
+/* ---------- 相性用ヘルパー ---------- */
+const MASTER_QUALITY = {11:"鋭い感受性とインスピレーション",22:"壮大な構築のエネルギー",33:"底知れない無条件の愛"};
+const baseOf  = n => MASTERS.has(n) ? ({11:2,22:4,33:6})[n] : n;
+const pairKey = (a,b) => { const x=baseOf(a), y=baseOf(b); return x<=y ? `${x}-${y}` : `${y}-${x}`; };
+const groupOf = n => { const b=baseOf(n); return [1,5,7].includes(b) ? 1 : [2,4,8].includes(b) ? 2 : 3; };
+const GROUP_NAME = {1:"思考・独立",2:"現実・堅実",3:"感情・創造"};
+const REL_TYPE_DESC = {
+"鏡の縁":"相手は自分を映す鏡。長所も課題も倍写しになる、自己理解がぐんと進むご縁です。",
+"同質の縁":"気質の根っこが同じグループにあり、説明のいらない心地よさが土台にあるご縁です。",
+"補完の縁":"互いにない資質を持ち寄るご縁。違いがそのまま、二人の武器になります。",
+"成長の縁":"ぶつかりやすい分、乗り越えるたびに、他では得られない絆が育つご縁です。"
+};
+function relType(a,b,star){
+  if(baseOf(a)===baseOf(b)) return "鏡の縁";
+  if(groupOf(a)===groupOf(b)) return "同質の縁";
+  return star>=4 ? "補完の縁" : "成長の縁";
+}
+function starsHTML(n){
+  let s = "";
+  for(let i=1;i<=5;i++) s += i<=n ? "★" : '<span class="off">★</span>';
+  return `<span class="stars">${s}</span>`;
+}
+
+/* ============================================================
+   相性診断の実行
+   ============================================================ */
+function personCore(label, rawName, y, m, d, method){
+  rawName = normalizeRoman(rawName).trim();
+  if(!y || !m || !d) return {err:`${label}の生年月日をお選びください。`};
+  const chk = new Date(y, m-1, d);
+  if(chk.getFullYear()!==y || chk.getMonth()!==m-1 || chk.getDate()!==d){
+    return {err:`${label}の日付が存在しません。ご確認ください。`};
+  }
+  let hasName=false, words=[], letters="";
+  if(rawName){
+    if(/[^\x00-\x7F]/.test(rawName)) return {err:`${label}のお名前はヘボン式ローマ字(英字)でご入力ください。`};
+    const clean = rawName.toUpperCase().replace(/[^A-Z]+/g," ").trim();
+    words = clean.split(/\s+/).filter(Boolean);
+    letters = words.join("");
+    if(!letters) return {err:`${label}のお名前に英字が含まれていません。`};
+    hasName = true;
+  }
+  const lp = lifePathParts(y, m, d, method).lp;
+  let sl=null, ps=null;
+  if(hasName){
+    let vw=0, cs=0;
+    for(const ch of letters){
+      const v = LETTER_MAP[ch];
+      if(VOWELS.has(ch)) vw += v; else cs += v;
+    }
+    if(vw>0) sl = reduceSteps(vw).pop();
+    if(cs>0) ps = reduceSteps(cs).pop();
+  }
+  const now = new Date();
+  const py = fullReduce(ds(String(m)+String(d)+String(now.getFullYear()))).n;
+  const disp = hasName ? esc(words.join(" ")) : label;
+  return {label, disp, y, m, d, hasName, lp, sl, ps, py};
+}
+
+function calcPair(){
+  $("err").classList.remove("show");
+  const method = $("method").value;
+  const A = personCore("お一人目", $("nameA").value, Number($("yyA").value), Number($("mmA").value), Number($("ddA").value), method);
+  if(A.err){ showErr(A.err); return; }
+  const B = personCore("お二人目", $("nameB").value, Number($("yyB").value), Number($("mmB").value), Number($("ddB").value), method);
+  if(B.err){ showErr(B.err); return; }
+  renderPair(A, B);
+}
+
+function pairSec(en, jp, sub, inner){
+  return `<section class="reading card">
+    <div class="sec-head"><div><p class="eyebrow">${en}</p><h2>${jp}<span class="sec-sub">— ${sub}</span></h2></div></div>
+    ${inner}
+  </section>`;
+}
+
+function renderPair(A, B){
+  const now = new Date();
+  const cyY = now.getFullYear();
+  const today = `${cyY}年${now.getMonth()+1}月${now.getDate()}日`;
+  const pair = PAIR[pairKey(A.lp, B.lp)];
+  const type = relType(A.lp, B.lp, pair.s);
+  let h = "";
+
+  /* 鑑定書ヘッダー */
+  h += `<div class="doc-head">
+    <p class="eyebrow">Numerology Compatibility Report</p>
+    <h2>相 性 鑑 定 書</h2>
+    <div class="doc-meta">
+      <span>お一人目 <b>${A.disp} / ${A.y}年${A.m}月${A.d}日</b></span>
+      <span>お二人目 <b>${B.disp} / ${B.y}年${B.m}月${B.d}日</b></span>
+      <span>鑑定日 <b>${today}</b></span>
+    </div>
+  </div>`;
+
+  /* 相性ビジュアル+調和度 */
+  const duoP = p => `<div class="p">
+      <p class="pname">${p.disp}</p>
+      <div class="duo-ring"><span class="n">${p.lp}</span></div>
+      <p class="parch">「${P[p.lp].name}」</p>
+      ${MASTERS.has(p.lp)?'<div style="margin-top:6px"><span class="master-tag">MASTER</span></div>':""}
+    </div>`;
+  h += `<div class="card" style="padding:0">
+    <div class="duo">${duoP(A)}<span class="duo-link">∞</span>${duoP(B)}</div>
+    <div class="harmony">
+      <p class="pair-title">「${pair.t}」</p>
+      ${starsHTML(pair.s)}
+      <p class="h-type">ご縁のかたち:<b>${type}</b> — ${REL_TYPE_DESC[type]}</p>
+      <p class="h-note">※星は「自然に調和しやすい度合い」の目安であり、良し悪しではありません。星が少ない組み合わせほど、歩み寄りが実ったときの結びつきは強くなります。</p>
+      ${(!A.hasName||!B.hasName)?'<p class="h-note">お二人ともお名前をご入力いただくと、魂(ソウル)と外面(パーソナリティ)の相性も読み解けます。</p>':""}
+    </div>
+  </div>`;
+
+  /* マスターナンバー注記 */
+  const masterNoteFor = pr => {
+    const ms = [...new Set([pr.lp, pr.sl, pr.ps].filter(n => n && MASTERS.has(n)))];
+    if(!ms.length) return "";
+    return `<p>【${pr.disp}さん】マスターナンバー(${ms.join("・")})の持ち主。${ms.map(n=>MASTER_QUALITY[n]).join("、")}が、この関係に独特の深みを添えます。相性の基本形は${ms.map(n=>`${n}を${baseOf(n)}`).join("、")}として読み解いています。</p>`;
+  };
+  const mn = masterNoteFor(A) + masterNoteFor(B);
+  if(mn){
+    h += `<div class="karma" style="margin-top:26px">
+      <h3>マスターナンバーについて</h3>
+      ${mn}
+    </div>`;
+  }
+
+  /* ライフパスの相性(本編) */
+  h += `<div style="height:30px"></div>`;
+  h += pairSec("Life Path Compatibility","ライフパスの相性","お二人の関係の基本形",
+    `<p class="arch"><b>「${P[A.lp].name}」</b><span class="arch-en">${A.lp}</span> × <b>「${P[B.lp].name}」</b><span class="arch-en">${B.lp}</span></p>
+     <p class="pos-text">${pair.x}</p>
+     <div class="block"><h3>お二人へのアドバイス</h3><p>${pair.tip}</p></div>`);
+
+  /* 魂の共鳴(両者に名前がある場合) */
+  if(A.sl && B.sl){
+    let inner = `<p class="pos-text">${A.disp}さんの魂は「${SHORT[A.sl]}」(ソウル${A.sl})を、${B.disp}さんの魂は「${SHORT[B.sl]}」(ソウル${B.sl})を求めています。</p>`;
+    let body;
+    if(A.sl === B.sl){
+      body = `お二人のソウルナンバーは同じ「${A.sl}」。心の奥で望むものがぴたりと重なっており、言葉にしなくても「わかる」と感じられる、深い共鳴の配置です。ただし、似ているからこそ同じ弱点も共有しやすいことは、心の隅に留めておいてください。`;
+    }else if(groupOf(A.sl) === groupOf(B.sl)){
+      body = `数は違えど、どちらも「${GROUP_NAME[groupOf(A.sl)]}」の気質グループに属する魂同士。価値観の根っこが近く、一緒にいて自然に楽な、呼吸の合う関係です。`;
+    }else{
+      body = `お二人の魂は、異なる方向を向いています。すれ違いの種にもなり得ますが、見方を変えれば、相手は自分では開けない扉を開いてくれる存在。「わからない」を「面白い」に変換できたとき、このご縁は大きく育ちます。`;
+    }
+    h += pairSec("Soul Resonance","魂の共鳴","心の奥で求め合うもの(ソウルナンバー)",
+      inner + `<div class="block"><p>${body}</p></div>`);
+  }
+
+  /* 外から見たお二人 */
+  if(A.ps && B.ps){
+    let inner = `<p class="pos-text">${A.disp}さんは「${P[A.ps].name}」(パーソナリティ${A.ps})、${B.disp}さんは「${P[B.ps].name}」(パーソナリティ${B.ps})として周囲に映っています。</p>`;
+    let body;
+    if(A.ps === B.ps){
+      body = `外への顔が同じ数のお二人。周囲からは「似た者同士」「息が合う」と見られやすく、並んだときの雰囲気に自然な統一感があります。`;
+    }else if(groupOf(A.ps) === groupOf(B.ps)){
+      body = `印象の系統が近いお二人。並ぶと穏やかな調和があり、周囲に安心感を与えるペアとして映ります。`;
+    }else{
+      body = `印象のタイプが異なるお二人。並ぶと互いを引き立て合う、コントラストの効いた魅力的なペアとして周囲の目に映ります。`;
+    }
+    h += pairSec("How You Appear","外から見たお二人","周囲に映る二人の姿(パーソナリティナンバー)",
+      inner + `<div class="block"><p>${body}</p></div>`);
+  }
+
+  /* 今年のお二人 */
+  const pyBody = (A.py === B.py)
+    ? `今年、お二人は同じ「${CYCLE[A.py].t}」を歩んでいます。人生のリズムが揃いやすく、共同の計画や大きな決断に追い風の一年です。`
+    : `${A.disp}さんは「${CYCLE[A.py].t}」、${B.disp}さんは「${CYCLE[B.py].t}」。ペースの違いは優劣ではなく、季節の違いです。相手がいまどの季節にいるかを思いやるだけで、すれ違いの多くは自然と溶けていきます。`;
+  h += pairSec("Life Cycle","今年のお二人","パーソナルイヤーの重なり",
+    `<div class="cycle-grid two" style="margin-top:20px">
+      <div class="cy small"><span class="cy-label">${A.disp}さん・${cyY}年</span>
+        <div class="cy-head"><span class="cy-num">${A.py}</span><span class="cy-title">${CYCLE[A.py].t}</span></div></div>
+      <div class="cy small"><span class="cy-label">${B.disp}さん・${cyY}年</span>
+        <div class="cy-head"><span class="cy-num">${B.py}</span><span class="cy-title">${CYCLE[B.py].t}</span></div></div>
+    </div>
+    <div class="block"><h3>リズムの読み解き</h3><p>${pyBody}</p></div>`);
+
+  /* 総合メッセージ */
+  let syn = `<p>「${P[A.lp].name}」と「${P[B.lp].name}」——お二人のご縁のかたちは「${type}」。${REL_TYPE_DESC[type]}「${pair.t}」という関係の基本形を心に置きながら、合うところは喜びに、違うところは学びに変えていってください。</p>`;
+  syn += `<p class="close">相性とは、当たり外れの判定ではなく、二つの魂が学び合うために選んだ「出会いの角度」です。どんな数の組み合わせにも、その二人にしか歩めない道があります。この鑑定が、お二人のご縁をより深く慈しむきっかけとなりますように。</p>`;
+  h += `<section class="reading card synth">
+    <div class="sec-head"><div><p class="eyebrow">Synthesis</p><h2>総合鑑定<span class="sec-sub">— 二つの数が結ぶ物語</span></h2></div></div>
+    ${syn}
+  </section>`;
+
+  /* アクション */
+  h += `<div class="actions no-print">
+    <button class="btn" id="print-btn">鑑定書を印刷・PDF保存</button>
+    <button class="btn btn--sub" id="reset-btn">新しい鑑定をはじめる</button>
+  </div>`;
+
+  const R = $("result");
+  R.innerHTML = h;
+  R.hidden = false;
+  R.focus({preventScroll:true});
+  R.scrollIntoView({behavior: prefersReduce ? "auto" : "smooth", block: "start"});
+}
+
+/* ---------- イベント ---------- */
+let currentMode = "personal";
+function setMode(mode){
+  currentMode = mode;
+  const per = mode === "personal";
+  $("mode-personal").hidden = !per;
+  $("mode-pair").hidden = per;
+  $("tab-personal").classList.toggle("active", per);
+  $("tab-pair").classList.toggle("active", !per);
+  $("tab-personal").setAttribute("aria-selected", String(per));
+  $("tab-pair").setAttribute("aria-selected", String(!per));
+  $("tab-personal").tabIndex = per ? 0 : -1;
+  $("tab-pair").tabIndex = per ? -1 : 0;
+  $("form-note").textContent = per
+    ? "お名前はヘボン式ローマ字(英字)でご入力ください。名前を省略した場合は、生年月日のみの鑑定となります。"
+    : "お二人の生年月日で相性を鑑定します。お名前(ローマ字)もご入力いただくと、魂と外面の相性まで深く読み解けます。";
+  $("err").classList.remove("show");
+}
+$("tab-personal").addEventListener("click", () => setMode("personal"));
+$("tab-pair").addEventListener("click", () => setMode("pair"));
+/* タブの左右キー操作(ARIAタブパターン) */
+document.querySelector(".tabs").addEventListener("keydown", e => {
+  if(!["ArrowLeft","ArrowRight","Home","End"].includes(e.key)) return;
+  e.preventDefault();
+  const next = e.key === "Home" ? "personal"
+             : e.key === "End"  ? "pair"
+             : currentMode === "personal" ? "pair" : "personal";
+  setMode(next);
+  $(next === "personal" ? "tab-personal" : "tab-pair").focus();
+});
+$("go").addEventListener("click", () => currentMode === "personal" ? calc() : calcPair());
+["name","nameA","nameB"].forEach(id => {
+  $(id).addEventListener("keydown", e => {
+    if(e.key === "Enter") currentMode === "personal" ? calc() : calcPair();
+  });
+});
+document.addEventListener("click", e => {
+  if(e.target.id === "print-btn") window.print();
+  if(e.target.id === "reset-btn"){
+    const R = $("result");
+    R.hidden = true; R.innerHTML = "";
+    $("form-card").scrollIntoView({behavior: prefersReduce ? "auto" : "smooth"});
+  }
+});
+window.addEventListener("beforeprint", () => {
+  document.querySelectorAll("details.calc").forEach(d => d.open = true);
+});
+</script>
+</body>
+</html>
