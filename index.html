@@ -104,9 +104,21 @@ body::before{
 .hero .eyebrow{margin-bottom:18px}
 .hero h1{
   font-size:clamp(2rem,6vw,2.9rem);font-weight:600;letter-spacing:.24em;
-  text-indent:.24em;color:var(--ink);
+  text-indent:.24em;color:var(--gold-bright);
 }
-.hero h1 .h-gold{color:var(--gold-bright)}
+/* 金泥のグラデーション文字(非対応ブラウザは上の単色金のまま) */
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero h1{
+    background:linear-gradient(168deg,#f5e3b8 0%,#e6c88a 28%,#c9a45c 52%,#a57e3b 74%,#d9b876 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 14px rgba(201,164,92,.28));
+  }
+  html[data-theme="light"] .hero h1{
+    background:linear-gradient(168deg,#b08a45 0%,#8a6b2e 40%,#6f5518 75%,#8a6b2e 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:none;
+  }
+}
 .hero .lead{
   margin-top:18px;color:var(--ink-dim);font-size:.92rem;letter-spacing:.1em;
 }
@@ -502,7 +514,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
   <div class="wrap">
     <img class="hero-logo" src="images/logo.png" alt="" width="376" height="376">
     <p class="eyebrow">Numerology &nbsp;·&nbsp; Professional Reading</p>
-    <h1>数<span class="h-gold">秘</span>術鑑定</h1>
+    <h1>数秘術鑑定</h1>
     <p class="lead">生年月日とお名前に刻まれた、あなたの魂の設計図を読み解きます</p>
     <div class="orn"><span>1 · 2 · 3 · 4 · 5 · 6 · 7 · 8 · 9 · 11 · 22 · 33</span></div>
   </div>
