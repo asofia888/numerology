@@ -162,18 +162,37 @@ section a:hover{color:var(--gold);border-bottom-color:var(--gold)}
 
 /* ---------- フッター ---------- */
 footer{
-  text-align:left;padding:46px 0 44px;
+  text-align:center;padding:52px 0 46px;
   font-size:.76rem;color:var(--ink-faint);letter-spacing:.14em;
 }
-footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:0}
-footer .f-links{margin-top:14px}
+footer .f-rule{
+  display:flex;align-items:center;gap:18px;
+  max-width:380px;margin:0 auto 30px;
+  color:var(--gold);font-size:.66rem;line-height:1;
+}
+footer .f-rule::before,footer .f-rule::after{content:"";flex:1;height:1px}
+footer .f-rule::before{background:linear-gradient(90deg,transparent,var(--line))}
+footer .f-rule::after{background:linear-gradient(270deg,transparent,var(--line))}
+footer .f-brand{color:var(--ink-dim);font-size:.98rem;letter-spacing:.34em;text-indent:.34em}
+footer .f-brand-en{
+  display:block;margin-top:7px;
+  font-family:"Cormorant Garamond",serif;font-weight:500;
+  font-size:.7rem;letter-spacing:.46em;text-indent:.46em;
+  text-transform:uppercase;color:var(--gold);
+}
+footer .f-links{margin-top:24px}
 footer .f-links a{
   color:var(--ink-dim);text-decoration:none;
   border-bottom:1px solid var(--line-dim);padding-bottom:1px;
   transition:color .25s,border-color .25s;
 }
 footer .f-links a:hover{color:var(--gold-bright);border-bottom-color:var(--gold)}
-footer .f-links .sep{margin:0 12px;color:var(--ink-faint)}
+footer .f-links .sep{margin:0 14px;color:var(--line)}
+footer .f-copy{
+  margin-top:24px;
+  font-family:"Cormorant Garamond",serif;
+  font-size:.74rem;letter-spacing:.3em;text-indent:.3em;
+}
 
 /* ---------- 表示設定バー(テーマ切替) ---------- */
 .fs-switch{
@@ -282,7 +301,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
       <ul>
         <li>鑑定のためにご入力いただくお名前・生年月日は、お使いの端末の中だけで計算され、外部に送信・保存されることは一切ありません。</li>
         <li>端末に保存されるのは表示設定(テーマ・文字サイズ)のみです。Cookie・アクセス解析・広告は使用していません。</li>
-        <li>フォントの表示(Google Fonts)とサイトの公開(Vercel)に伴い、IPアドレス等の技術的な情報が各サービスへ自動的に送信されることがあります。</li>
+        <li>フォントの表示(Google Fonts)とサイトの公開(さくらインターネット)に伴い、IPアドレス等の技術的な情報が各サービスへ自動的に送信されることがあります。</li>
       </ul>
     </div>
 
@@ -310,7 +329,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
       <p>本サイトでは、表示・公開のために以下の外部サービスを利用しています。これらのサービスの性質上、本サイトの閲覧に伴い、お使いのブラウザから各サービスの提供者へIPアドレス等の技術的な情報が自動的に送信されることがあります。各社における情報の取り扱いは、それぞれのプライバシーポリシーをご確認ください。</p>
       <ol>
         <li><b>Google Fonts</b>(フォント配信/Google LLC)<br>本サイトの書体を表示するために読み込んでいます。詳細は<a href="https://policies.google.com/privacy?hl=ja" target="_blank" rel="noopener">Google プライバシーポリシー</a>をご確認ください。</li>
-        <li><b>Vercel</b>(サイトの公開/Vercel Inc.)<br>本サイトはVercel上で公開されており、閲覧の際にIPアドレス等がVercelのサーバーに記録されることがあります。詳細は<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel プライバシーポリシー</a>をご確認ください。</li>
+        <li><b>さくらインターネット</b>(サイトの公開/さくらインターネット株式会社)<br>本サイトはさくらインターネットのレンタルサーバー上で公開されており、閲覧の際にIPアドレス等がさくらインターネットのサーバーに記録されることがあります。詳細は<a href="https://www.sakura.ad.jp/corporate/privacy" target="_blank" rel="noopener">さくらインターネット 個人情報保護ポリシー</a>をご確認ください。</li>
       </ol>
     </section>
 
@@ -333,7 +352,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
       <h2><span class="no">7</span>運営者情報</h2>
       <div class="contact-box">
         <p>サイト名:数秘術鑑定 | Numerology Reading</p>
-        <p>URL:<a href="https://numerology-peach.vercel.app/">https://numerology-peach.vercel.app/</a></p>
+        <p>URL:<a href="https://numerology.matrix.jp/">https://numerology.matrix.jp/</a></p>
         <p>運営者:Wind Bell</p>
       </div>
     </section>
@@ -352,10 +371,10 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 
 <footer>
   <div class="wrap">
-    <p class="f-orn">◆ ◆ ◆</p>
-    <p>数秘術鑑定 | Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
-    <p class="f-links"><a href="privacy.html">プライバシーポリシー</a><span class="sep" aria-hidden="true">|</span><a href="disclaimer.html">免責事項</a></p>
-    <p>© 2026 Wind Bell</p>
+    <p class="f-rule" aria-hidden="true">◆</p>
+    <p class="f-brand">数秘術鑑定<span class="f-brand-en">Numerology Reading</span></p>
+    <p class="f-links"><a href="index.html">トップページ</a><span class="sep" aria-hidden="true">・</span><a href="disclaimer.html">免責事項</a></p>
+    <p class="f-copy">© 2026 Wind Bell</p>
   </div>
 </footer>
 

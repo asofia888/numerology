@@ -2,7 +2,7 @@
 
 生年月日とお名前(ローマ字)から、ピタゴラス式数秘術に基づいてプロの鑑定書スタイルの読み解きを行う単一HTMLアプリです。サーバー・ビルド不要、`index.html` 1ファイルだけで動作します。
 
-公開中のサイト: https://numerology-peach.vercel.app/(運営:Wind Bell)
+公開中のサイト: https://numerology.matrix.jp/(さくらインターネット/運営:Wind Bell)
 
 ## 機能
 
@@ -39,7 +39,7 @@
 3. リポジトリの **Settings → Pages** を開く
 4. **Source** で「Deploy from a branch」を選び、Branch を `main` / `(root)` に設定して Save
 5. 数分後、`https://ユーザー名.github.io/リポジトリ名/` で公開されます
-6. OGP タグ(SNSシェア用カード)は現在の公開URL `https://numerology-peach.vercel.app/` 向けに設定済みです。別のURLで公開する場合のみ、`index.html` 内の `og:url`・`og:image` の2行を書き換えてください
+6. OGP タグ(SNSシェア用カード)は現在の公開URL `https://numerology.matrix.jp/` 向けに設定済みです。別のURLで公開する場合のみ、`index.html` 内の `og:url`・`og:image` の2行を書き換えてください
 
 ## 技術メモ
 
