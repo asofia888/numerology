@@ -399,6 +399,15 @@ section.reading{margin-bottom:34px}
 .dnum.max{border-color:var(--gold);background:rgba(201,164,92,.10)}
 .dnum.max b{color:var(--gold-bright)}
 .dnum.zero{border-style:dashed;opacity:.55}
+.plane{display:grid;grid-template-columns:150px 1fr 48px;gap:12px;align-items:center;margin-top:12px}
+.plane .pl-label{font-size:.84rem;letter-spacing:.1em;color:var(--ink-dim)}
+.plane .pl-label small{display:block;font-size:.68rem;color:var(--ink-faint);letter-spacing:.14em}
+.plane .pl-bar{height:8px;border:1px solid var(--line-dim);border-radius:999px;overflow:hidden;background:rgba(10,12,26,.35)}
+.plane .pl-fill{height:100%;background:linear-gradient(90deg,rgba(201,164,92,.4),var(--gold));border-radius:999px}
+.plane.max .pl-fill{background:linear-gradient(90deg,var(--gold),var(--gold-bright))}
+.plane.max .pl-label{color:var(--ink)}
+.plane .pl-count{font-size:.8rem;color:var(--ink-faint);text-align:right}
+.plane.max .pl-count{color:var(--gold-bright)}
 
 /* ---------- 総合メッセージ ---------- */
 .synth{border-color:var(--line);background:var(--card-strong)}
@@ -457,6 +466,7 @@ html[data-fs="l"]{--fs-scale:1.2}
   .hero{padding-top:64px}
   .hero .hero-logo{width:134px;height:134px;margin-bottom:20px}
   .cycle-grid.two{grid-template-columns:1fr}
+  .plane{grid-template-columns:104px 1fr 42px;gap:9px}
   .duo{gap:14px}
   .duo-link{width:100%;text-align:center;order:1}
   .duo .p{order:0}
@@ -502,7 +512,7 @@ html[data-theme="light"] body::before{
 html[data-theme="light"] input[type="text"], html[data-theme="light"] select{background-color:rgba(255,255,255,.75)}
 html[data-theme="light"] select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a6b2e' stroke-width='1.2'/%3E%3C/svg%3E")}
 html[data-theme="light"] .btn:hover{color:#fdfaf1}
-html[data-theme="light"] .mini, html[data-theme="light"] .cy, html[data-theme="light"] .dnum{background:rgba(255,255,255,.55)}
+html[data-theme="light"] .mini, html[data-theme="light"] .cy, html[data-theme="light"] .dnum, html[data-theme="light"] .plane .pl-bar{background:rgba(255,255,255,.55)}
 html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 
 /* ---------- 印刷(鑑定書として保存) ---------- */
@@ -900,6 +910,38 @@ const HPASSION = {
 9:"広く世界に貢献したいという情熱。立場を越えて人の役に立てたとき、深い充足に包まれます。"
 };
 
+/* ---------- 上級鑑定:プレーンズ・オブ・エクスプレッション ---------- */
+/* 伝統的な文字分類(Campbell/Decoz系): P=肉体 M=思考 E=感情 I=直観 */
+const PLANE_OF = {
+  D:"P", E:"P", M:"P", W:"P",
+  A:"M", G:"M", H:"M", J:"M", L:"M", N:"M", P:"M",
+  B:"E", I:"E", O:"E", R:"E", S:"E", T:"E", X:"E", Z:"E",
+  C:"I", F:"I", K:"I", Q:"I", U:"I", V:"I", Y:"I"
+};
+const PLANES = {
+P:{jp:"肉体のプレーン", en:"Physical", sub:"行動と現実",
+   x:"「現実の中で手を動かしながら学ぶ」実践派の気質。体験・行動・形あるものへの感覚が鋭く、机上の理屈より実際にやってみることで本領を発揮します。健康や暮らしの心地よさを整えることが、そのまま運の土台になるタイプです。"},
+M:{jp:"思考のプレーン", en:"Mental", sub:"論理と言葉",
+   x:"「考え、言葉にして掴む」知性派の気質。物事を筋道立てて捉え、計画・分析・言葉の力に長けています。感情が波立ったときほど、紙に書き出して整理すると本来の冴えが戻ります。"},
+E:{jp:"感情のプレーン", en:"Emotional", sub:"心と共感",
+   x:"「心で感じて動く」感受派の気質。共感力と表現力が豊かで、人の気持ちや場の空気を深く受け取ります。感情は最大の才能であると同時に疲れの源にもなるため、心の換気を習慣にすることが開運の鍵です。"},
+I:{jp:"直観のプレーン", en:"Intuitive", sub:"ひらめきと霊感",
+   x:"「ひらめきで本質を掴む」直観派の気質。理屈を飛び越えて答えに届く、鋭いアンテナを持っています。根拠を求められる場面では弱く見えても、最初の直感の精度こそ、あなたの隠れた武器です。"}
+};
+
+/* ---------- 上級鑑定:ブリッジナンバー(資質をつなぐ鍵) ---------- */
+const BRIDGE = {
+0:"二つの数が同じ質を持ち、橋を架ける必要がないほど自然に重なっています。意識せずとも資質どうしが響き合う、一貫性の高い配置です。",
+1:"鍵は「自分で決める」こと。人に合わせて曖昧にせず、小さな場面でも自分の意志を言葉にする習慣が、二つの資質をまっすぐつなぎます。",
+2:"鍵は「協調と受け取り」。強く押し切るより、人の力を借り、感謝して受け取る柔らかさが、二つの資質の間に静かな橋を架けます。",
+3:"鍵は「表現と遊び心」。まじめに考えすぎず、話す・書く・楽しむという軽やかな表現が、内と外の風通しを良くしてくれます。",
+4:"鍵は「習慣と積み重ね」。ひらめきや情熱を日々の小さなルーティンに落とし込むことで、二つの資質が着実に噛み合い始めます。",
+5:"鍵は「変化を許すこと」。安定にしがみつかず、新しい体験や環境の風を取り入れるたびに、資質どうしが生き生きとつながります。",
+6:"鍵は「愛情と責任のバランス」。一人で抱え込みすぎず、任せ、頼り、共に育てる姿勢が、二つの資質を温かく結びます。",
+7:"鍵は「内省の時間」。忙しさから離れて一人で深く考える静けさが、表の顔と内なる声を結び直してくれます。",
+8:"鍵は「堂々と成果を求めること」。遠慮や自己犠牲を手放し、目標と豊かさに正面から向き合うとき、二つの資質が力強く連動します。"
+};
+
 /* ============================================================
    計算エンジン(ピタゴラス式)
    ============================================================ */
@@ -958,6 +1000,20 @@ function pinnacleChallenge(y, m, d, lp){
     {from:firstEnd+10, to:firstEnd+18, pin:p3, ch:c3},
     {from:firstEnd+19, to:null,        pin:p4, ch:c4}
   ]};
+}
+/* 上級鑑定:名前の文字を4つの気質面に分類(プレーンズ・オブ・エクスプレッション) */
+function planesOf(letters){
+  const c = {P:0, M:0, E:0, I:0};
+  for(const ch of letters) c[PLANE_OF[ch]]++;
+  const total = letters.length;
+  const maxC = Math.max(c.P, c.M, c.E, c.I);
+  const dom = ["P","M","E","I"].filter(k => c[k] === maxC);
+  return {c, total, maxC, dom};
+}
+/* 上級鑑定:ブリッジナンバー(還元値どうしの距離) */
+function bridgeNumber(a, b){
+  const base = n => MASTERS.has(n) ? ({11:2,22:4,33:6})[n] : n;
+  return Math.abs(base(a) - base(b));
 }
 /* 上級鑑定:名前に含まれる1〜9の分布(欠け=カルミックレッスン/最多=ヒドゥンパッション) */
 function nameDistribution(values){
@@ -1127,12 +1183,14 @@ function calc(){
   const age = (cyY - y) - (now < new Date(cyY, m-1, d) ? 1 : 0);
   const curIdx = age < 0 ? -1 : periods.findIndex(p => p.to === null || age <= p.to);
   const dist = hasName ? nameDistribution(allV) : null;
+  const planes = hasName ? planesOf(letters) : null;
+  const bridges = hasName ? {lpdt: bridgeNumber(lp, dtN), slps: (sl && ps) ? bridgeNumber(sl, ps) : null} : null;
 
   render({y,m,d,hasName,words,lp,lpSteps,bd,bdSteps,
           dtN,dtSteps,sl,slSteps,ps,psSteps,mtN,mtSteps,
           allV,vwV,csV,karmic,cyY,cyM,py,pyMaster,pm,npy,now,
           method, ySteps:lpp.ySteps, mSteps:lpp.mSteps, dSteps:lpp.dSteps, sumParts:lpp.sumParts,
-          periods, age, curIdx, dist});
+          periods, age, curIdx, dist, planes, bridges});
 }
 
 /* ============================================================
@@ -1316,8 +1374,52 @@ function render(o){
       <div class="block"><h3>ヒドゥンパッション — 最も濃い数「${o.dist.passions.join("・")}」</h3>${passionBody}</div>
       <div class="block"><h3>カルミックレッスン — 欠けている数${o.dist.missing.length ? `「${o.dist.missing.join("・")}」` : ""}</h3>${lessonBody}</div>
     </section>`;
-  }else{
-    h += `<p class="calc-note" style="margin:-14px 0 34px">お名前(ローマ字)をご入力いただくと、上級鑑定に「名前の深層」(カルミックレッスン・ヒドゥンパッション)が加わります。</p>`;
+  }
+
+  /* 上級鑑定:気質の四面(プレーンズ・オブ・エクスプレッション) */
+  if(o.planes){
+    const PL_KEYS = ["P","M","E","I"];
+    const rows = PL_KEYS.map(k => {
+      const c = o.planes.c[k];
+      const pct = o.planes.total ? Math.round(c / o.planes.total * 100) : 0;
+      const isMax = o.planes.dom.includes(k);
+      return `<div class="plane${isMax ? " max" : ""}">
+        <span class="pl-label">${PLANES[k].jp}<small>${PLANES[k].en} — ${PLANES[k].sub}</small></span>
+        <span class="pl-bar"><span class="pl-fill" style="width:${pct}%"></span></span>
+        <span class="pl-count">×${c}</span>
+      </div>`;
+    }).join("");
+    const domBody = o.planes.dom.map(k => `<p><b>「${PLANES[k].jp}」</b> — ${PLANES[k].x}</p>`).join("");
+    h += `<section class="reading card">
+      <div class="sec-head">
+        <div><p class="eyebrow">Planes of Expression</p><h2>気質の四面<span class="sec-sub">— プレーンズ・オブ・エクスプレッション(文字が示す気質の配合)</span></h2></div>
+      </div>
+      <p class="pos-text">お名前の文字を「肉体・思考・感情・直観」の4つの面に分類し、あなたの気質の配合を読み解きます。どの面が濃いかは、物事の受け止め方・学び方のクセを表します。</p>
+      <div class="block"><h3>気質の配合</h3>${rows}</div>
+      <div class="block"><h3>最も濃い面:${o.planes.dom.map(k => PLANES[k].jp).join("・")}</h3>${domBody}</div>
+      <p class="calc-note">※分類はピタゴラス式数秘術で伝統的に用いられる文字対応表に基づきます。</p>
+    </section>`;
+  }
+
+  /* 上級鑑定:架け橋の数(ブリッジナンバー) */
+  if(o.bridges){
+    let bb = `<div class="block"><h3>生き方と役割の橋 — ライフパス${o.lp} × ディスティニー${o.dtN}:ブリッジ「${o.bridges.lpdt}」</h3><p>${BRIDGE[o.bridges.lpdt]}</p></div>`;
+    if(o.bridges.slps !== null){
+      bb += `<div class="block"><h3>本音と外面の橋 — ソウル${o.sl} × パーソナリティ${o.ps}:ブリッジ「${o.bridges.slps}」</h3><p>${BRIDGE[o.bridges.slps]}</p></div>`;
+    }
+    h += `<section class="reading card">
+      <div class="sec-head">
+        <div><p class="eyebrow">Bridge Numbers</p><h2>架け橋の数<span class="sec-sub">— ブリッジナンバー(資質どうしをつなぐ鍵)</span></h2></div>
+        <div class="sec-num">${o.bridges.lpdt}</div>
+      </div>
+      <p class="pos-text">コアナンバー同士の「距離」と、その間に橋を架ける鍵を示します。数が小さいほど資質は近く自然に重なり、大きいほど意識的な橋渡しが大きな実りをもたらします。</p>
+      ${bb}
+      <p class="calc-note">※マスターナンバーは還元値(11→2・22→4・33→6)で距離を測っています。</p>
+    </section>`;
+  }
+
+  if(!o.hasName){
+    h += `<p class="calc-note" style="margin:-14px 0 34px">お名前(ローマ字)をご入力いただくと、上級鑑定に「名前の深層」「気質の四面」「架け橋の数」が加わります。</p>`;
   }
 
   /* 総合鑑定 */
