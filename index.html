@@ -15,11 +15,13 @@ try{if(localStorage.getItem("numerology-theme")==="light")document.documentEleme
 <meta property="og:site_name" content="数秘術鑑定">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://asofia888.github.io/numerology/">
-<meta property="og:image" content="https://asofia888.github.io/numerology/og-image.png">
+<meta property="og:image" content="https://asofia888.github.io/numerology/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a45c' stroke-width='1.5'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23c9a45c'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -92,7 +94,13 @@ body::before{
 }
 
 /* ---------- ヒーロー ---------- */
-.hero{padding:76px 0 44px;text-align:center}
+.hero{padding:56px 0 44px;text-align:center}
+.hero .hero-logo{
+  width:156px;height:156px;display:block;margin:0 auto 26px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  box-shadow:0 0 0 1px rgba(201,164,92,.12), 0 0 46px rgba(201,164,92,.18);
+}
 .hero .eyebrow{margin-bottom:18px}
 .hero h1{
   font-size:clamp(2rem,6vw,2.9rem);font-weight:600;letter-spacing:.24em;
@@ -403,6 +411,8 @@ html[data-fs="l"]{--fs-scale:1.2}
 /* ---------- レスポンシブ ---------- */
 @media (max-width:680px){
   .card{padding:26px 20px}
+  .hero{padding-top:64px}
+  .hero .hero-logo{width:120px;height:120px;margin-bottom:20px}
   .cycle-grid.two{grid-template-columns:1fr}
   .duo{gap:14px}
   .duo-link{width:100%;text-align:center;order:1}
@@ -490,6 +500,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 
 <header class="hero">
   <div class="wrap">
+    <img class="hero-logo" src="images/logo.png" alt="" width="376" height="376">
     <p class="eyebrow">Numerology &nbsp;·&nbsp; Professional Reading</p>
     <h1>数<span class="h-gold">秘</span>術鑑定</h1>
     <p class="lead">生年月日とお名前に刻まれた、あなたの魂の設計図を読み解きます</p>

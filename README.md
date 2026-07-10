@@ -30,7 +30,7 @@
 ## GitHub Pages での公開手順
 
 1. GitHubで新しいリポジトリを作成(例: `numerology-reading`)
-2. このフォルダ内のファイル(`index.html`・`og-image.png`・`README.md`)をアップロードしてコミット
+2. このフォルダ内のファイル(`index.html`・`images` フォルダ・`README.md`)をアップロードしてコミット
 3. リポジトリの **Settings → Pages** を開く
 4. **Source** で「Deploy from a branch」を選び、Branch を `main` / `(root)` に設定して Save
 5. 数分後、`https://ユーザー名.github.io/リポジトリ名/` で公開されます
@@ -43,4 +43,5 @@
 - ライフパスは「一括合算方式(生年月日の全桁を合計)」と「桁別還元方式(年・月・日を個別に還元して合算)」を画面上で切替可能(初期値: 一括合算)。数秘術は流派により計算方式が異なり、マスターナンバーの出方が変わることがあるため両対応
 - パーソナルイヤーは 1月1日切り替えで算出
 - 名前入力はヘボン式ローマ字を想定(全角英字・マクロン付き文字「Ō」などは自動で半角・基本ラテン文字に補正)
-- OGP・Twitterカード対応(シェア用画像 `og-image.png` 同梱。公開後に `og:url`・`og:image` のURL書き換えが必要)
+- OGP・Twitterカード対応(シェア用画像 `images/og-image.jpg` 同梱。別URLで公開する場合は `og:url`・`og:image` の書き換えが必要)
+- ロゴ・ファビコン・OGP画像は `images/numerology.jpg`(ブランドアートワーク)から生成し、`images/` に同梱
