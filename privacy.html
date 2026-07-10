@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1022">
+<script>/* 保存済みテーマを描画前に適用(切替時のチラつき防止) */
+try{if(localStorage.getItem("numerology-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<title>プライバシーポリシー | 数秘術鑑定</title>
+<meta name="description" content="数秘術鑑定 | Numerology Reading のプライバシーポリシー。ご入力いただく情報の取り扱い、端末内に保存される設定、外部サービスについてご案内します。">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   紺紙金泥 — 藍の夜空に金泥で記す鑑定書(規約ページ共通)
+   ============================================================ */
+:root{
+  --bg:#0d1022;
+  --bg-deep:#0a0c1a;
+  --card:rgba(255,253,245,.032);
+  --card-strong:rgba(255,253,245,.055);
+  --line:rgba(201,164,92,.30);
+  --line-dim:rgba(201,164,92,.16);
+  --gold:#c9a45c;
+  --gold-bright:#e6c88a;
+  --ink:#efe8d8;
+  --ink-dim:#b3ab97;
+  --ink-faint:#8d8672;
+  --danger:#d8a08a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.95;
+  letter-spacing:.03em;
+  font-size:15.5px;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  position:relative;
+}
+/* 星屑と金の靄 */
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(1px 1px at 12% 22%, rgba(240,230,200,.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 12%, rgba(240,230,200,.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 62% 38%, rgba(230,200,138,.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 32% 64%, rgba(240,230,200,.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 56%, rgba(240,230,200,.4) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 8% 84%, rgba(230,200,138,.4) 50%, transparent 51%),
+    radial-gradient(1px 1px at 46% 92%, rgba(240,230,200,.3) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 76%, rgba(240,230,200,.35) 50%, transparent 51%),
+    radial-gradient(900px 480px at 50% -8%, rgba(201,164,92,.10), transparent 70%),
+    linear-gradient(180deg, #0e1126 0%, var(--bg) 40%, var(--bg-deep) 100%);
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+
+.eyebrow{
+  font-family:"Cormorant Garamond", serif;
+  font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line-dim);
+  border-radius:6px;
+  padding:40px 44px;
+}
+
+/* ---------- ページヘッダー ---------- */
+.page-head{padding:64px 0 42px;text-align:center}
+.page-head .eyebrow{margin-bottom:16px}
+.page-head h1{
+  font-size:clamp(1.55rem,5vw,2.05rem);font-weight:600;
+  letter-spacing:.3em;text-indent:.3em;color:var(--gold-bright);
+}
+.page-head .lead{margin-top:16px;color:var(--ink-dim);font-size:.88rem;letter-spacing:.08em}
+.page-head .orn{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:24px;color:var(--gold);
+}
+.page-head .orn::before,.page-head .orn::after{
+  content:"";width:110px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line));
+}
+.page-head .orn::after{background:linear-gradient(90deg,var(--line),transparent)}
+.page-head .orn span{font-size:.66rem;letter-spacing:.3em}
+
+/* ---------- 本文 ---------- */
+.intro{font-size:.92rem;color:var(--ink-dim)}
+.digest{
+  margin-top:26px;
+  border:1px solid var(--line);border-radius:6px;
+  background:rgba(201,164,92,.05);
+  padding:22px 26px;
+}
+.digest-title{
+  font-size:.8rem;letter-spacing:.3em;color:var(--gold);margin-bottom:10px;
+}
+.digest ul{list-style:none}
+.digest li{
+  position:relative;font-size:.9rem;color:var(--ink);
+  padding-left:1.4em;margin-top:8px;
+}
+.digest li::before{
+  content:"◆";position:absolute;left:0;top:.1em;
+  font-size:.6rem;color:var(--gold);
+}
+section{margin-top:38px}
+section h2{
+  display:flex;align-items:baseline;gap:14px;
+  font-size:1rem;font-weight:600;letter-spacing:.16em;color:var(--gold);
+  padding-bottom:10px;margin-bottom:16px;
+  border-bottom:1px solid var(--line-dim);
+}
+section h2 .no{
+  font-family:"Cormorant Garamond", serif;
+  font-size:1.4rem;font-weight:400;line-height:1;color:var(--gold-bright);
+}
+section p{font-size:.93rem;margin-top:12px}
+section ol{margin:12px 0 0 1.5em}
+section ol li{font-size:.93rem;margin-top:9px;padding-left:.2em}
+section a{
+  color:var(--gold-bright);text-decoration:none;
+  border-bottom:1px solid var(--line);padding-bottom:1px;
+  transition:color .25s,border-color .25s;
+}
+section a:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.contact-box{
+  margin-top:14px;
+  border:1px solid var(--line-dim);border-radius:6px;
+  padding:18px 24px;font-size:.93rem;
+}
+.contact-box p{margin-top:4px}
+.contact-box p:first-child{margin-top:0}
+.enact{
+  margin-top:46px;padding-top:20px;
+  border-top:1px solid var(--line-dim);
+  text-align:right;font-size:.88rem;color:var(--ink-dim);
+}
+
+/* ---------- ページ下部ナビ ---------- */
+.page-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:34px 0 10px}
+.page-nav a{
+  display:block;text-align:center;text-decoration:none;
+  font-size:.88rem;letter-spacing:.2em;text-indent:.2em;
+  color:var(--ink-dim);
+  border:1px solid var(--line);border-radius:4px;
+  padding:12px 10px;
+  transition:background .3s,color .3s;
+}
+.page-nav a:hover{background:rgba(201,164,92,.12);color:var(--gold-bright)}
+.page-nav a:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+
+/* ---------- フッター ---------- */
+footer{
+  text-align:left;padding:46px 0 44px;
+  font-size:.76rem;color:var(--ink-faint);letter-spacing:.14em;
+}
+footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:0}
+footer .f-links{margin-top:14px}
+footer .f-links a{
+  color:var(--ink-dim);text-decoration:none;
+  border-bottom:1px solid var(--line-dim);padding-bottom:1px;
+  transition:color .25s,border-color .25s;
+}
+footer .f-links a:hover{color:var(--gold-bright);border-bottom-color:var(--gold)}
+footer .f-links .sep{margin:0 12px;color:var(--ink-faint)}
+
+/* ---------- 表示設定バー(テーマ切替) ---------- */
+.fs-switch{
+  position:fixed;top:12px;right:12px;z-index:20;
+  display:flex;align-items:center;
+  background:rgba(10,12,26,.85);
+  border:1px solid var(--line);border-radius:999px;
+  padding:4px 6px;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+.fs-switch button{
+  font-family:inherit;background:none;border:1px solid transparent;border-radius:999px;
+  color:var(--ink-dim);cursor:pointer;padding:3px 10px;line-height:1.6;
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;
+  transition:color .2s,background .2s;
+}
+.fs-switch button svg{flex-shrink:0}
+.fs-switch button.on{color:var(--gold-bright);border-color:var(--line);background:rgba(201,164,92,.14)}
+.fs-switch button:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width:680px){
+  .card{padding:28px 20px}
+  .page-head{padding-top:72px}
+  .page-nav{grid-template-columns:1fr}
+  html{font-size:17px}
+  body{font-size:16.5px}
+  .fs-switch .t-txt{display:none}
+}
+
+/* ---------- ライトモード(昼の鑑定書) ---------- */
+html[data-theme="light"]{
+  --bg:#faf6ec;
+  --bg-deep:#f2ebd9;
+  --card:rgba(255,255,255,.55);
+  --card-strong:rgba(255,255,255,.82);
+  --line:rgba(138,107,46,.45);
+  --line-dim:rgba(138,107,46,.26);
+  --gold:#8a6b2e;
+  --gold-bright:#7a5c20;
+  --ink:#241f14;
+  --ink-dim:#4a4231;
+  --ink-faint:#7d7460;
+  --danger:#b04a30;
+}
+html[data-theme="light"] body::before{
+  background:
+    radial-gradient(1px 1px at 12% 22%, rgba(138,107,46,.20) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 12%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 62% 38%, rgba(138,107,46,.16) 50%, transparent 51%),
+    radial-gradient(1px 1px at 32% 64%, rgba(138,107,46,.12) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 56%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 8% 84%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1px 1px at 46% 92%, rgba(138,107,46,.10) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 76%, rgba(138,107,46,.12) 50%, transparent 51%),
+    radial-gradient(900px 480px at 50% -8%, rgba(201,164,92,.16), transparent 70%),
+    linear-gradient(180deg, #fdfaf2 0%, var(--bg) 40%, var(--bg-deep) 100%);
+}
+html[data-theme="light"] .digest{background:rgba(201,164,92,.08)}
+html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
+
+/* ---------- 印刷 ---------- */
+@media print{
+  :root, html[data-theme="light"]{
+    --bg:#ffffff;--bg-deep:#ffffff;
+    --card:#ffffff;--card-strong:#faf7ef;
+    --line:rgba(138,107,46,.5);--line-dim:rgba(138,107,46,.3);
+    --gold:#8a6b2e;--gold-bright:#7a5c20;
+    --ink:#241f14;--ink-dim:#4a4231;--ink-faint:#7d7460;
+  }
+  body::before{display:none}
+  body{font-size:11.5pt;background:#fff}
+  .fs-switch,.page-nav,.no-print{display:none !important}
+  .card,.digest,.contact-box{background:#fff}
+  a{color:inherit;text-decoration:none;border-bottom:none}
+}
+</style>
+</head>
+<body>
+
+<div class="fs-switch no-print" role="group" aria-label="表示テーマ">
+  <button type="button" data-theme-choice="dark" class="on" aria-pressed="true" aria-label="ナイトモード(紺色の背景)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M13.5 9.8A6 6 0 1 1 6.2 2.5a5 5 0 1 0 7.3 7.3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="t-txt">ナイト</span></button>
+  <button type="button" data-theme-choice="light" aria-pressed="false" aria-label="ライトモード(明るい背景)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="3.1" fill="none" stroke="currentColor" stroke-width="1.2"/><g stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M8 1.2v1.7M8 13.1v1.7M1.2 8h1.7M13.1 8h1.7M3.2 3.2l1.2 1.2M11.6 11.6l1.2 1.2M3.2 12.8l1.2-1.2M11.6 4.4l1.2-1.2"/></g></svg><span class="t-txt">ライト</span></button>
+</div>
+
+<header class="page-head">
+  <div class="wrap">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>プライバシーポリシー</h1>
+    <p class="lead">「数秘術鑑定 | Numerology Reading」における情報の取り扱いについて</p>
+    <div class="orn"><span>◆ ◆ ◆</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <p class="intro">Wind Bell(以下「当方」といいます)は、当方が運営するウェブサイト「数秘術鑑定 | Numerology Reading」(以下「本サイト」といいます)における利用者の情報の取り扱いについて、以下のとおりプライバシーポリシー(以下「本ポリシー」といいます)を定めます。</p>
+
+    <div class="digest">
+      <p class="digest-title">この方針の要点</p>
+      <ul>
+        <li>鑑定のためにご入力いただくお名前・生年月日は、お使いの端末の中だけで計算され、外部に送信・保存されることは一切ありません。</li>
+        <li>端末に保存されるのは表示設定(テーマ・文字サイズ)のみです。Cookie・アクセス解析・広告は使用していません。</li>
+        <li>フォントの表示(Google Fonts)とサイトの公開(Vercel)に伴い、IPアドレス等の技術的な情報が各サービスへ自動的に送信されることがあります。</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2><span class="no">1</span>鑑定のためにご入力いただく情報について</h2>
+      <ol>
+        <li>本サイトの鑑定機能では、お名前(ローマ字)および生年月日をご入力いただきますが、これらの情報はすべてお使いのブラウザ(端末)内のプログラムのみで計算・表示されます。</li>
+        <li>ご入力いただいた情報が当方のサーバーその他の外部に送信・保存されることは一切なく、当方がこれらの情報を取得・閲覧することはありません。</li>
+        <li>ご入力いただいた情報は、ページを閉じる、または再読み込みした時点で消去されます。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2><span class="no">2</span>端末内に保存される設定情報について</h2>
+      <ol>
+        <li>本サイトでは、表示テーマ(ナイトモード/ライトモード)および文字サイズの設定を記憶するために、ブラウザのローカルストレージ(localStorage)を利用しています。</li>
+        <li>保存されるのはこれらの表示設定のみであり、個人を特定できる情報は含まれません。また、これらの情報はお使いの端末内にのみ保存され、外部へ送信されることはありません。</li>
+        <li>保存された設定は、ブラウザの閲覧データ(サイトデータ)を削除することで、いつでも消去できます。</li>
+        <li>本サイトは、Cookieを使用していません。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2><span class="no">3</span>外部サービスの利用について</h2>
+      <p>本サイトでは、表示・公開のために以下の外部サービスを利用しています。これらのサービスの性質上、本サイトの閲覧に伴い、お使いのブラウザから各サービスの提供者へIPアドレス等の技術的な情報が自動的に送信されることがあります。各社における情報の取り扱いは、それぞれのプライバシーポリシーをご確認ください。</p>
+      <ol>
+        <li><b>Google Fonts</b>(フォント配信/Google LLC)<br>本サイトの書体を表示するために読み込んでいます。詳細は<a href="https://policies.google.com/privacy?hl=ja" target="_blank" rel="noopener">Google プライバシーポリシー</a>をご確認ください。</li>
+        <li><b>Vercel</b>(サイトの公開/Vercel Inc.)<br>本サイトはVercel上で公開されており、閲覧の際にIPアドレス等がVercelのサーバーに記録されることがあります。詳細は<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel プライバシーポリシー</a>をご確認ください。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2><span class="no">4</span>アクセス解析ツール・広告について</h2>
+      <p>本サイトは、現在、アクセス解析ツールおよび広告配信サービスを使用していません。将来これらを導入する場合は、本ポリシーを改定したうえで、本ページにてお知らせします。</p>
+    </section>
+
+    <section>
+      <h2><span class="no">5</span>お問い合わせの際にいただく個人情報について</h2>
+      <p>お問い合わせの際にご提供いただくメールアドレス等の個人情報は、お問い合わせへの回答および必要なご連絡のためにのみ利用し、ご本人の同意なく第三者に提供することはありません(法令に基づき開示が求められる場合を除きます)。</p>
+    </section>
+
+    <section>
+      <h2><span class="no">6</span>本ポリシーの改定について</h2>
+      <p>本ポリシーの内容は、法令の変更や本サイトの機能の追加・変更等に応じて、予告なく改定することがあります。改定後の本ポリシーは、本ページに掲載した時点から効力を生じるものとします。</p>
+    </section>
+
+    <section>
+      <h2><span class="no">7</span>運営者情報</h2>
+      <div class="contact-box">
+        <p>サイト名:数秘術鑑定 | Numerology Reading</p>
+        <p>URL:<a href="https://numerology-peach.vercel.app/">https://numerology-peach.vercel.app/</a></p>
+        <p>運営者:Wind Bell</p>
+      </div>
+    </section>
+
+    <div class="enact">
+      <p>制定日:2026年7月10日</p>
+      <p>Wind Bell</p>
+    </div>
+  </div>
+
+  <nav class="page-nav no-print" aria-label="関連ページ">
+    <a href="index.html">← 鑑定トップへ戻る</a>
+    <a href="disclaimer.html">免責事項を見る</a>
+  </nav>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="f-orn">◆ ◆ ◆</p>
+    <p>数秘術鑑定 | Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
+    <p class="f-links"><a href="privacy.html">プライバシーポリシー</a><span class="sep" aria-hidden="true">|</span><a href="disclaimer.html">免責事項</a></p>
+    <p>© 2026 Wind Bell</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- テーマ切替(ナイト/ライト) ---------- */
+const THEME_KEY = "numerology-theme";
+function setTheme(v){
+  document.documentElement.setAttribute("data-theme", v);
+  document.querySelectorAll(".fs-switch [data-theme-choice]").forEach(b => {
+    const on = b.dataset.themeChoice === v;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", String(on));
+  });
+  const tc = document.querySelector('meta[name="theme-color"]');
+  if(tc) tc.setAttribute("content", v === "light" ? "#faf6ec" : "#0d1022");
+  try{ localStorage.setItem(THEME_KEY, v); }catch(e){ /* プライベートブラウズ等では記憶せず動作のみ */ }
+}
+document.querySelectorAll(".fs-switch [data-theme-choice]").forEach(b => {
+  b.addEventListener("click", () => setTheme(b.dataset.themeChoice));
+});
+(function initTheme(){
+  let v = "dark";
+  try{ v = localStorage.getItem(THEME_KEY) || "dark"; }catch(e){}
+  if(!["dark","light"].includes(v)) v = "dark";
+  setTheme(v);
+})();
+</script>
+</body>
+</html>

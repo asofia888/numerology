@@ -14,8 +14,8 @@ try{if(localStorage.getItem("numerology-theme")==="light")document.documentEleme
 <meta property="og:description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
 <meta property="og:site_name" content="数秘術鑑定">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://asofia888.github.io/numerology/">
-<meta property="og:image" content="https://asofia888.github.io/numerology/images/og-image.jpg">
+<meta property="og:url" content="https://numerology-peach.vercel.app/">
+<meta property="og:image" content="https://numerology-peach.vercel.app/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -404,6 +404,14 @@ footer{
   font-size:.76rem;color:var(--ink-faint);letter-spacing:.14em;
 }
 footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:0}
+footer .f-links{margin-top:16px}
+footer .f-links a{
+  color:var(--ink-dim);text-decoration:none;
+  border-bottom:1px solid var(--line-dim);padding-bottom:1px;
+  transition:color .25s,border-color .25s;
+}
+footer .f-links a:hover{color:var(--gold-bright);border-bottom-color:var(--gold)}
+footer .f-links .sep{margin:0 12px;color:var(--ink-faint)}
 
 /* ---------- 出現アニメーション ---------- */
 #result section.reading, #result .chart, #result .doc-head, #result .karma, #result details.calc{
@@ -620,6 +628,8 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
     <p>Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
     <p>ご入力いただいた情報は、お使いの端末内でのみ計算され、外部に送信・保存されることはありません。</p>
     <p>数が示すのは定められた運命ではなく、魂が携えてきた才能の地図です。</p>
+    <p class="f-links no-print"><a href="privacy.html">プライバシーポリシー</a><span class="sep" aria-hidden="true">|</span><a href="disclaimer.html">免責事項</a></p>
+    <p>© 2026 Wind Bell</p>
   </div>
 </footer>
 

@@ -2,6 +2,8 @@
 
 生年月日とお名前(ローマ字)から、ピタゴラス式数秘術に基づいてプロの鑑定書スタイルの読み解きを行う単一HTMLアプリです。サーバー・ビルド不要、`index.html` 1ファイルだけで動作します。
 
+公開中のサイト: https://numerology-peach.vercel.app/(運営:Wind Bell)
+
 ## 機能
 
 **個人鑑定**
@@ -28,15 +30,16 @@
 - 全角英字・マクロン付きローマ字(Ō・Ū など)の自動補正
 - 選択した年・月に合わせて「日」の選択肢を自動調整
 - 入力された情報は端末内でのみ計算(外部への送信・保存は一切なし)
+- プライバシーポリシー・免責事項ページを同梱(`privacy.html` / `disclaimer.html`。フッターのリンクから閲覧可能。運営:Wind Bell)
 
 ## GitHub Pages での公開手順
 
 1. GitHubで新しいリポジトリを作成(例: `numerology-reading`)
-2. このフォルダ内のファイル(`index.html`・`images` フォルダ・`README.md`)をアップロードしてコミット
+2. このフォルダ内のファイル(`index.html`・`privacy.html`・`disclaimer.html`・`site.webmanifest`・`images` フォルダ・`README.md`)をアップロードしてコミット
 3. リポジトリの **Settings → Pages** を開く
 4. **Source** で「Deploy from a branch」を選び、Branch を `main` / `(root)` に設定して Save
 5. 数分後、`https://ユーザー名.github.io/リポジトリ名/` で公開されます
-6. OGP タグ(SNSシェア用カード)は `https://asofia888.github.io/numerology/` 向けに設定済みです。独自ドメインなど別のURLで公開する場合のみ、`index.html` 内の `og:url`・`og:image` の2行を書き換えてください
+6. OGP タグ(SNSシェア用カード)は現在の公開URL `https://numerology-peach.vercel.app/` 向けに設定済みです。別のURLで公開する場合のみ、`index.html` 内の `og:url`・`og:image` の2行を書き換えてください
 
 ## 技術メモ
 
