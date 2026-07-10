@@ -366,10 +366,10 @@ section.reading{margin-bottom:34px}
 /* ---------- アクション・フッター ---------- */
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:44px 0 10px}
 footer{
-  text-align:center;padding:56px 0 44px;
+  text-align:left;padding:56px 0 44px;
   font-size:.76rem;color:var(--ink-faint);letter-spacing:.14em;
 }
-footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:.5em}
+footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacing:.5em;text-indent:0}
 
 /* ---------- 出現アニメーション ---------- */
 #result section.reading, #result .chart, #result .doc-head, #result .karma, #result details.calc{
@@ -581,10 +581,12 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 </div>
 
 <footer>
-  <p class="f-orn">◆ ◆ ◆</p>
-  <p>Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
-  <p>ご入力いただいた情報は、お使いの端末内でのみ計算され、外部に送信・保存されることはありません。</p>
-  <p>数が示すのは定められた運命ではなく、魂が携えてきた才能の地図です。</p>
+  <div class="wrap">
+    <p class="f-orn">◆ ◆ ◆</p>
+    <p>Numerology Reading — ピタゴラス式数秘術に基づく鑑定</p>
+    <p>ご入力いただいた情報は、お使いの端末内でのみ計算され、外部に送信・保存されることはありません。</p>
+    <p>数が示すのは定められた運命ではなく、魂が携えてきた才能の地図です。</p>
+  </div>
 </footer>
 
 <script>
