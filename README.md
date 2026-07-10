@@ -47,4 +47,4 @@
 - パーソナルイヤーは 1月1日切り替えで算出
 - 名前入力はヘボン式ローマ字を想定(全角英字・マクロン付き文字「Ō」などは自動で半角・基本ラテン文字に補正)
 - OGP・Twitterカード対応(シェア用画像 `images/og-image.jpg` 同梱。別URLで公開する場合は `og:url`・`og:image` の書き換えが必要)
-- ロゴ・OGP画像は `images/numerology.jpg`、ファビコン・各種アイコンは `images/favicon.png`(正方形アートワーク)から生成し、`images/` に同梱
+- ロゴ・ファビコン・各種アイコンは `images/favicon.png`(正方形アートワーク)、OGP画像は `images/numerology.jpg` から生成し、`images/` に同梱
