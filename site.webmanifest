@@ -1,0 +1,16 @@
+{
+  "name": "数秘術鑑定 | Numerology Reading",
+  "short_name": "数秘術鑑定",
+  "description": "生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "minimal-ui",
+  "background_color": "#0d1022",
+  "theme_color": "#0d1022",
+  "icons": [
+    { "src": "images/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "images/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
