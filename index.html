@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d1022">
+<script>/* 保存済みテーマを描画前に適用(切替時のチラつき防止) */
+try{if(localStorage.getItem("numerology-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
 <title>数秘術鑑定 | Numerology Reading</title>
 <meta name="description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
 <!-- OGP(SNSシェア用)※別のURLで公開する場合は og:url と og:image の2行を書き換えてください -->
@@ -370,12 +373,12 @@ footer .f-orn{color:var(--gold);margin-bottom:14px;font-size:.8rem;letter-spacin
   html{scroll-behavior:auto}
 }
 
-/* ---------- 文字サイズ切替(スマートフォン表示) ---------- */
+/* ---------- 表示設定バー(テーマ切替・文字サイズ切替) ---------- */
 html[data-fs="s"]{--fs-scale:.9}
 html[data-fs="l"]{--fs-scale:1.2}
 .fs-switch{
   position:fixed;top:12px;right:12px;z-index:20;
-  display:none;align-items:center;
+  display:flex;align-items:center;
   background:rgba(10,12,26,.85);
   border:1px solid var(--line);border-radius:999px;
   padding:4px 6px;
@@ -385,13 +388,17 @@ html[data-fs="l"]{--fs-scale:1.2}
 .fs-switch button{
   font-family:inherit;background:none;border:1px solid transparent;border-radius:999px;
   color:var(--ink-dim);cursor:pointer;padding:3px 10px;line-height:1.6;
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;
   transition:color .2s,background .2s;
 }
-.fs-switch button:nth-of-type(1){font-size:11px}
-.fs-switch button:nth-of-type(2){font-size:13px}
-.fs-switch button:nth-of-type(3){font-size:15px}
+.fs-switch button svg{flex-shrink:0}
+.fs-switch [data-fs="s"]{font-size:11px}
+.fs-switch [data-fs="m"]{font-size:13px}
+.fs-switch [data-fs="l"]{font-size:15px}
 .fs-switch button.on{color:var(--gold-bright);border-color:var(--line);background:rgba(201,164,92,.14)}
 .fs-switch button:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+.fs-fonts{display:none;align-items:center}
+.fs-sep{width:1px;height:15px;background:var(--line-dim);margin:0 4px 0 6px}
 
 /* ---------- レスポンシブ ---------- */
 @media (max-width:680px){
@@ -407,12 +414,47 @@ html[data-fs="l"]{--fs-scale:1.2}
   .actions{grid-template-columns:1fr}
   html{font-size:calc(17px * var(--fs-scale,1))}
   body{font-size:calc(16.5px * var(--fs-scale,1))}
-  .fs-switch{display:flex}
+  .fs-fonts{display:flex}
+  .fs-switch .t-txt{display:none}
 }
+
+/* ---------- ライトモード(昼の鑑定書) ---------- */
+html[data-theme="light"]{
+  --bg:#faf6ec;
+  --bg-deep:#f2ebd9;
+  --card:rgba(255,255,255,.55);
+  --card-strong:rgba(255,255,255,.82);
+  --line:rgba(138,107,46,.45);
+  --line-dim:rgba(138,107,46,.26);
+  --gold:#8a6b2e;
+  --gold-bright:#7a5c20;
+  --ink:#241f14;
+  --ink-dim:#4a4231;
+  --ink-faint:#7d7460;
+  --danger:#b04a30;
+}
+html[data-theme="light"] body::before{
+  background:
+    radial-gradient(1px 1px at 12% 22%, rgba(138,107,46,.20) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 12%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 62% 38%, rgba(138,107,46,.16) 50%, transparent 51%),
+    radial-gradient(1px 1px at 32% 64%, rgba(138,107,46,.12) 50%, transparent 51%),
+    radial-gradient(1px 1px at 88% 56%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 8% 84%, rgba(138,107,46,.14) 50%, transparent 51%),
+    radial-gradient(1px 1px at 46% 92%, rgba(138,107,46,.10) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 76%, rgba(138,107,46,.12) 50%, transparent 51%),
+    radial-gradient(900px 480px at 50% -8%, rgba(201,164,92,.16), transparent 70%),
+    linear-gradient(180deg, #fdfaf2 0%, var(--bg) 40%, var(--bg-deep) 100%);
+}
+html[data-theme="light"] input[type="text"], html[data-theme="light"] select{background-color:rgba(255,255,255,.75)}
+html[data-theme="light"] select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a6b2e' stroke-width='1.2'/%3E%3C/svg%3E")}
+html[data-theme="light"] .btn:hover{color:#fdfaf1}
+html[data-theme="light"] .mini, html[data-theme="light"] .cy{background:rgba(255,255,255,.55)}
+html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 
 /* ---------- 印刷(鑑定書として保存) ---------- */
 @media print{
-  :root{
+  :root, html[data-theme="light"]{
     --bg:#ffffff;--bg-deep:#ffffff;
     --card:#ffffff;--card-strong:#faf7ef;
     --line:rgba(138,107,46,.5);--line-dim:rgba(138,107,46,.3);
@@ -434,11 +476,16 @@ html[data-fs="l"]{--fs-scale:1.2}
 </head>
 <body>
 
-<div class="fs-switch no-print" role="group" aria-label="文字サイズの変更">
-  <span class="fs-label">文字</span>
-  <button type="button" data-fs="s" aria-pressed="false">小</button>
-  <button type="button" data-fs="m" aria-pressed="true">標準</button>
-  <button type="button" data-fs="l" aria-pressed="false">大</button>
+<div class="fs-switch no-print" role="group" aria-label="表示設定(テーマと文字サイズ)">
+  <button type="button" data-theme-choice="dark" class="on" aria-pressed="true" aria-label="ナイトモード(紺色の背景)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M13.5 9.8A6 6 0 1 1 6.2 2.5a5 5 0 1 0 7.3 7.3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="t-txt">ナイト</span></button>
+  <button type="button" data-theme-choice="light" aria-pressed="false" aria-label="ライトモード(明るい背景)"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="8" cy="8" r="3.1" fill="none" stroke="currentColor" stroke-width="1.2"/><g stroke="currentColor" stroke-width="1.1" stroke-linecap="round"><path d="M8 1.2v1.7M8 13.1v1.7M1.2 8h1.7M13.1 8h1.7M3.2 3.2l1.2 1.2M11.6 11.6l1.2 1.2M3.2 12.8l1.2-1.2M11.6 4.4l1.2-1.2"/></g></svg><span class="t-txt">ライト</span></button>
+  <span class="fs-fonts">
+    <span class="fs-sep" aria-hidden="true"></span>
+    <span class="fs-label">文字</span>
+    <button type="button" data-fs="s" aria-pressed="false">小</button>
+    <button type="button" data-fs="m" aria-pressed="true">標準</button>
+    <button type="button" data-fs="l" aria-pressed="false">大</button>
+  </span>
 </div>
 
 <header class="hero">
@@ -1428,6 +1475,29 @@ document.querySelectorAll(".fs-switch [data-fs]").forEach(b => {
   try{ v = localStorage.getItem(FS_KEY) || "m"; }catch(e){}
   if(!["s","m","l"].includes(v)) v = "m";
   setFontSize(v);
+})();
+
+/* ---------- テーマ切替(ナイト/ライト) ---------- */
+const THEME_KEY = "numerology-theme";
+function setTheme(v){
+  document.documentElement.setAttribute("data-theme", v);
+  document.querySelectorAll(".fs-switch [data-theme-choice]").forEach(b => {
+    const on = b.dataset.themeChoice === v;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", String(on));
+  });
+  const tc = document.querySelector('meta[name="theme-color"]');
+  if(tc) tc.setAttribute("content", v === "light" ? "#faf6ec" : "#0d1022");
+  try{ localStorage.setItem(THEME_KEY, v); }catch(e){ /* プライベートブラウズ等では記憶せず動作のみ */ }
+}
+document.querySelectorAll(".fs-switch [data-theme-choice]").forEach(b => {
+  b.addEventListener("click", () => setTheme(b.dataset.themeChoice));
+});
+(function initTheme(){
+  let v = "dark";
+  try{ v = localStorage.getItem(THEME_KEY) || "dark"; }catch(e){}
+  if(!["dark","light"].includes(v)) v = "dark";
+  setTheme(v);
 })();
 </script>
 </body>
