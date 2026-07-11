@@ -7,11 +7,12 @@
 <script>/* 保存済みテーマを描画前に適用(切替時のチラつき防止) */
 try{if(localStorage.getItem("numerology-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
 <title>数秘術鑑定 | Numerology Reading</title>
-<meta name="description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
-<!-- OGP(SNSシェア用)※別のURLで公開する場合は og:url と og:image の2行を書き換えてください -->
+<meta name="description" content="生年月日とお名前から、6つのコアナンバー・運気ごよみ・人生の三大周期・誕生数チャートまで、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
+<link rel="canonical" href="https://numerology.matrix.jp/">
+<!-- OGP(SNSシェア用)※別のURLで公開する場合は canonical・og:url・og:image と、下の JSON-LD 内の url・image を書き換えてください -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="数秘術鑑定 | Numerology Reading">
-<meta property="og:description" content="生年月日とお名前から6つのコアナンバーを算出し、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
+<meta property="og:description" content="生年月日とお名前から、6つのコアナンバー・運気ごよみ・人生の三大周期・誕生数チャートまで、プロの鑑定書のように丁寧に読み解く数秘術アプリ">
 <meta property="og:site_name" content="数秘術鑑定">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:url" content="https://numerology.matrix.jp/">
@@ -19,6 +20,24 @@ try{if(localStorage.getItem("numerology-theme")==="light")document.documentEleme
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "数秘術鑑定 | Numerology Reading",
+  "alternateName": "Numerology Reading",
+  "url": "https://numerology.matrix.jp/",
+  "image": "https://numerology.matrix.jp/images/og-image.jpg",
+  "description": "生年月日とお名前から、6つのコアナンバー・運気ごよみ・人生の三大周期・誕生数チャートまで、プロの鑑定書のように丁寧に読み解く数秘術アプリ",
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Web",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ja",
+  "isAccessibleForFree": true,
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "JPY"},
+  "publisher": {"@type": "Organization", "name": "Wind Bell"}
+}
+</script>
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -46,14 +65,14 @@ try{if(localStorage.getItem("numerology-theme")==="light")document.documentEleme
   --danger:#d8a08a;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:calc(100% * var(--fs-scale,1))}
 body{
   font-family:"Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   background:var(--bg);
   color:var(--ink);
   line-height:1.95;
   letter-spacing:.03em;
-  font-size:15.5px;
+  font-size:calc(15.5px * var(--fs-scale,1));
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
   position:relative;
@@ -181,6 +200,13 @@ input::placeholder{color:var(--ink-faint)}
 .btn--sub:hover{background:rgba(201,164,92,.12);color:var(--gold-bright);box-shadow:none}
 .err{display:none;color:var(--danger);font-size:.84rem;margin-top:14px;letter-spacing:.06em}
 .err.show{display:block}
+.remember{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 9px;
+  margin:0 0 20px;font-size:.84rem;color:var(--ink-dim);
+  letter-spacing:.06em;cursor:pointer;
+}
+.remember input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+.remember .rem-note{font-size:.74rem;color:var(--ink-faint)}
 
 /* ---------- モード切替タブ ---------- */
 .tabs{display:flex;margin-bottom:24px;border-bottom:1px solid var(--line-dim)}
@@ -232,6 +258,22 @@ input::placeholder{color:var(--ink-faint)}
 /* ---------- 鑑定書ヘッダー ---------- */
 #result{padding-bottom:40px}
 #result:focus{outline:none}
+section.reading,.chart,.karma,details.calc{scroll-margin-top:18px}
+
+/* ---------- 目次ナビ ---------- */
+.toc{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 8px;
+  border:1px solid var(--line-dim);border-radius:6px;
+  background:var(--card);padding:16px 20px;margin-bottom:26px;
+}
+.toc-label{font-size:.72rem;letter-spacing:.3em;color:var(--gold);margin-right:8px}
+.toc a{
+  font-size:.78rem;letter-spacing:.1em;color:var(--ink-dim);text-decoration:none;
+  border:1px solid var(--line-dim);border-radius:999px;padding:2px 12px;
+  transition:color .25s,border-color .25s;
+}
+.toc a:hover{color:var(--gold-bright);border-color:var(--gold)}
+.toc a:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
 .doc-head{text-align:center;padding:26px 0 40px}
 .doc-head .eyebrow{margin-bottom:14px}
 .doc-head h2{font-size:1.5rem;font-weight:600;letter-spacing:.3em;text-indent:.3em}
@@ -390,6 +432,42 @@ section.reading{margin-bottom:34px}
 .pin-ch{margin-top:12px;font-size:.88rem;color:var(--ink-dim);border-top:1px dashed var(--line-dim);padding-top:10px}
 .pin-ch b{color:var(--gold);font-weight:600}
 
+/* ---------- 人生の三大周期 ---------- */
+.cycle-grid.three{grid-template-columns:repeat(3,1fr)}
+
+/* ---------- 誕生数チャート(九宮) ---------- */
+.bgrid-wrap{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:start;margin-top:24px}
+.bgrid{display:grid;grid-template-columns:repeat(3,80px);grid-auto-rows:80px;gap:7px}
+.bcell{
+  border:1px solid var(--line-dim);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(10,12,26,.35);
+}
+.bcell .bd-fill{
+  font-family:"Cormorant Garamond",serif;font-weight:400;
+  font-size:1.75rem;line-height:1;color:var(--gold-bright);letter-spacing:.05em;
+}
+.bcell.empty .bd-pos{
+  font-family:"Cormorant Garamond",serif;font-size:1.1rem;line-height:1;
+  color:rgba(201,164,92,.22);
+}
+html[data-theme="light"] .bcell.empty .bd-pos{color:rgba(138,107,46,.28)}
+.bgrid-note{font-size:.74rem;color:var(--ink-faint);text-align:center;margin-top:10px;letter-spacing:.06em}
+.bgrid-wrap .block:first-child{margin-top:0}
+
+/* ---------- 12ヶ月の運気ごよみ ---------- */
+.pm-cal{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:12px}
+.pm-cell{
+  border:1px solid var(--line-dim);border-radius:6px;
+  padding:10px 6px 9px;text-align:center;
+  background:rgba(10,12,26,.35);
+}
+.pm-cell span{display:block}
+.pm-cell.nowm{border-color:var(--gold);background:rgba(201,164,92,.08)}
+.pm-cell .l{font-size:.68rem;color:var(--ink-faint);letter-spacing:.05em}
+.pm-cell .n{font-family:"Cormorant Garamond",serif;font-size:1.7rem;line-height:1.25;color:var(--gold-bright)}
+.pm-cell .t{font-size:.7rem;color:var(--ink-dim);letter-spacing:.03em}
+
 
 /* ---------- 総合メッセージ ---------- */
 .synth{border-color:var(--line);background:var(--card-strong)}
@@ -435,7 +513,7 @@ footer .f-copy{
 }
 
 /* ---------- 出現アニメーション ---------- */
-#result section.reading, #result .chart, #result .doc-head, #result .karma, #result details.calc{
+#result section.reading, #result .chart, #result .doc-head, #result .karma, #result details.calc, #result .toc{
   animation:rise .7s ease both;
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -468,7 +546,7 @@ html[data-fs="l"]{--fs-scale:1.2}
 .fs-switch [data-fs="l"]{font-size:15px}
 .fs-switch button.on{color:var(--gold-bright);border-color:var(--line);background:rgba(201,164,92,.14)}
 .fs-switch button:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
-.fs-fonts{display:none;align-items:center}
+.fs-fonts{display:flex;align-items:center}
 .fs-sep{width:1px;height:15px;background:var(--line-dim);margin:0 4px 0 6px}
 
 /* ---------- レスポンシブ ---------- */
@@ -477,6 +555,9 @@ html[data-fs="l"]{--fs-scale:1.2}
   .hero{padding-top:64px}
   .hero .hero-logo{width:134px;height:134px;margin-bottom:20px}
   .cycle-grid.two{grid-template-columns:1fr}
+  .cycle-grid.three{grid-template-columns:1fr}
+  .bgrid-wrap{grid-template-columns:1fr;gap:22px}
+  .bgrid{justify-content:center;grid-template-columns:repeat(3,minmax(72px,84px))}
   .duo{gap:14px}
   .duo-link{width:100%;text-align:center;order:1}
   .duo .p{order:0}
@@ -487,7 +568,6 @@ html[data-fs="l"]{--fs-scale:1.2}
   .actions{grid-template-columns:1fr}
   html{font-size:calc(17px * var(--fs-scale,1))}
   body{font-size:calc(16.5px * var(--fs-scale,1))}
-  .fs-fonts{display:flex}
   .fs-switch .t-txt{display:none}
 }
 
@@ -499,11 +579,11 @@ html[data-theme="light"]{
   --card-strong:rgba(255,255,255,.82);
   --line:rgba(138,107,46,.45);
   --line-dim:rgba(138,107,46,.26);
-  --gold:#8a6b2e;
+  --gold:#7d5f24;
   --gold-bright:#7a5c20;
   --ink:#241f14;
   --ink-dim:#4a4231;
-  --ink-faint:#7d7460;
+  --ink-faint:#6f6753;
   --danger:#b04a30;
 }
 html[data-theme="light"] body::before{
@@ -522,7 +602,9 @@ html[data-theme="light"] body::before{
 html[data-theme="light"] input[type="text"], html[data-theme="light"] select{background-color:rgba(255,255,255,.75)}
 html[data-theme="light"] select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a6b2e' stroke-width='1.2'/%3E%3C/svg%3E")}
 html[data-theme="light"] .btn:hover{color:#fdfaf1}
-html[data-theme="light"] .mini, html[data-theme="light"] .cy{background:rgba(255,255,255,.55)}
+html[data-theme="light"] .mini, html[data-theme="light"] .cy,
+html[data-theme="light"] .bcell, html[data-theme="light"] .pm-cell{background:rgba(255,255,255,.55)}
+html[data-theme="light"] .pm-cell.nowm{background:rgba(201,164,92,.13)}
 html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
 
 /* ---------- 印刷(鑑定書として保存) ---------- */
@@ -537,7 +619,8 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
   body::before{display:none}
   body{font-size:11.5pt;background:#fff}
   .hero,.form-card,.actions,.no-print{display:none !important}
-  .card,.mini,.cy,details.calc{background:#fff}
+  .card,.mini,.cy,details.calc,.bcell,.pm-cell{background:#fff}
+  .pm-cell.nowm{background:#faf4e4}
   .lp-ring{box-shadow:none;animation:none}
   .duo-ring{box-shadow:none}
   .stars,.duo-link{text-shadow:none}
@@ -577,6 +660,7 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
       <button class="tab active" id="tab-personal" type="button" role="tab" aria-selected="true" aria-controls="mode-personal">個人鑑定</button>
       <button class="tab" id="tab-pair" type="button" role="tab" aria-selected="false" aria-controls="mode-pair" tabindex="-1">相性診断</button>
     </div>
+    <form id="reading-form" novalidate>
     <p class="form-note" id="form-note">お名前はヘボン式ローマ字(英字)でご入力ください。名前を省略した場合は、生年月日のみの鑑定となります。</p>
 
     <div id="mode-personal" role="tabpanel" aria-labelledby="tab-personal">
@@ -636,8 +720,15 @@ html[data-theme="light"] .fs-switch{background:rgba(250,246,236,.9)}
       </select>
     </div>
 
-    <button class="btn" id="go">鑑 定 す る</button>
+    <label class="remember" for="remember">
+      <input type="checkbox" id="remember">
+      入力内容をこの端末に記憶する
+      <span class="rem-note">(端末内のみ保存・外部には送信されません)</span>
+    </label>
+
+    <button class="btn" id="go" type="submit">鑑 定 す る</button>
     <p class="err" id="err" role="alert"></p>
+    </form>
   </div>
 
   <main id="result" hidden tabindex="-1"></main>
@@ -896,6 +987,63 @@ const CHALLENGE = {
 8:"「力とお金との健全な関係」を学ぶ課題。物質面への執着や、逆に苦手意識が出やすい時期です。豊かさを恐れず、正しく使う経験を重ねることが、器を大きく育てます。"
 };
 
+/* ---------- 上級鑑定:人生の三大周期(サイクルナンバー) ---------- */
+const LCYCLE = {
+1:{t:"自立と挑戦の周期",x:"新しい道を自分の意志で切り拓くことにエネルギーが注がれる期間。環境や誰かに頼るより、自分で決めて動くほど流れが味方します。"},
+2:{t:"協調と縁の周期",x:"人との繋がりと支え合いを通して魂が育つ期間。目立つ成果より、信頼という見えない財産が静かに積み上がっていきます。"},
+3:{t:"表現と喜びの周期",x:"創造性が花開き、交流や楽しみが人生を彩る期間。心が弾む方へ進むことが、そのまま開運の道になります。"},
+4:{t:"基盤づくりの周期",x:"仕事・暮らし・健康の土台をコツコツ固める期間。地道な積み重ねが、後の周期の大きな飛躍を支えます。"},
+5:{t:"変化と自由の周期",x:"移動・転機・新しい出会いが多く、体験を通して世界が広がる期間。変化を恐れず乗りこなすほど、運が大きく動きます。"},
+6:{t:"愛と責任の周期",x:"家族や身近な人との関わりが人生の中心となる期間。誰かを支え、支えられる経験が、深い幸福として実っていきます。"},
+7:{t:"探求と内省の周期",x:"学び・専門性・精神的な深まりに向く、静かで豊かな期間。外の評価より内なる納得を育てるほど、揺るがぬ知恵が身につきます。"},
+8:{t:"達成と豊かさの周期",x:"現実的な成果・地位・経済面が大きく動く力強い期間。堂々と目標を掲げ、実りを受け取ることがテーマになります。"},
+9:{t:"統合と貢献の周期",x:"経験が智慧へと熟し、人へ還元する流れが生まれる期間。手放しと感謝が、次の扉を開く鍵になります。"},
+11:{t:"直観と霊性の周期",x:"感受性が研ぎ澄まされ、ひらめきや不思議な縁に導かれる期間。感じ取ったことを信じ、言葉や形にすることで才能が開きます。"},
+22:{t:"大きな構築の周期",x:"個人の枠を超えた仕組みや事業を形にする力が高まる、スケールの大きな期間。焦らず基礎を積むほど、後に残るものが育ちます。"},
+33:{t:"無償の愛の周期",x:"損得を超えて人を癒し支える役割が巡ってくる、稀有な期間。まず自分を満たすことを忘れなければ、存在そのものが光になります。"}
+};
+const LCYCLE_PHASE = [
+{jp:"形成期", src:"誕生月より", desc:"人格と土台をつくる季節"},
+{jp:"生産期", src:"誕生日より", desc:"力を発揮し、実らせる季節"},
+{jp:"収穫期", src:"誕生年より", desc:"実りを味わい、還元する季節"}
+];
+
+/* ---------- 上級鑑定:誕生数チャート(九宮と強みの矢) ---------- */
+const ARROWS = [
+{nums:[1,2,3], name:"計画の矢", x:"目標から逆算して物事を組み立てる、優れた計画性の印。頭の中に自然と段取りが描ける、企画者・参謀の資質を示します。"},
+{nums:[4,5,6], name:"意志の矢", x:"一度決めたら簡単には諦めない、強い意志と粘りの印。困難の中でも心が折れにくい、芯の強さを示します。"},
+{nums:[7,8,9], name:"行動の矢", x:"考えるより先に体が動く、優れた行動力と実行力の印。現場で力を発揮し、経験から学んでいく天性を示します。"},
+{nums:[1,4,7], name:"実務の矢", x:"物事を現実の形に落とし込む、地に足のついた実務能力の印。手を動かし、確かなものを築き上げる才を示します。"},
+{nums:[2,5,8], name:"感性の矢", x:"人の気持ちや場の空気を細やかに感じ取る、豊かな感受性の印。心の機微を扱う仕事や役割に向く資質を示します。"},
+{nums:[3,6,9], name:"知性の矢", x:"物事を筋道立てて理解し、記憶し、伝えることに優れた知性の印。学ぶ側でも教える側でも力を発揮する頭脳を示します。"},
+{nums:[1,5,9], name:"決断の矢", x:"迷いを断ち、自らの意志で道を選び取る強い決断力の印。逆境をバネに変える、不屈の粘り強さも併せ持ちます。"},
+{nums:[3,5,7], name:"精神性の矢", x:"目に見えない世界への感度が高い、深い精神性の印。経験のひとつひとつを通して魂が磨かれていく、求道者の資質を示します。"}
+];
+const MISSING_NUM = {
+1:"「自分で決めて踏み出す」こと。小さな選択から自分の意志で決める練習が力になります。",
+2:"「寄り添い、待つ」こと。急がず人の気持ちに耳を傾ける経験が、心を豊かにします。",
+3:"「素直に表現する」こと。上手さよりも、感じたことを言葉にする習慣が扉を開きます。",
+4:"「コツコツ続ける」こと。小さな習慣をひとつ守り抜く経験が、大きな自信に変わります。",
+5:"「変化を楽しむ」こと。慣れた場所の外へ半歩出る体験が、世界を広げてくれます。",
+6:"「愛を受け取り、返す」こと。身近な人への小さな思いやりが、学びの入口になります。",
+7:"「一人で深く考える」こと。静かな時間を持ち、自分の内側と対話する習慣が助けになります。",
+8:"「堂々と豊かさを求める」こと。お金や評価と健全に付き合う経験が、器を育てます。",
+9:"「手放し、譲る」こと。完璧な決着よりも、大きな流れに委ねる練習が心を軽くします。"
+};
+
+/* ---------- パーソナルデー短文 ---------- */
+const PD_SHORT = {
+1:"始めるのに良い日。小さな一歩が新しい流れをつくります。",
+2:"合わせる日。対話と気配りが、物事を滑らかにします。",
+3:"楽しむ日。遊び心と笑顔が、幸運を連れてきます。",
+4:"整える日。片付けや段取りごとが、静かにはかどります。",
+5:"動く日。外出や新しい試みに、追い風が吹きます。",
+6:"慈しむ日。大切な人への思いやりが、運を養います。",
+7:"静める日。学びや内省、一人の時間が実りをもたらします。",
+8:"攻める日。決断・交渉・大事な仕事に好機があります。",
+9:"手放す日。整理と感謝が、次の流れへの道を空けます。"
+};
+
 /* ============================================================
    計算エンジン(ピタゴラス式)
    ============================================================ */
@@ -955,6 +1103,34 @@ function pinnacleChallenge(y, m, d, lp){
     {from:firstEnd+19, to:null,        pin:p4, ch:c4}
   ]};
 }
+/* 上級鑑定:人生の三大周期。形成期=誕生月/生産期=誕生日/収穫期=誕生年の還元数。
+   周期の変わり目は27歳前後・54歳前後に巡るパーソナルイヤー1の年(誕生年+23〜+31年に必ず1回現れる) */
+function periodCycles(y, m, d){
+  const last = a => a[a.length-1];
+  const nums = [last(reduceSteps(m)), last(reduceSteps(d)), last(reduceSteps(y))];
+  let t1 = y + 27;
+  for(let yr = y + 23; yr <= y + 31; yr++){
+    if(fullReduce(ds(String(m)+String(d)+String(yr))).n === 1){ t1 = yr; break; }
+  }
+  return {nums, t1, t2: t1 + 27};
+}
+/* 上級鑑定:誕生数チャート。生年月日の各桁(0を除く)を九宮に配置し、
+   揃った列=強みの矢、空白=学びの数、最多出現数=濃い資質を導く */
+function birthGrid(y, m, d){
+  const counts = {};
+  for(let i=1;i<=9;i++) counts[i]=0;
+  for(const c of String(y)+String(m)+String(d)) if(c!=="0") counts[Number(c)]++;
+  const has = n => counts[n] > 0;
+  const arrows = ARROWS.filter(a => a.nums.every(has));
+  const missing = [];
+  let maxC = 0;
+  for(let i=1;i<=9;i++){
+    if(!counts[i]) missing.push(i);
+    if(counts[i] > maxC) maxC = counts[i];
+  }
+  const tops = maxC >= 2 ? [1,2,3,4,5,6,7,8,9].filter(i=>counts[i]===maxC) : [];
+  return {counts, arrows, missing, tops, maxC};
+}
 function chainHTML(parts, steps){
   let s = (parts && parts !== String(steps[0])) ? `${parts} = <b>${steps[0]}</b>` : `<b>${steps[0]}</b>`;
   for(let i=1;i<steps.length;i++){
@@ -968,10 +1144,10 @@ function chainHTML(parts, steps){
 function blockHTML(label, text){
   return `<div class="block"><h3>${label}</h3><p>${text}</p></div>`;
 }
-function secHTML(en, jp, sub, num, posKey, blocks){
+function secHTML(id, en, jp, sub, num, posKey, blocks){
   const p = P[num];
   const master = MASTERS.has(num) ? '<span class="master-tag" style="margin-left:10px;vertical-align:2px">MASTER NUMBER</span>' : "";
-  return `<section class="reading card">
+  return `<section class="reading card" id="${id}">
     <div class="sec-head">
       <div><p class="eyebrow">${en}</p><h2>${jp}<span class="sec-sub">— ${sub}</span></h2></div>
       <div class="sec-num">${num}</div>
@@ -1033,6 +1209,37 @@ function syncDays(yId, mId, dId){
   });
 })();
 
+/* ---------- 入力内容の記憶(オプトイン・端末内localStorageのみ) ---------- */
+const REMEMBER_KEY = "numerology-inputs";
+function collectInputs(){
+  return {mode: currentMode, method: $("method").value,
+    name: $("name").value,  yy: $("yy").value,  mm: $("mm").value,  dd: $("dd").value,
+    nameA: $("nameA").value, yyA: $("yyA").value, mmA: $("mmA").value, ddA: $("ddA").value,
+    nameB: $("nameB").value, yyB: $("yyB").value, mmB: $("mmB").value, ddB: $("ddB").value};
+}
+function saveInputs(){
+  if(!$("remember").checked) return;
+  try{ localStorage.setItem(REMEMBER_KEY, JSON.stringify(collectInputs())); }catch(e){ /* プライベートブラウズ等では記憶せず動作のみ */ }
+}
+function clearInputs(){
+  try{ localStorage.removeItem(REMEMBER_KEY); }catch(e){}
+}
+function restoreInputs(){
+  let d = null;
+  try{ d = JSON.parse(localStorage.getItem(REMEMBER_KEY) || "null"); }catch(e){}
+  if(!d || typeof d !== "object") return;
+  $("remember").checked = true;
+  if(typeof d.method === "string" && d.method) $("method").value = d.method;
+  [["yy","mm","dd","name"],["yyA","mmA","ddA","nameA"],["yyB","mmB","ddB","nameB"]].forEach(([yId, mId, dId, nId])=>{
+    if(d[yId]) $(yId).value = String(d[yId]);
+    if(d[mId]) $(mId).value = String(d[mId]);
+    syncDays(yId, mId, dId);
+    if(d[dId]) $(dId).value = String(d[dId]);
+    if(typeof d[nId] === "string") $(nId).value = d[nId];
+  });
+  if(d.mode === "pair") setMode("pair");
+}
+
 function showErr(msg){
   const e = $("err");
   e.textContent = msg;
@@ -1044,6 +1251,7 @@ function showErr(msg){
    ============================================================ */
 function calc(){
   $("err").classList.remove("show");
+  saveInputs();
 
   const y = Number($("yy").value), m = Number($("mm").value), d = Number($("dd").value);
   const method  = $("method").value;
@@ -1103,18 +1311,30 @@ function calc(){
   const pyR = fullReduce(ds(String(m)+String(d)+String(cyY)));
   const py = pyR.n, pyMaster = pyR.masterHit;
   const pm  = fullReduce(py + cyM).n;
+  const pd  = fullReduce(pm + now.getDate()).n;
   const npy = fullReduce(ds(String(m)+String(d)+String(cyY+1))).n;
+  /* 今月から12ヶ月分のパーソナルマンス(年をまたぐ月は翌年のパーソナルイヤーで算出) */
+  const months = [];
+  for(let k=0;k<12;k++){
+    const mm2 = ((cyM-1+k)%12)+1;
+    const yy2 = cyY + Math.floor((cyM-1+k)/12);
+    const pyk = fullReduce(ds(String(m)+String(d)+String(yy2))).n;
+    months.push({y:yy2, m:mm2, n:fullReduce(pyk+mm2).n});
+  }
 
   /* --- 上級鑑定 --- */
   const periods = pinnacleChallenge(y, m, d, lp).periods;
   const age = (cyY - y) - (now < new Date(cyY, m-1, d) ? 1 : 0);
   const curIdx = age < 0 ? -1 : periods.findIndex(p => p.to === null || age <= p.to);
+  const pc = periodCycles(y, m, d);
+  const curCycle = cyY < pc.t1 ? 0 : cyY < pc.t2 ? 1 : 2;
+  const grid = birthGrid(y, m, d);
 
   render({y,m,d,hasName,words,lp,lpSteps,bd,bdSteps,
           dtN,dtSteps,sl,slSteps,ps,psSteps,mtN,mtSteps,
-          allV,vwV,csV,karmic,cyY,cyM,py,pyMaster,pm,npy,now,
+          allV,vwV,csV,karmic,cyY,cyM,py,pyMaster,pm,pd,npy,months,now,
           method, ySteps:lpp.ySteps, mSteps:lpp.mSteps, dSteps:lpp.dSteps, sumParts:lpp.sumParts,
-          periods, age, curIdx});
+          periods, age, curIdx, pc, curCycle, grid});
 }
 
 /* ============================================================
@@ -1136,6 +1356,24 @@ function render(o){
     </div>
   </div>`;
 
+  /* 目次ナビ(表示されるセクションだけを並べる) */
+  const tocItems = [["sec-core","コアナンバー"]];
+  if(o.karmic.length) tocItems.push(["sec-karma","カルミック"]);
+  tocItems.push(["sec-calc","計算の内訳"],["sec-lp","ライフパス"]);
+  if(o.hasName){
+    tocItems.push(["sec-dt","ディスティニー"]);
+    if(o.sl) tocItems.push(["sec-sl","ソウル"]);
+    if(o.ps) tocItems.push(["sec-ps","パーソナリティ"]);
+  }
+  tocItems.push(["sec-bd","バースデー"]);
+  if(o.hasName) tocItems.push(["sec-mt","マチュリティ"]);
+  tocItems.push(["sec-cycle","運気サイクル"],["sec-pinnacle","人生の四季"],
+                ["sec-periods","三大周期"],["sec-grid","誕生数チャート"],["sec-synth","総合鑑定"]);
+  h += `<nav class="toc no-print" aria-label="鑑定書の目次">
+    <span class="toc-label">目 次</span>
+    ${tocItems.map(([id, label]) => `<a href="#${id}">${label}</a>`).join("")}
+  </nav>`;
+
   /* コアナンバーチャート */
   const lpP = P[o.lp];
   let minis = "";
@@ -1148,7 +1386,7 @@ function render(o){
   }else{
     minis += miniHTML("BIRTHDAY","隠れた強み", o.bd);
   }
-  h += `<div class="card chart">
+  h += `<div class="card chart" id="sec-core">
     <div class="lp-moon">
       <span class="eyebrow">Life Path</span>
       <div class="lp-ring"><span class="n${o.lp>9?" master":""}">${o.lp}</span></div>
@@ -1165,7 +1403,7 @@ function render(o){
 
   /* カルミックナンバー */
   if(o.karmic.length){
-    h += `<div class="karma">
+    h += `<div class="karma" id="sec-karma">
       <h3>カルミックナンバーが現れています</h3>
       <p>計算の途中に、魂の宿題を示す「カルミックナンバー」が含まれています。重い意味ではなく、今世で丁寧に磨くと決めてきたテーマ——伸びしろの印として、お受け取りください。</p>
       ${o.karmic.map(k=>`<p>【${k.pos}】 ${k.txt}</p>`).join("")}
@@ -1201,21 +1439,21 @@ function render(o){
     ? "桁別還元方式(年・月・日をそれぞれ還元してから合算)"
     : "一括合算方式(生年月日の全桁を合計)";
   cb += `<p class="calc-note">※ピタゴラス式(A=1〜Z=8の換算)を採用し、ライフパスは${methodName}で算出しています。マスターナンバー(11・22・33)は還元せず、そのまま採用しています。Yは子音として扱います。数秘術には複数の流派があるため、計算方式の違いにより他の書籍・サイトと結果が異なる場合があります。</p>`;
-  h += `<details class="calc"><summary>計算の内訳を見る</summary><div class="calc-body">${cb}</div></details>`;
+  h += `<details class="calc" id="sec-calc"><summary>計算の内訳を見る</summary><div class="calc-body">${cb}</div></details>`;
 
   /* 各ナンバーの詳細鑑定 */
-  h += secHTML("Life Path Number","ライフパスナンバー","人生の目的と歩む道(生年月日より)", o.lp, "lp",
+  h += secHTML("sec-lp","Life Path Number","ライフパスナンバー","人生の目的と歩む道(生年月日より)", o.lp, "lp",
     [["基本性質","essence"],["才能と強み","talent"],["成長のテーマ","challenge"],["開運の鍵","advice"]]);
   if(o.hasName){
-    h += secHTML("Destiny Number","ディスティニーナンバー","社会での使命と役割(名前の全文字より)", o.dtN, "dt",
+    h += secHTML("sec-dt","Destiny Number","ディスティニーナンバー","社会での使命と役割(名前の全文字より)", o.dtN, "dt",
       [["仕事・使命の生かし方","work"]]);
-    if(o.sl) h += secHTML("Soul Number","ソウルナンバー","魂が本当に望むもの(名前の母音より)", o.sl, "sl",
+    if(o.sl) h += secHTML("sec-sl","Soul Number","ソウルナンバー","魂が本当に望むもの(名前の母音より)", o.sl, "sl",
       [["恋愛・パートナーシップ","love"]]);
-    if(o.ps) h += secHTML("Personality Number","パーソナリティナンバー","周囲に映るあなた(名前の子音より)", o.ps, "ps", []);
+    if(o.ps) h += secHTML("sec-ps","Personality Number","パーソナリティナンバー","周囲に映るあなた(名前の子音より)", o.ps, "ps", []);
   }
-  h += secHTML("Birthday Number","バースデーナンバー","生まれ持った隠し味(誕生日より)", o.bd, "bd", []);
+  h += secHTML("sec-bd","Birthday Number","バースデーナンバー","生まれ持った隠し味(誕生日より)", o.bd, "bd", []);
   if(o.hasName){
-    h += secHTML("Maturity Number","マチュリティナンバー","人生後半のテーマ(ライフパス+ディスティニー)", o.mtN, "mt", []);
+    h += secHTML("sec-mt","Maturity Number","マチュリティナンバー","人生後半のテーマ(ライフパス+ディスティニー)", o.mtN, "mt", []);
   }
 
   /* 運気サイクル */
@@ -1223,7 +1461,7 @@ function render(o){
   if(o.pyMaster){
     masterNote = `<p class="cy-note">※今年は途中の合計が <b>${o.pyMaster}</b> になるマスターイヤー。${o.py}の流れに、${PY_MASTER_QUALITY[o.pyMaster]}のエネルギーが重なる特別な一年です。</p>`;
   }
-  h += `<section class="reading card">
+  h += `<section class="reading card" id="sec-cycle">
     <div class="sec-head">
       <div><p class="eyebrow">Life Cycle</p><h2>運気サイクル<span class="sec-sub">— 9年周期のリズム(パーソナルイヤー)</span></h2></div>
       <div class="sec-num">${o.py}</div>
@@ -1235,10 +1473,28 @@ function render(o){
         <p>${CYCLE[o.py].x}</p>
         ${masterNote}
       </div>
+      <div class="cycle-grid two" style="margin-top:0">
+        <div class="cy small">
+          <span class="cy-label">${o.cyY}年${o.cyM}月のパーソナルマンス</span>
+          <div class="cy-head"><span class="cy-num">${o.pm}</span><span class="cy-title">${CYCLE[o.pm].t}</span></div>
+          <p>${PM_SHORT[o.pm]}</p>
+        </div>
+        <div class="cy small">
+          <span class="cy-label">今日のパーソナルデー(${o.now.getMonth()+1}月${o.now.getDate()}日)</span>
+          <div class="cy-head"><span class="cy-num">${o.pd}</span><span class="cy-title">${CYCLE[o.pd].t.replace("の年","の日")}</span></div>
+          <p>${PD_SHORT[o.pd]}</p>
+        </div>
+      </div>
       <div class="cy small">
-        <span class="cy-label">${o.cyY}年${o.cyM}月のパーソナルマンス</span>
-        <div class="cy-head"><span class="cy-num">${o.pm}</span><span class="cy-title">${CYCLE[o.pm].t}</span></div>
-        <p>${PM_SHORT[o.pm]}</p>
+        <span class="cy-label">これから12ヶ月の運気ごよみ</span>
+        <div class="pm-cal">
+          ${o.months.map((mo, i) => `<div class="pm-cell${i===0?" nowm":""}">
+            <span class="l">${(i===0 || mo.m===1) ? `${mo.y}年` : ""}${mo.m}月${i===0?"(今月)":""}</span>
+            <span class="n">${mo.n}</span>
+            <span class="t">${CYCLE[mo.n].t.replace("の年","の月")}</span>
+          </div>`).join("")}
+        </div>
+        <p class="cy-note">月ごとの運気のリズムです。「種まき」で始め、「収穫」で受け取り、「手放し」で整える——月の性質に沿って予定を置くと、流れが滑らかになります。</p>
       </div>
       <div class="cy small">
         <span class="cy-label">来年の流れ</span>
@@ -1246,13 +1502,13 @@ function render(o){
         <p>${o.cyY+1}年は「${CYCLE[o.npy].t}」のサイクルへ。今年の過ごし方が、そのまま来年の追い風になります。</p>
       </div>
     </div>
-    <p class="cy-note">※パーソナルイヤーは1月1日切り替えで算出しています(お誕生日切り替えとする流派もあります)。</p>
+    <p class="cy-note">※パーソナルイヤーは1月1日切り替えで算出しています(お誕生日切り替えとする流派もあります)。パーソナルデーは「パーソナルマンス+日にち」を還元した数です。</p>
   </section>`;
 
   /* 上級鑑定:人生の四季(ピナクル&チャレンジ) */
   h += `<div class="adv-divider"><span>上級鑑定 — Advanced Reading</span></div>`;
   const SEASON = ["一","二","三","四"];
-  h += `<section class="reading card">
+  h += `<section class="reading card" id="sec-pinnacle">
     <div class="sec-head">
       <div><p class="eyebrow">Pinnacles &amp; Challenges</p><h2>人生の四季<span class="sec-sub">— 4つの頂きと課題(ピナクル&チャレンジ)</span></h2></div>
     </div>
@@ -1273,6 +1529,66 @@ function render(o){
     <p class="cy-note">※ピナクルは誕生月・日・年を還元して組み合わせた数、チャレンジはその差から導いています。年齢は満年齢の目安です。${o.curIdx >= 0 ? `現在${o.age}歳——第${SEASON[o.curIdx]}の季節を歩んでいます。` : ""}</p>
   </section>`;
 
+  /* 上級鑑定:人生の三大周期(サイクルナンバー) */
+  const cycRange = [
+    `誕生 〜 ${o.pc.t1-1}年(〜${o.pc.t1-1-o.y}歳ごろ)`,
+    `${o.pc.t1}年 〜 ${o.pc.t2-1}年(${o.pc.t1-o.y}〜${o.pc.t2-1-o.y}歳ごろ)`,
+    `${o.pc.t2}年 〜(${o.pc.t2-o.y}歳ごろ〜)`
+  ];
+  h += `<section class="reading card" id="sec-periods">
+    <div class="sec-head">
+      <div><p class="eyebrow">Period Cycles</p><h2>人生の三大周期<span class="sec-sub">— 形成・生産・収穫のサイクルナンバー</span></h2></div>
+    </div>
+    <p class="pos-text">人生の大きな流れを、約27年ごとの三つの周期で読み解きます。それぞれの期間には生年月日から導かれる固有のテーマの数が流れており、同じ出来事でも「いまどの周期にいるか」で意味合いが変わってきます。</p>
+    <div class="cycle-grid three" style="margin-top:22px">
+      ${o.pc.nums.map((n, i) => {
+        const ph = LCYCLE_PHASE[i];
+        const masterTag = MASTERS.has(n) ? ' <span class="master-tag">MASTER</span>' : "";
+        return `<div class="cy small pin${i === o.curCycle ? " now" : ""}">
+          ${i === o.curCycle ? '<span class="now-tag">いまの周期</span>' : ""}
+          <span class="cy-label">${ph.jp}(${ph.src})<br>${cycRange[i]}</span>
+          <div class="cy-head"><span class="cy-num">${n}</span><span class="cy-title">${LCYCLE[n].t}${masterTag}</span></div>
+          <p>${ph.desc}。${LCYCLE[n].x}</p>
+        </div>`;
+      }).join("")}
+    </div>
+    <p class="cy-note">※形成期は誕生月、生産期は誕生日、収穫期は誕生年を還元した数がテーマです。周期の変わり目は、27歳前後・54歳前後に巡ってくる「種まきの年(パーソナルイヤー1)」に置く方式で算出しています。</p>
+  </section>`;
+
+  /* 上級鑑定:誕生数チャート(九宮と強みの矢) */
+  const GRID_ORDER = [3,6,9,2,5,8,1,4,7];
+  const cells = GRID_ORDER.map(n => {
+    const c = o.grid.counts[n];
+    if(!c) return `<div class="bcell empty"><span class="bd-pos">${n}</span></div>`;
+    const fill = c <= 3 ? String(n).repeat(c) : `${n}×${c}`;
+    return `<div class="bcell"><span class="bd-fill">${fill}</span></div>`;
+  }).join("");
+  let gblocks = "";
+  if(o.grid.arrows.length){
+    gblocks += o.grid.arrows.map(a => blockHTML(`強みの矢:${a.name}(${a.nums.join("・")})`, a.x)).join("");
+  }else{
+    gblocks += blockHTML("矢のない配置について","三つ揃う列は現れていませんが、これは欠点ではありません。数がひとつの型に偏らず散らばっている印で、状況に応じて多面的に力を使い分けられる、バランス型の資質を示します。");
+  }
+  if(o.grid.tops.length){
+    gblocks += blockHTML("最も濃い数", `チャートで最も多く現れているのは「${o.grid.tops.join("・")}」(${o.grid.maxC}回)。「${o.grid.tops.map(t=>SHORT[t]).join("」「")}」の資質が、人一倍濃く備わっていることを示します。`);
+  }
+  if(o.grid.missing.length){
+    gblocks += blockHTML("空白の部屋(学びの数)", `空白は欠落ではなく、今世で新しく体験すると決めてきたテーマです。 ${o.grid.missing.map(n=>`<b>${n}</b> ${MISSING_NUM[n]}`).join(" ")}`);
+  }
+  h += `<section class="reading card" id="sec-grid">
+    <div class="sec-head">
+      <div><p class="eyebrow">Birth Chart</p><h2>誕生数チャート<span class="sec-sub">— 九つの部屋と強みの矢</span></h2></div>
+    </div>
+    <p class="pos-text">生年月日に含まれる数字を九つの部屋に配置した、あなただけのチャートです。数の集まる部屋は生まれ持った資質の濃さを、縦・横・斜めに三つ揃った列「強みの矢」は、意識せずとも自然に発揮される天性を示します。</p>
+    <div class="bgrid-wrap">
+      <div>
+        <div class="bgrid" role="img" aria-label="誕生数チャート(九宮)">${cells}</div>
+        <p class="bgrid-note">生年月日 ${o.y}.${o.m}.${o.d} の数字より</p>
+      </div>
+      <div>${gblocks}</div>
+    </div>
+  </section>`;
+
   /* 総合鑑定 */
   let syn = "";
   if(o.hasName){
@@ -1291,13 +1607,16 @@ function render(o){
   }else{
     syn += `<p>生年月日から見えるあなたの根幹は、「${P[o.lp].name}」として「${SHORT[o.lp]}」を生きる、ライフパス${o.lp}の道です。日々の選択に迷ったときは、この軸に照らして「自分らしい方」を選ぶこと。それが数秘術からの、いちばんシンプルな道しるべです。</p>`;
   }
+  if(o.curIdx >= 0){
+    syn += `<p>そして、いま。あなたは人生の第${SEASON[o.curIdx]}の季節(頂き「${P[o.periods[o.curIdx].pin].name}」)と「${LCYCLE[o.pc.nums[o.curCycle]].t}」を歩みながら、${o.cyY}年という一年は「${CYCLE[o.py].t}」の中にいます。大きな季節のテーマに、今年の風向きを重ねて眺めること——それが、日々の選択を軽やかにする、数秘術のいちばん実践的な使い方です。</p>`;
+  }
   const masterCores = [...new Set([o.lp,o.dtN,o.sl,o.ps,o.bd,o.mtN].filter(n=>n && MASTERS.has(n)))];
   if(masterCores.length){
     syn += `<p>また、あなたのコアナンバーにはマスターナンバー(${masterCores.join("・")})が含まれています。感受性やエネルギーが人一倍強く、生きづらさを感じる時期もあったかもしれません。それは欠陥ではなく、大きな役割を果たすための特別な器である証です。</p>`;
   }
   syn += `<p class="close">数秘術が示すのは、決められた運命ではなく、あなたという魂が携えてきた「才能の地図」です。出来事に良いも悪いもなく、すべてはあなたが本来の輝きを思い出すための道しるべ。この鑑定が、ご自身を深く愛おしむきっかけとなりますように。</p>`;
 
-  h += `<section class="reading card synth">
+  h += `<section class="reading card synth" id="sec-synth">
     <div class="sec-head">
       <div><p class="eyebrow">Synthesis</p><h2>総合鑑定<span class="sec-sub">— 数が織りなす、あなたという物語</span></h2></div>
     </div>
@@ -1429,6 +1748,7 @@ function personCore(label, rawName, y, m, d, method){
 
 function calcPair(){
   $("err").classList.remove("show");
+  saveInputs();
   const method = $("method").value;
   const A = personCore("お一人目", $("nameA").value, Number($("yyA").value), Number($("mmA").value), Number($("ddA").value), method);
   if(A.err){ showErr(A.err); return; }
@@ -1596,11 +1916,14 @@ document.querySelector(".tabs").addEventListener("keydown", e => {
   setMode(next);
   $(next === "personal" ? "tab-personal" : "tab-pair").focus();
 });
-$("go").addEventListener("click", () => currentMode === "personal" ? calc() : calcPair());
-["name","nameA","nameB"].forEach(id => {
-  $(id).addEventListener("keydown", e => {
-    if(e.key === "Enter") currentMode === "personal" ? calc() : calcPair();
-  });
+/* フォームsubmitで鑑定実行(ボタンクリックのほか、テキスト欄・セレクトでのEnterにも対応) */
+$("reading-form").addEventListener("submit", e => {
+  e.preventDefault();
+  currentMode === "personal" ? calc() : calcPair();
+});
+/* 記憶チェックボックス:ONで即保存、OFFで即削除 */
+$("remember").addEventListener("change", () => {
+  $("remember").checked ? saveInputs() : clearInputs();
 });
 document.addEventListener("click", e => {
   if(e.target.id === "print-btn") window.print();
@@ -1610,8 +1933,15 @@ document.addEventListener("click", e => {
     $("form-card").scrollIntoView({behavior: prefersReduce ? "auto" : "smooth"});
   }
 });
+/* 印刷時は計算の内訳を自動で開き、印刷後は元の状態に戻す */
+let autoOpenedCalc = [];
 window.addEventListener("beforeprint", () => {
-  document.querySelectorAll("details.calc").forEach(d => d.open = true);
+  autoOpenedCalc = [...document.querySelectorAll("details.calc:not([open])")];
+  autoOpenedCalc.forEach(d => d.open = true);
+});
+window.addEventListener("afterprint", () => {
+  autoOpenedCalc.forEach(d => d.open = false);
+  autoOpenedCalc = [];
 });
 
 /* ---------- 文字サイズ切替(スマートフォン表示) ---------- */
@@ -1657,6 +1987,16 @@ document.querySelectorAll(".fs-switch [data-theme-choice]").forEach(b => {
   if(!["dark","light"].includes(v)) v = "dark";
   setTheme(v);
 })();
+
+/* ---------- 記憶済み入力の復元 ---------- */
+restoreInputs();
+
+/* ---------- Service Worker(オフライン対応) ---------- */
+if(typeof navigator !== "undefined" && "serviceWorker" in navigator && location.protocol !== "file:"){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* 未対応・失敗時は通常表示のまま動作 */ });
+  });
+}
 </script>
 </body>
 </html>
